@@ -1,0 +1,30 @@
+PROJET MOBIPASS V2 - M2 MIAGE IDA - Cours de F. Ravat
+Soutenance : vendredi 30/10 après-midi (15 min + 10 min de questions)
+
+01_Dossier_conception
+  MobiPass_Dossier_conception.docx
+    - Expression des besoins (B1 à B4, contraintes C1 à C7, points à valider)
+    - Architecture fonctionnelle (dictionnaire des magasins, besoins -> magasins)
+    - Données sources (S1 à S7, schémas, règles de gestion RG1 à RG13)
+    - Architecture globale (correspondance sources/magasins, besoin d'un ED)
+    - Conception de l'ED (schéma logique, dictionnaire, choix DSA sans ODS)
+
+02_Schemas_drawio
+  MobiPass_Conception_complet.drawio : tous les schémas, 7 pages
+    1. Architecture SAD          5. MD2 Ventes conceptuel
+    2. Sources S2 et S3          6. MD1 R-OLAP et treillis partiel
+    3. ED conceptuel V2          7. MD2 logique (Power BI)
+    4. MD1 Locations conceptuel
+  pages_separees : les mêmes schémas, un fichier par page
+  Ouverture : draw.io > File > Open from > Device
+
+03_Scripts_SQL
+  01_creation_ED_MobiPass_V2.sql : création des 24 tables de l'ED sous Oracle
+  Exécution : SQL Developer > ouvrir le fichier > F5 (Run Script)
+
+RESTE À FAIRE
+  - Génération des données + script d'insertion (02_insertion_ED.sql)
+  - Dictionnaires des mesures et des attributs des 2 magasins
+  - MD1 : création de l'étoile, alimentation, vues matérialisées, rapports Power BI
+  - MD2 : implantation Power BI, sécurité par pays, rapports
+  - Fin du dossier, guides utilisateurs, slides, fiche de temps
