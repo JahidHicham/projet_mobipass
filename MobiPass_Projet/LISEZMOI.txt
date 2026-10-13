@@ -10,17 +10,32 @@ Soutenance : vendredi 30/10 après-midi (15 min + 10 min de questions)
     - Conception de l'ED (schéma logique, dictionnaire, choix DSA sans ODS)
 
 02_Schemas_drawio
-  MobiPass_Conception_complet.drawio : tous les schémas, 7 pages
-    1. Architecture SAD          5. MD2 Ventes conceptuel
-    2. Sources S2 et S3          6. MD1 R-OLAP et treillis partiel
-    3. ED conceptuel V2          7. MD2 logique (Power BI)
-    4. MD1 Locations conceptuel
+  MobiPass_Conception_complet.drawio : tous les schémas, 9 pages
+    1.  Architecture SAD
+    2a. Sources S2 et S3
+    2b. Sources S1, S4, S5, S7
+    2c. Source S6 (ED V1)
+    3.  ED conceptuel V2
+    4.  MD1 Locations conceptuel
+    5.  MD2 Ventes conceptuel
+    6.  MD1 R-OLAP et treillis partiel
+    7.  MD2 logique (Power BI)
   pages_separees : les mêmes schémas, un fichier par page
   Ouverture : draw.io > File > Open from > Device
 
 03_Scripts_SQL
   01_creation_ED_MobiPass_V2.sql : création des 24 tables de l'ED sous Oracle
   Exécution : SQL Developer > ouvrir le fichier > F5 (Run Script)
+  01b_creation_ED_pour_Looping.sql : version simplifiée (tables + clés) pour la
+    rétro-conception dans Looping, à ne PAS utiliser pour l'implantation Oracle
+
+04_Looping
+  MobiPass_ED_MCD.loo : MCD Merise de l'ED V2 dans Looping (Windows)
+    - associations Acheter, Réserver, Louer, Tarifer, Exercer, Réduction
+    - CIF RG9 sur Exercer : EMPLOYE + JOUR -> APPELLATION
+      (clé d'EXERCER = CodeE + date de début, comme dans le script Oracle)
+    - JOUR et ANNEE sont des entités du MCD mais pas des tables de l'ED
+  Plan_disposition_MCD_Looping.png : plan de disposition utilisé
 
 RESTE À FAIRE
   - Génération des données + script d'insertion (02_insertion_ED.sql)
