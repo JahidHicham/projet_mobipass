@@ -1,6 +1,8 @@
 -- MobiPass - Entrepôt de données : contraintes, triggers et index (Oracle 11g, schéma ABEHS)
 -- À lancer après 01_creation_ED.sql. Les règles viennent des annexes 1, 2 et 3 du sujet
 -- et de la figure 2 (découpage administratif de l'Allemagne).
+-- Toujours lancer 01 puis 02 à la suite : relancé seul sur des tables qui ont déjà leurs contraintes,
+-- ce script échoue (ORA-02264 / ORA-00955 : nom déjà utilisé) et n'applique pas les règles modifiées.
 
 ALTER TABLE PAYS_DW ADD (
   CONSTRAINT ck_pays_code CHECK (CodePays IN ('FR','DE')),
@@ -18,13 +20,14 @@ ALTER TABLE ZONE_GEO_DW ADD (
                                OR (NiveauZG NOT IN ('REGION','LAND') AND CodeZG_zone_englobante IS NOT NULL) )
 );
 
--- Sujet V3 + client (14/10) : NAF rév. 2, 4 niveaux retenus sur 5 (la section lettre est écartée)
--- division '62' -> groupe '62.0' -> classe '62.01' -> sous-classe '62.01Z' ; le code enfant commence par le code parent
+-- Sujet V3 (annexe 1) + client (14/10) : NAF rév. 2, sections (lettres) écartées
+-- division '62' -> groupe '62.0' -> classe '62.01' -> sous-classe '62.01Z'
+-- Le super-domaine est un code NAF plus court dont le code est le préfixe (ex. annexe 1 : 49.39A -> 49)
 ALTER TABLE DOMAINE_DW ADD (
   CONSTRAINT ck_do_masque CHECK (REGEXP_LIKE(CodeDO, '^[0-9]{2}(\.[0-9]([0-9][A-Z]?)?)?$')),
   CONSTRAINT ck_do_super  CHECK ( (LENGTH(CodeDO) = 2 AND CodeDO_Sup IS NULL)
                                OR (LENGTH(CodeDO) > 2 AND CodeDO_Sup IS NOT NULL
-                                   AND LENGTH(CodeDO_Sup) = DECODE(LENGTH(CodeDO), 4, 2, 5, 4, 6, 5)
+                                   AND LENGTH(CodeDO_Sup) < LENGTH(CodeDO)
                                    AND CodeDO LIKE CodeDO_Sup || '%') )
 );
 

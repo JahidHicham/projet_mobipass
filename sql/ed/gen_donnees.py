@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Génération des données de l'ED MobiPass V2 -> 03_insertion_ED.sql (Oracle 11g)
 Graine fixe : le script produit toujours les mêmes données."""
-import random, datetime as dt, re, collections
+import random, datetime as dt, re, collections, os
 random.seed(2026)
 D = dt.date
 TODAY = D(2026, 10, 14)          # date de génération ; toutes les dates d'activité sont < TODAY
@@ -575,8 +575,9 @@ for t in ORDER:
         if i % 500 == 0: out.append("COMMIT;")
     out.append("COMMIT;"); out.append("")
 out.append("-- Vérification : nombre de lignes par table")
-out.append("SELECT '" + "' AS t, COUNT(*) FROM ".join([]) + "" if False else "")
 out.append("\nUNION ALL\n".join(f"SELECT '{t}_DW' AS table_name, COUNT(*) AS nb FROM {t}_DW" for t in ORDER) + ";")
-open("MobiPass_Projet/03_Scripts_SQL/03_insertion_ED.sql", "w", encoding="utf-8").write("\n".join(out) + "\n")
+CIBLE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "03_insertion_ED.sql")   # à côté de ce script
+open(CIBLE, "w", encoding="utf-8").write("\n".join(out) + "\n")
+print("écrit :", CIBLE)
 for t in ORDER: print(f"{t:22s}{len(R[t]):6d}")
 print("total", sum(len(R[t]) for t in ORDER))
