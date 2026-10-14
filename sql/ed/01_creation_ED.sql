@@ -5,7 +5,7 @@
 
 BEGIN
   FOR t IN (SELECT table_name FROM user_tables
-            WHERE table_name IN ('ACHETER_PARTENAIRE','LOUER','RESERVER','ACHETER','TARIFER',
+            WHERE table_name IN ('ACHETER_PARTENAIRE','LOUER','RESERVER','ACHAT','TARIFER',
                                  'REDUCTION','EXERCER','SALARIE_RH','EXEMPLAIRE','PRODUIT',
                                  'ETRE_AFFECTE','EMPLOYE','SERVICE','SOCIETE','PARTENAIRE',
                                  'GAMME','AGENCE','GENERATION','FABRICANT','APPELLATION',
@@ -38,10 +38,10 @@ CREATE TABLE ZONE_GEO(
 
 CREATE TABLE DOMAINE(
    CodeDO                VARCHAR2(7),
-   NomDO                 VARCHAR2(100) NOT NULL,
-   CodeDO_super_domaine  VARCHAR2(7),
+   NomDO                 VARCHAR2(150) NOT NULL,
+   CodeDO_Sup            VARCHAR2(7),
    CONSTRAINT pk_domaine PRIMARY KEY(CodeDO),
-   CONSTRAINT fk_do_super FOREIGN KEY(CodeDO_super_domaine) REFERENCES DOMAINE(CodeDO)
+   CONSTRAINT fk_do_super FOREIGN KEY(CodeDO_Sup) REFERENCES DOMAINE(CodeDO)
 );
 
 CREATE TABLE CATEGORIE_JURIDIQUE(
@@ -137,12 +137,12 @@ CREATE TABLE PARTENAIRE(
 );
 
 CREATE TABLE SOCIETE(
-   CodeSOC  VARCHAR2(14),
+   CodeSOC  VARCHAR2(14),               -- SIREN (FR) ou USt-IdNr (DE)
    NomSOC   VARCHAR2(100) NOT NULL,
    CodeTy   VARCHAR2(5),
    CodeZG   VARCHAR2(10)  NOT NULL,
-   CodeCJ   VARCHAR2(4),
-   CodeDO   VARCHAR2(7),
+   CodeCJ   VARCHAR2(4)   NOT NULL,   -- Classer 1,1 : INSEE (FR) ou branche D (formes allemandes)
+   CodeDO   VARCHAR2(7),               -- Caractériser 0,1 : pas de code NAF pour les sociétés allemandes
    CONSTRAINT pk_societe PRIMARY KEY(CodeSOC),
    CONSTRAINT fk_soc_type FOREIGN KEY(CodeTy) REFERENCES TYPE_SOCIETE(CodeTy),
    CONSTRAINT fk_soc_zg FOREIGN KEY(CodeZG) REFERENCES ZONE_GEO(CodeZG),
@@ -211,7 +211,7 @@ CREATE TABLE SALARIE_RH(
    DateNaissSAL       DATE,
    DateEntreeSAL      DATE,
    CPResidenceSAL     VARCHAR2(5),
-   LibelleServiceSAL  VARCHAR2(50),
+   LibelleServiceSAL  VARCHAR2(100),
    CodeE              NUMBER(10) NOT NULL,
    CONSTRAINT pk_salarie_rh PRIMARY KEY(MatriculeSAL, NumEtab),
    CONSTRAINT uq_sal_employe UNIQUE(CodeE),
@@ -254,12 +254,13 @@ CREATE TABLE TARIFER(
    CONSTRAINT fk_tar_produit FOREIGN KEY(CodeP) REFERENCES PRODUIT(CodeP)
 );
 
-CREATE TABLE ACHETER(
+-- Noms de la V1 conservés (ACHAT, DOMAINE.CodeDO_Sup) : l'ED V2 étend l'ED V1 sans renommer ses tables
+CREATE TABLE ACHAT(
    CodeE  NUMBER(10),
    CodeP  NUMBER(10),
    DateA  DATE,
    Qte    NUMBER(5) NOT NULL,
-   CONSTRAINT pk_acheter PRIMARY KEY(CodeE, CodeP, DateA),
+   CONSTRAINT pk_achat PRIMARY KEY(CodeE, CodeP, DateA),
    CONSTRAINT fk_ach_employe FOREIGN KEY(CodeE) REFERENCES EMPLOYE(CodeE),
    CONSTRAINT fk_ach_produit FOREIGN KEY(CodeP) REFERENCES PRODUIT(CodeP)
 );
@@ -286,6 +287,8 @@ CREATE TABLE LOUER(
    CONSTRAINT fk_lou_exemplaire FOREIGN KEY(CodeEX) REFERENCES EXEMPLAIRE(CodeEX)
 );
 
+-- Offre partenaire (Alltricks) : aucune information sur les articles ni sur les montants ;
+-- on enregistre seulement qu'un employé a acheté chez un partenaire un jour donné (fait sans mesure)
 CREATE TABLE ACHETER_PARTENAIRE(
    CodeE           NUMBER(10),
    DateA           DATE,

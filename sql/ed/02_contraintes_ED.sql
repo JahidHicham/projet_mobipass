@@ -9,6 +9,8 @@ ALTER TABLE PAYS ADD (
 
 -- Figure 2 : Land > District (4 Länder seulement) > Kreis (Landkreis ou kreisfreie Stadt) > Gemeinde ;
 -- les villes-États (Berlin, Hambourg, Brême) sont découpées directement en Bezirke.
+-- Codes allemands : 'DE' + préfixe du code AGS Destatis (Land 2 chiffres, district 3, Kreis 5, Gemeinde 8),
+-- ex. DE09, DE091, DE09162, DE09162000 (München). Les Bezirke n'ont pas de code AGS officiel.
 ALTER TABLE ZONE_GEO ADD (
   CONSTRAINT ck_zg_niveau CHECK ( (CodePays = 'FR' AND NiveauZG IN ('COMMUNE','DEPARTEMENT','REGION'))
                                OR (CodePays = 'DE' AND NiveauZG IN ('GEMEINDE','BEZIRK','KREIS','DISTRICT','LAND')) ),
@@ -16,17 +18,18 @@ ALTER TABLE ZONE_GEO ADD (
                                OR (NiveauZG NOT IN ('REGION','LAND') AND CodeZG_zone_englobante IS NOT NULL) )
 );
 
--- Annexe 1 : masque 999-999, les premiers chiffres désignent le super-domaine (ex. 62-001 -> 62-000)
+-- Sujet V3 + client (14/10) : NAF rév. 2, 4 niveaux retenus sur 5 (la section lettre est écartée)
+-- division '62' -> groupe '62.0' -> classe '62.01' -> sous-classe '62.01Z' ; le code enfant commence par le code parent
 ALTER TABLE DOMAINE ADD (
-  CONSTRAINT ck_do_masque CHECK (REGEXP_LIKE(CodeDO, '^[0-9]{2,3}-[0-9]{3}$')),
-  CONSTRAINT ck_do_super  CHECK (CodeDO_super_domaine IS NULL
-                                 OR (CodeDO_super_domaine LIKE '%-000'
-                                     AND CodeDO <> CodeDO_super_domaine
-                                     AND SUBSTR(CodeDO, 1, INSTR(CodeDO, '-'))
-                                       = SUBSTR(CodeDO_super_domaine, 1, INSTR(CodeDO_super_domaine, '-'))))
+  CONSTRAINT ck_do_masque CHECK (REGEXP_LIKE(CodeDO, '^[0-9]{2}(\.[0-9]([0-9][A-Z]?)?)?$')),
+  CONSTRAINT ck_do_super  CHECK ( (LENGTH(CodeDO) = 2 AND CodeDO_Sup IS NULL)
+                               OR (LENGTH(CodeDO) > 2 AND CodeDO_Sup IS NOT NULL
+                                   AND LENGTH(CodeDO_Sup) = DECODE(LENGTH(CodeDO), 4, 2, 5, 4, 6, 5)
+                                   AND CodeDO LIKE CodeDO_Sup || '%') )
 );
 
 -- INSEE : niveau I = 1 caractère, niveau II = 2, niveau III = 4, et le code enfant commence par le code parent
+-- Formes allemandes (RG15) : même hiérarchie avec des codes préfixés par D (D -> D1 -> D101 GmbH)
 ALTER TABLE CATEGORIE_JURIDIQUE ADD (
   CONSTRAINT ck_cj_niveau   CHECK (NiveauCJ IN (1,2,3)),
   CONSTRAINT ck_cj_longueur CHECK (LENGTH(CodeCJ) = DECODE(NiveauCJ, 1, 1, 2, 2, 3, 4)),
@@ -36,6 +39,9 @@ ALTER TABLE CATEGORIE_JURIDIQUE ADD (
 );
 
 ALTER TABLE TYPE_SOCIETE ADD CONSTRAINT ck_ty_code CHECK (CodeTy IN ('MICRO','PME','ETI','GE'));
+
+-- RG16 : SIREN (9 chiffres) pour la France, USt-IdNr (DE + 9 chiffres) pour l'Allemagne
+ALTER TABLE SOCIETE ADD CONSTRAINT ck_soc_code CHECK (REGEXP_LIKE(CodeSOC, '^([0-9]{9}|DE[0-9]{9})$'));
 
 -- Annexe 2 : masque AA-99 ; les classes de trajet sont fixes
 ALTER TABLE CATEGORIE ADD (
@@ -70,17 +76,20 @@ ALTER TABLE EMPLOYE ADD CONSTRAINT ck_emp_code CHECK (CodeE > 0);
 
 ALTER TABLE ETRE_AFFECTE ADD CONSTRAINT ck_aff_dates CHECK (DateFinAffect IS NULL OR DateFinAffect > DateDebutAffect);
 
--- NumEtab : SIRET pour la France (14 chiffres), n° de TVA intracommunautaire pour l'Allemagne (DE + 9 chiffres).
+-- RG6 : NumEtab = SIRET pour la France (14 chiffres), Betriebsnummer pour l'Allemagne (8 chiffres).
+-- (La USt-IdNr identifie la société : c'est le CodeSOC, pas le numéro d'établissement.)
 -- Les codes postaux font 5 chiffres dans les deux pays.
 ALTER TABLE SALARIE_RH ADD (
-  CONSTRAINT ck_sal_numetab CHECK (REGEXP_LIKE(NumEtab, '^[0-9]{14}$') OR REGEXP_LIKE(NumEtab, '^DE[0-9]{9}$')),
+  CONSTRAINT ck_sal_numetab CHECK (REGEXP_LIKE(NumEtab, '^[0-9]{14}$') OR REGEXP_LIKE(NumEtab, '^[0-9]{8}$')),
   CONSTRAINT ck_sal_cp      CHECK (CPResidenceSAL IS NULL OR REGEXP_LIKE(CPResidenceSAL, '^[0-9]{5}$')),
   CONSTRAINT ck_sal_dates   CHECK (DateEntreeSAL IS NULL OR DateNaissSAL IS NULL OR DateEntreeSAL > DateNaissSAL)
 );
 
 ALTER TABLE EXERCER ADD (
   CONSTRAINT ck_exr_dates   CHECK (DateFinMetier IS NULL OR DateFinMetier > DateDebutMetier),
-  CONSTRAINT ck_exr_contrat CHECK (TypeContrat IN ('CDI','CDD','ALTERNANCE','STAGE','INTERIM'))
+  CONSTRAINT ck_exr_contrat CHECK (TypeContrat IN ('CDI','CDD','ALTERNANCE','STAGE','INTERIM')),
+  -- RG9 : le ROME est français, seuls les salariés d'un établissement français (SIRET) ont un métier
+  CONSTRAINT ck_exr_france  CHECK (REGEXP_LIKE(NumEtab, '^[0-9]{14}$'))
 );
 
 -- Annexe 1 : réductions > 0 et <= 1
@@ -99,7 +108,7 @@ ALTER TABLE TARIFER ADD (
                                    OR (CodePays = 'DE' AND ModePrix = 'HT') )
 );
 
-ALTER TABLE ACHETER ADD CONSTRAINT ck_ach_qte CHECK (Qte > 0);
+ALTER TABLE ACHAT ADD CONSTRAINT ck_ach_qte CHECK (Qte > 0);
 
 ALTER TABLE RESERVER ADD (
   CONSTRAINT ck_res_nb    CHECK (Nb_Ex_Prev > 0),
@@ -112,7 +121,7 @@ ALTER TABLE LOUER ADD CONSTRAINT ck_lou_duree CHECK (Duree_Loc > 0);
 -- Les règles qui comparent à la date du jour ne peuvent pas être des CHECK (SYSDATE interdit) : triggers.
 
 CREATE OR REPLACE TRIGGER trg_acheter_date
-BEFORE INSERT OR UPDATE OF DateA ON ACHETER
+BEFORE INSERT OR UPDATE OF DateA ON ACHAT
 FOR EACH ROW
 BEGIN
   IF :NEW.DateA > TRUNC(SYSDATE) THEN
@@ -126,7 +135,7 @@ BEFORE INSERT OR UPDATE OF DateA ON ACHETER_PARTENAIRE
 FOR EACH ROW
 BEGIN
   IF :NEW.DateA > TRUNC(SYSDATE) THEN
-    RAISE_APPLICATION_ERROR(-20001, 'DateA ne peut pas être dans le futur');
+    RAISE_APPLICATION_ERROR(-20005, 'DateA ne peut pas être dans le futur (achat partenaire)');
   END IF;
 END;
 /
@@ -163,6 +172,10 @@ BEGIN
 END;
 /
 
+-- Trigger de niveau instruction : il relit toute la table à chaque INSERT.
+-- Pour charger les communes (environ 46 000 lignes), le désactiver avant le chargement puis le réactiver :
+--   ALTER TRIGGER trg_zg_coherence DISABLE;  ... chargement ...  ALTER TRIGGER trg_zg_coherence ENABLE;
+-- et lancer une fois la requête de contrôle du trigger.
 CREATE OR REPLACE TRIGGER trg_zg_coherence
 AFTER INSERT OR UPDATE ON ZONE_GEO
 DECLARE
@@ -193,6 +206,6 @@ CREATE INDEX idx_aff_service    ON ETRE_AFFECTE(CodeSE);
 CREATE INDEX idx_pro_gamme      ON PRODUIT(CodeG);
 CREATE INDEX idx_ex_produit     ON EXEMPLAIRE(CodeP);
 CREATE INDEX idx_exr_appel      ON EXERCER(CodeAPP);
-CREATE INDEX idx_ach_produit    ON ACHETER(CodeP);
+CREATE INDEX idx_ach_produit    ON ACHAT(CodeP);
 CREATE INDEX idx_res_produit    ON RESERVER(CodeP);
 CREATE INDEX idx_lou_exemplaire ON LOUER(CodeEX);
