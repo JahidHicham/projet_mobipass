@@ -563,19 +563,19 @@ ORDER = ['PAYS','ZONE_GEO','DOMAINE','CATEGORIE_JURIDIQUE','TYPE_SOCIETE','CATEG
          'APPELLATION','FABRICANT','GENERATION','AGENCE','GAMME','PARTENAIRE','SOCIETE','SERVICE','EMPLOYE','ETRE_AFFECTE','PRODUIT',
          'EXEMPLAIRE','SALARIE_RH','EXERCER','REDUCTION','TARIFER','ACHAT','RESERVER','LOUER','ACHETER_PARTENAIRE']
 out = ["-- MobiPass - Entrepôt de données : insertion des données (Oracle 11g)",
-       "-- Tables suffixées _DW (entrepôt). Généré par gen_donnees.py (graine fixe) le " + TODAY.isoformat() + ". À lancer APRÈS 01_creation_ED.sql et 02_contraintes_ED.sql.",
+       "-- Tables de l'entrepôt (noms de la V1 conservés). Généré par gen_donnees.py (graine fixe) le " + TODAY.isoformat() + ". À lancer APRÈS 01_creation_ED.sql et 02_contraintes_ED.sql.",
        "-- Historique du " + START.isoformat() + " au " + LAST.isoformat() + " ; activité allemande et partenariat Alltricks à partir de janvier 2026.",
        "-- Codes d'appellation ROME illustratifs (6 chiffres) ; codes INSEE, NAF, ROME (fiches), AGS réels.",
        "SET DEFINE OFF", ""]
 for t in ORDER:
-    out.append(f"-- {t}_DW : {len(R[t])} lignes")
+    out.append(f"-- {t} : {len(R[t])} lignes")
     cols = list(R[t][0].keys())
     for i, r in enumerate(R[t], 1):
-        out.append(f"INSERT INTO {t}_DW({', '.join(cols)}) VALUES ({', '.join(lit(r[c]) for c in cols)});")
+        out.append(f"INSERT INTO {t}({', '.join(cols)}) VALUES ({', '.join(lit(r[c]) for c in cols)});")
         if i % 500 == 0: out.append("COMMIT;")
     out.append("COMMIT;"); out.append("")
 out.append("-- Vérification : nombre de lignes par table")
-out.append("\nUNION ALL\n".join(f"SELECT '{t}_DW' AS table_name, COUNT(*) AS nb FROM {t}_DW" for t in ORDER) + ";")
+out.append("\nUNION ALL\n".join(f"SELECT '{t}' AS table_name, COUNT(*) AS nb FROM {t}" for t in ORDER) + ";")
 CIBLE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "03_insertion_ED.sql")   # à côté de ce script
 open(CIBLE, "w", encoding="utf-8").write("\n".join(out) + "\n")
 print("écrit :", CIBLE)
