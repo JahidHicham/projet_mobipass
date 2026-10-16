@@ -476,14 +476,14 @@
         },
         {
           "id": "p-mv8h370w-64",
-          "name": "CodeGeminede",
+          "name": "CodeGemeinde",
           "weakAttributes": [
             {
               "id": "wa-mv8h44pt-65",
-              "name": "NomGemiende",
+              "name": "NomGemeinde",
               "position": {
-                "x": 91.42852783203125,
-                "y": 344.2857360839844
+                "x": 104.5712890625,
+                "y": 342.00006103515625
               }
             }
           ],
@@ -518,22 +518,22 @@
               "id": "wa-mv8h714u-70",
               "name": "NomPays",
               "position": {
-                "x": -137.71438598632812,
-                "y": 556.8572387695312
+                "x": -138.85720825195312,
+                "y": 551.1429748535156
               }
             },
             {
               "id": "wa-mv8h7540-71",
               "name": "TauxTVA",
               "position": {
-                "x": -142.8572998046875,
-                "y": 576.4572692871094
+                "x": -141.14297485351562,
+                "y": 569.0288024902344
               }
             }
           ],
           "position": {
-            "x": -24.857208251953125,
-            "y": 556.571533203125
+            "x": -23.142913818359375,
+            "y": 553.7144165039062
           }
         },
         {
@@ -544,8 +544,16 @@
               "id": "wa-mv8h88qd-73",
               "name": "NomKreis",
               "position": {
-                "x": 104,
-                "y": 416.8571472167969
+                "x": 107.4285888671875,
+                "y": 412.2856750488281
+              }
+            },
+            {
+              "id": "wa-mvb5fwfq-3",
+              "name": "TypeKreis",
+              "position": {
+                "x": 112.571533203125,
+                "y": 425.5999694824219
               }
             }
           ],
@@ -583,8 +591,8 @@
             }
           ],
           "position": {
-            "x": 153.428466796875,
-            "y": 518.8572082519531
+            "x": 164.28570556640625,
+            "y": 509.71441650390625
           }
         }
       ],
@@ -627,7 +635,9 @@
             "p-mv8h6jeq-69"
           ],
           "linkTypes": {
-            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete"
+            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete",
+            "p-mv8h370w-64->p-mv8h7u8h-72": "strict",
+            "p-mv8h7u8h-72->p-mv8h5nkd-67": "strict"
           },
           "chipPosition": {
             "x": 20.168930053710938,
@@ -660,7 +670,9 @@
             "p-mv8h5nkd-67"
           ],
           "linkTypes": {
-            "p-mv8h7u8h-72->p-mv8ivqu5-83": "strict_incomplete"
+            "p-mv8h7u8h-72->p-mv8ivqu5-83": "strict_incomplete",
+            "p-mv8h370w-64->p-mv8h7u8h-72": "strict",
+            "p-mv8ivqu5-83->p-mv8h5nkd-67": "strict"
           }
         }
       ],
