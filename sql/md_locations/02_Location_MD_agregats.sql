@@ -16,7 +16,7 @@
 --  a) montant paye par mois et par societe   -> AGG_MOIS_SOCIETE_MD1
 --  b) montant paye et duree par semaine et par employe -> AGG_SEM_EMPLOYE_MD1
 --  c) duree par mois et par region (France) / Land (Allemagne) -> AGG_MOIS_REGION_MD1
---  Montants en HT (cf. dictionnaire de donnees).
+--  Montants en TTC (cf. dictionnaire de mesures).
 -- =====================================================================
 
 -- Agg1 : (Semaine, Mois, Employe) - porte societe, type, region et pays pour alimenter Agg2 et Agg3

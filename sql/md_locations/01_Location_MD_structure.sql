@@ -224,9 +224,10 @@ ATTRIBUTE CodeCategorie   DETERMINES EMPLOYE_MD1.NomCategorie;
 -- =====================================================================
 -- 4) FAIT LOCATION_MD1  (grain : une location = CodeEmploye x CodeExemplaire x DateJ)
 --    Duree_Location_MD            = SUM(Louer.Duree_Loc)
---    Montant_Location_MD          = SUM(Duree_Loc * Prix_loc_jour), ramene en HT :
---                                   / (1 + TauxTVA) si Tarifer.ModePrix = 'TTC'
---    Montant_Location_ReelPaye_MD = SUM(Montant HT * (1 - PctReduc_Loc))
+--    Montant_Location_MD          = SUM(Duree_Loc * Prix_loc_jour), ramene en TTC :
+--                                   * (1 + TauxTVA) si Tarifer.ModePrix = 'HT' (tarifs allemands)
+--                                   (les tarifs francais sont deja en TTC)
+--    Montant_Location_ReelPaye_MD = SUM(Montant TTC * (1 - PctReduc_Loc))
 --                                   (0 si aucune reduction trouvee)
 --  Les SUM suivent le dictionnaire de mesures ; comme LOUER a pour cle
 --  (CodeE, CodeEX, DateL), chaque groupe ne contient qu'une location.
@@ -242,12 +243,12 @@ AS SELECT l.CodeE   AS CodeEmploye,
           l.CodeEX  AS CodeExemplaire,
           l.DateL   AS DateJ,
           SUM(l.Duree_Loc) AS Duree_Location_MD,
-          ROUND(SUM(CASE WHEN t.ModePrix = 'TTC'
-                         THEN l.Duree_Loc * t.Prix_loc_jour / (1 + pa.TauxTVA)
+          ROUND(SUM(CASE WHEN t.ModePrix = 'HT'
+                         THEN l.Duree_Loc * t.Prix_loc_jour * (1 + pa.TauxTVA)
                          ELSE l.Duree_Loc * t.Prix_loc_jour
                     END), 2) AS Montant_Location_MD,
-          ROUND(SUM(CASE WHEN t.ModePrix = 'TTC'
-                         THEN l.Duree_Loc * t.Prix_loc_jour / (1 + pa.TauxTVA)
+          ROUND(SUM(CASE WHEN t.ModePrix = 'HT'
+                         THEN l.Duree_Loc * t.Prix_loc_jour * (1 + pa.TauxTVA)
                          ELSE l.Duree_Loc * t.Prix_loc_jour
                     END * (1 - NVL(r.PctReduc_Loc, 0))), 2) AS Montant_Location_ReelPaye_MD
    FROM   LOUER l
