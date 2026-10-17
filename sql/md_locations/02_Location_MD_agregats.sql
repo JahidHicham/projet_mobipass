@@ -11,7 +11,7 @@
 --                     AGG_SEM_EMPLOYE_MD1  (Num_Semaine, Num_Mois, CodeEmploye)   Agg1
 --                      /                  \
 --     AGG_MOIS_SOCIETE_MD1          AGG_MOIS_REGION_MD1
---     (Num_Mois, CodeSociete)       (Num_Mois, CodeRegion)                         Agg2, Agg3
+--     (Num_Mois, CodeSociete)       (Num_Mois, CodeRegion, CodeLand)                        Agg2, Agg3
 --
 --  a) montant paye par mois et par societe   -> AGG_MOIS_SOCIETE_MD1
 --  b) montant paye et duree par semaine et par employe -> AGG_SEM_EMPLOYE_MD1
@@ -33,7 +33,7 @@ AS SELECT
           e.CodeEmploye, e.NomEmploye, e.PrenomEmploye,
 
           -- Analyse C
-          e.CodeRegion, e.NomRegion, e.CodePays, e.NomPays,
+          e.CodeRegion, e.NomRegion, e.CodeLand, e.NomLand, e.CodePays, e.NomPays,
 
           SUM(l.Montant_Location_ReelPaye_MD) AS MontantPaye_Semaine,
           SUM(l.Duree_Location_MD)            AS Duree_Semaine
@@ -43,7 +43,7 @@ AS SELECT
    GROUP BY t.Num_Mois,
           e.CodeSociete, e.NomSociete, e.CodeTy, e.LibelleTypeSoc,
           t.Num_Semaine, e.CodeEmploye, e.NomEmploye, e.PrenomEmploye, 
-          e.CodeRegion, e.NomRegion, e.CodePays, e.NomPays;
+          e.CodeRegion, e.NomRegion, e.CodeLand, e.NomLand, e.CodePays, e.NomPays;
 
 -- Agg2 : (Mois, Societe) calcule depuis Agg1
 CREATE MATERIALIZED VIEW AGG_MOIS_SOCIETE_MD1
@@ -60,20 +60,20 @@ AS SELECT Num_Mois,
 CREATE MATERIALIZED VIEW AGG_MOIS_REGION_MD1
 BUILD IMMEDIATE 
 REFRESH COMPLETE ON DEMAND
-AS SELECT Num_Mois, CodeRegion, NomRegion, CodePays, NomPays,
+AS SELECT Num_Mois, CodeRegion, NomRegion, CodeLand, NomLand, CodePays, NomPays,
           SUM(Duree_Semaine) AS Duree_Mois_Region
    FROM   AGG_SEM_EMPLOYE_MD1
-   GROUP BY Num_Mois, CodeRegion, NomRegion, CodePays, NomPays;
+   GROUP BY Num_Mois, CodeRegion, NomRegion, CodeLand, NomLand, CodePays, NomPays;
 
 
 
--- Requetes d'analyse (lecture directe des agregats, comme dans le cours)
+-- Requetes d'analyse :
 
 -- a) SELECT Num_Mois, CodeSociete, NomSociete, CodeTy, LibelleTypeSoc, MontantPaye_Mois FROM   AGG_MOIS_SOCIETE_MD1
 
 -- b) SELECT Num_Semaine, CodeEmploye, NomEmploye, PrenomEmploye, MontantPaye_Semaine, Duree_Semaine FROM AGG_SEM_EMPLOYE_MD1
 
--- c) SELECT Num_Mois, CodeRegion, NomRegion, CodePays, NomPays, Duree_Mois_Region FROM   AGG_MOIS_REGION_MD1;
+-- c) SELECT Num_Mois, CodeRegion, NomRegion, CodeLand, NomLand, CodePays, NomPays, Duree_Mois_Region FROM   AGG_MOIS_REGION_MD1;
 
 
 -- =====================================================================

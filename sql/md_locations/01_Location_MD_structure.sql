@@ -13,8 +13,9 @@
 --
 -- Ecarts volontaires entre schema en etoile et Oracle :
 --   * niveau "Date" -> colonne DateJ (DATE est un mot reserve Oracle)
---   * CodeGeminede / NomGemiende : noms du schema (fautes de frappe a corriger
---     dans le schema, puis a renommer ici)
+--   * TypeKreis / TypeLand : TypeKreis vient du NiveauZG du Kreis (LANDKREIS / KREISFREIE STADT, colonne TypeKreise du
+--     fichier source) ; TypeLand est calcule ici ('Stadtstaat' pour Berlin, Hamburg,
+--     Bremen ; 'Flächenland' pour les autres Laender).
 -- =====================================================================
 
 
@@ -122,14 +123,15 @@ ATTRIBUTE CodeGamme      DETERMINES EXEMPLAIRE_MD1.NomGamme;
 -- 3) DIMENSION EMPLOYE_MD1  (service / societe ACTUELS de l'employe)
 --    H_France      : CodeEmploye -> CodeService -> CodeSociete -> CodeVille
 --                    -> CodeDepartement -> CodeRegion -> CodePays
---    H_Allemagne   : CodeEmploye -> CodeService -> CodeSociete -> CodeGeminede
---                    -> CodeKreis -> CodeRegion -> CodePays
---    H_District    : ... -> CodeGeminede -> CodeKreis -> CodeDistrict -> CodeRegion -> CodePays
+--    H_Allemagne   : CodeEmploye -> CodeService -> CodeSociete -> CodeGemeinde
+--                    -> CodeKreis -> CodeLand -> CodePays
+--    H_District    : ... -> CodeGemeinde -> CodeKreis -> CodeDistrict -> CodeLand -> CodePays
 --    H_Type_Societe: CodeEmploye -> CodeService -> CodeSociete -> CodeTy
 --    H_Categorie   : CodeEmploye -> CodeCategorie -> SuperCategorie
---  Hierarchies incompletes : societe francaise -> CodeGeminede/CodeKreis/CodeDistrict NULL ;
---  societe allemande -> CodeVille/CodeDepartement NULL ; Kreis sans District -> NULL.
---  CodeRegion = REGION (France) ou LAND (Allemagne).
+--  Hierarchies incompletes : societe francaise -> CodeGemeinde/CodeKreis/CodeDistrict/CodeLand NULL ;
+--  societe allemande -> CodeVille/CodeDepartement/CodeRegion NULL ; Kreis sans District -> NULL.
+--  CodeRegion = region francaise (NiveauZG 'REGION') ; CodeLand = Land allemand (NiveauZG 'LAND').
+--  Les villes-Etats (Berlin, Hamburg, Bremen) sont des Laender : Gemeinde -> Kreis -> Land, sans district.
 --  Geographie : jointures de ZONE_GEO sur elle-meme (z0 = zone de la societe,
 --  z1 = parent de z0, z2 = parent de z1, z3 = parent de z2) ; le niveau (NiveauZG) decide
 --  de la colonne a renseigner ; une chaine absente donne NULL.
@@ -153,16 +155,22 @@ AS SELECT e.CodeE                                 AS CodeEmploye,
           CASE WHEN z0.NiveauZG = 'COMMUNE'     THEN z0.NomZG  END AS NomVille,
           CASE WHEN z1.NiveauZG = 'DEPARTEMENT' THEN z1.CodeZG END AS CodeDepartement,
           CASE WHEN z1.NiveauZG = 'DEPARTEMENT' THEN z1.NomZG  END AS NomDepartement,
-          CASE WHEN z0.NiveauZG = 'GEMEINDE'    THEN z0.CodeZG END AS CodeGeminede,
-          CASE WHEN z0.NiveauZG = 'GEMEINDE'    THEN z0.NomZG  END AS NomGemiende,
-          CASE WHEN z1.NiveauZG = 'KREIS'       THEN z1.CodeZG END AS CodeKreis,
-          CASE WHEN z1.NiveauZG = 'KREIS'       THEN z1.NomZG  END AS NomKreis,
+          CASE WHEN z0.NiveauZG = 'GEMEINDE'    THEN z0.CodeZG END AS CodeGemeinde,
+          CASE WHEN z0.NiveauZG = 'GEMEINDE'    THEN z0.NomZG  END AS NomGemeinde,
+          CASE WHEN z1.NiveauZG IN ('LANDKREIS','KREISFREIE STADT') THEN z1.CodeZG END AS CodeKreis,
+          CASE WHEN z1.NiveauZG IN ('LANDKREIS','KREISFREIE STADT') THEN z1.NomZG  END AS NomKreis,
+          CASE z1.NiveauZG WHEN 'LANDKREIS' THEN 'Landkreis'
+                           WHEN 'KREISFREIE STADT' THEN 'Kreisfreie Stadt' END AS TypeKreis,
           CASE WHEN z2.NiveauZG = 'DISTRICT'    THEN z2.CodeZG END AS CodeDistrict,
           CASE WHEN z2.NiveauZG = 'DISTRICT'    THEN z2.NomZG  END AS NomDistrict,
-          CASE WHEN z2.NiveauZG IN ('REGION','LAND') THEN z2.CodeZG
-               WHEN z3.NiveauZG = 'LAND'               THEN z3.CodeZG END AS CodeRegion,
-          CASE WHEN z2.NiveauZG IN ('REGION','LAND') THEN z2.NomZG
-               WHEN z3.NiveauZG = 'LAND'               THEN z3.NomZG END AS NomRegion,
+          CASE WHEN z2.NiveauZG = 'REGION'      THEN z2.CodeZG END AS CodeRegion,
+          CASE WHEN z2.NiveauZG = 'REGION'      THEN z2.NomZG  END AS NomRegion,
+          CASE WHEN z2.NiveauZG = 'LAND' THEN z2.CodeZG
+               WHEN z3.NiveauZG = 'LAND' THEN z3.CodeZG END AS CodeLand,
+          CASE WHEN z2.NiveauZG = 'LAND' THEN z2.NomZG
+               WHEN z3.NiveauZG = 'LAND' THEN z3.NomZG END AS NomLand,
+          CASE WHEN z2.NiveauZG = 'LAND' AND z2.CodeZG IN ('DE02','DE04','DE11') THEN 'Stadtstaat'
+               WHEN z2.NiveauZG = 'LAND' OR z3.NiveauZG = 'LAND'                 THEN 'Flächenland' END AS TypeLand,
           pa.CodePays                             AS CodePays,
           pa.NomPays                              AS NomPays,
           pa.TauxTVA                              AS TauxTVA
@@ -185,10 +193,11 @@ CREATE DIMENSION EMPLOYE_DIM1
    LEVEL CodeSociete    IS (EMPLOYE_MD1.CodeSociete)
    LEVEL CodeVille      IS (EMPLOYE_MD1.CodeVille)
    LEVEL CodeDepartement IS (EMPLOYE_MD1.CodeDepartement)
-   LEVEL CodeGeminede   IS (EMPLOYE_MD1.CodeGeminede)
+   LEVEL CodeGemeinde   IS (EMPLOYE_MD1.CodeGemeinde)
    LEVEL CodeKreis      IS (EMPLOYE_MD1.CodeKreis)
    LEVEL CodeDistrict   IS (EMPLOYE_MD1.CodeDistrict)
    LEVEL CodeRegion     IS (EMPLOYE_MD1.CodeRegion)
+   LEVEL CodeLand       IS (EMPLOYE_MD1.CodeLand)
    LEVEL CodePays       IS (EMPLOYE_MD1.CodePays)
    LEVEL CodeTy         IS (EMPLOYE_MD1.CodeTy)
    LEVEL CodeCategorie  IS (EMPLOYE_MD1.CodeCategorie)
@@ -197,11 +206,11 @@ HIERARCHY H_France (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
                     CHILD OF CodeVille CHILD OF CodeDepartement CHILD OF CodeRegion
                     CHILD OF CodePays)
 HIERARCHY H_Allemagne (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
-                       CHILD OF CodeGeminede CHILD OF CodeKreis CHILD OF CodeRegion
+                       CHILD OF CodeGemeinde CHILD OF CodeKreis CHILD OF CodeLand
                        CHILD OF CodePays)
 HIERARCHY H_District (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
-                      CHILD OF CodeGeminede CHILD OF CodeKreis CHILD OF CodeDistrict
-                      CHILD OF CodeRegion CHILD OF CodePays)
+                      CHILD OF CodeGemeinde CHILD OF CodeKreis CHILD OF CodeDistrict
+                      CHILD OF CodeLand CHILD OF CodePays)
 HIERARCHY H_Type_Societe (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
                           CHILD OF CodeTy)
 HIERARCHY H_Categorie (CodeEmploye CHILD OF CodeCategorie CHILD OF SuperCategorie)
@@ -211,10 +220,13 @@ ATTRIBUTE CodeService     DETERMINES EMPLOYE_MD1.NomService
 ATTRIBUTE CodeSociete     DETERMINES EMPLOYE_MD1.NomSociete
 ATTRIBUTE CodeVille       DETERMINES EMPLOYE_MD1.NomVille
 ATTRIBUTE CodeDepartement DETERMINES EMPLOYE_MD1.NomDepartement
-ATTRIBUTE CodeGeminede    DETERMINES EMPLOYE_MD1.NomGemiende
+ATTRIBUTE CodeGemeinde    DETERMINES EMPLOYE_MD1.NomGemeinde
 ATTRIBUTE CodeKreis       DETERMINES EMPLOYE_MD1.NomKreis
+ATTRIBUTE CodeKreis       DETERMINES EMPLOYE_MD1.TypeKreis
 ATTRIBUTE CodeDistrict    DETERMINES EMPLOYE_MD1.NomDistrict
 ATTRIBUTE CodeRegion      DETERMINES EMPLOYE_MD1.NomRegion
+ATTRIBUTE CodeLand        DETERMINES EMPLOYE_MD1.NomLand
+ATTRIBUTE CodeLand        DETERMINES EMPLOYE_MD1.TypeLand
 ATTRIBUTE CodePays DETERMINES EMPLOYE_MD1.NomPays
 ATTRIBUTE CodePays DETERMINES EMPLOYE_MD1.TauxTVA
 ATTRIBUTE CodeTy          DETERMINES EMPLOYE_MD1.LibelleTypeSoc
@@ -327,6 +339,10 @@ END;
 
 -- Jours dont l'annee civile et l'annee ISO different (quelques jours autour du 1er janvier) :
 -- SELECT DateJ, Annee, Num_Semaine, Annee_ISO FROM TEMPS_MD1 WHERE Annee <> Annee_ISO ORDER BY DateJ;
+
+-- Chaque employe doit avoir exactement UN des deux : region (France) ou Land (Allemagne) :
+-- SELECT COUNT(*) FROM EMPLOYE_MD1
+--  WHERE (CodeRegion IS NULL AND CodeLand IS NULL) OR (CodeRegion IS NOT NULL AND CodeLand IS NOT NULL);   -- doit renvoyer 0
 
 -- Validation des hierarchies declarees (creer d'abord DIMENSION_EXCEPTIONS avec utldim.sql) :
 -- EXEC DBMS_DIMENSION.VALIDATE_DIMENSION('TEMPS_DIM1',      FALSE, TRUE, 'verif_temps');
