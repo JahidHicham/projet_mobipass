@@ -447,8 +447,8 @@
             }
           ],
           "position": {
-            "x": -120.85711669921875,
-            "y": 440.00006103515625
+            "x": -122.57135009765625,
+            "y": 439.4285583496094
           }
         },
         {
@@ -506,8 +506,8 @@
             }
           ],
           "position": {
-            "x": -23.142852783203125,
-            "y": 495.4285583496094
+            "x": -121.4285888671875,
+            "y": 527.4285888671875
           }
         },
         {
@@ -518,22 +518,22 @@
               "id": "wa-mv8h714u-70",
               "name": "NomPays",
               "position": {
-                "x": -138.85720825195312,
-                "y": 551.1429748535156
+                "x": -146.2857666015625,
+                "y": 580.8572692871094
               }
             },
             {
               "id": "wa-mv8h7540-71",
               "name": "TauxTVA",
               "position": {
-                "x": -141.14297485351562,
-                "y": 569.0288024902344
+                "x": -148.57150268554688,
+                "y": 601.6002136230469
               }
             }
           ],
           "position": {
-            "x": -23.142913818359375,
-            "y": 553.7144165039062
+            "x": -22.00006103515625,
+            "y": 592.0001220703125
           }
         },
         {
@@ -544,22 +544,22 @@
               "id": "wa-mv8h88qd-73",
               "name": "NomKreis",
               "position": {
-                "x": 107.4285888671875,
-                "y": 412.2856750488281
+                "x": 135.4287109375,
+                "y": 396.2857666015625
               }
             },
             {
               "id": "wa-mvb5fwfq-3",
               "name": "TypeKreis",
               "position": {
-                "x": 112.571533203125,
-                "y": 425.5999694824219
+                "x": 142.2860107421875,
+                "y": 418.1713806152344
               }
             }
           ],
           "position": {
             "x": 82,
-            "y": 433.1428527832031
+            "y": 426.28570556640625
           }
         },
         {
@@ -582,17 +582,47 @@
           "dataType": "undefined"
         },
         {
-          "id": "p-mv8ivqu5-83",
-          "name": "CodeDistrict",
+          "id": "p-mvbaedyn-8",
+          "name": "CodeLand",
           "weakAttributes": [
             {
-              "id": "wa-mv8iwsip-84",
-              "name": "NomDistrict"
+              "id": "wa-mvban8qi-12",
+              "name": "NomLand",
+              "position": {
+                "x": 113.42864990234375,
+                "y": 561.9998779296875
+              }
+            },
+            {
+              "id": "wa-mvcceasd-2",
+              "name": "TypeLand",
+              "position": {
+                "x": 120.85711669921875,
+                "y": 581.0285888671875
+              }
             }
           ],
           "position": {
-            "x": 164.28570556640625,
-            "y": 509.71441650390625
+            "x": 82.28570556640625,
+            "y": 534.2856750488281
+          }
+        },
+        {
+          "id": "p-mvbaniwr-14",
+          "name": "CodeDistrict",
+          "weakAttributes": [
+            {
+              "id": "wa-mvbaoaxr-15",
+              "name": "NomDistrict",
+              "position": {
+                "x": 276.8570556640625,
+                "y": 458.57147216796875
+              }
+            }
+          ],
+          "position": {
+            "x": 254.8570556640625,
+            "y": 470.8571472167969
           }
         }
       ],
@@ -623,28 +653,6 @@
           ]
         },
         {
-          "id": "h-mv8h9h2n-76",
-          "name": "H_Allemagne",
-          "path": [
-            "p-mv8dfk56-4",
-            "p-mv8ebb3s-42",
-            "p-mv8ef427-44",
-            "p-mv8h370w-64",
-            "p-mv8h7u8h-72",
-            "p-mv8h5nkd-67",
-            "p-mv8h6jeq-69"
-          ],
-          "linkTypes": {
-            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete",
-            "p-mv8h370w-64->p-mv8h7u8h-72": "strict",
-            "p-mv8h7u8h-72->p-mv8h5nkd-67": "strict"
-          },
-          "chipPosition": {
-            "x": 20.168930053710938,
-            "y": 446.15234375
-          }
-        },
-        {
           "id": "h-mv8he8k0-79",
           "name": "H_Type_Societe",
           "path": [
@@ -658,7 +666,24 @@
           }
         },
         {
-          "id": "h-mv8ivqu5-82",
+          "id": "h-mvbaedyn-7",
+          "name": "H_Allemagne",
+          "path": [
+            "p-mv8dfk56-4",
+            "p-mv8ebb3s-42",
+            "p-mv8ef427-44",
+            "p-mv8h370w-64",
+            "p-mv8h7u8h-72",
+            "p-mvbaedyn-8",
+            "p-mv8h6jeq-69"
+          ],
+          "linkTypes": {
+            "p-mv8h370w-64->p-mv8h7u8h-72": "strict",
+            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-mvbaniwr-13",
           "name": "H_District",
           "path": [
             "p-mv8dfk56-4",
@@ -666,13 +691,13 @@
             "p-mv8ef427-44",
             "p-mv8h370w-64",
             "p-mv8h7u8h-72",
-            "p-mv8ivqu5-83",
-            "p-mv8h5nkd-67"
+            "p-mvbaniwr-14",
+            "p-mvbaedyn-8"
           ],
           "linkTypes": {
-            "p-mv8h7u8h-72->p-mv8ivqu5-83": "strict_incomplete",
             "p-mv8h370w-64->p-mv8h7u8h-72": "strict",
-            "p-mv8ivqu5-83->p-mv8h5nkd-67": "strict"
+            "p-mv8h7u8h-72->p-mvbaniwr-14": "strict_incomplete",
+            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete"
           }
         }
       ],
