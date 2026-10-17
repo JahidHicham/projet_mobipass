@@ -50,15 +50,17 @@ RB = {'081':'Stuttgart','082':'Karlsruhe','083':'Freiburg','084':'Tübingen','09
       '093':'Oberpfalz','094':'Oberfranken','095':'Mittelfranken','096':'Unterfranken','097':'Schwaben',
       '064':'Darmstadt','065':'Gießen','066':'Kassel','051':'Düsseldorf','053':'Köln','055':'Münster',
       '057':'Detmold','059':'Arnsberg'}
-# Kreis (AGS 5 chiffres) : nom, district (None si le Land n'a pas de district)
-KREIS = {'11000':('Berlin',None),'02000':('Hamburg',None),'09162':('München, Landeshauptstadt','091'),
-         '09184':('München, Landkreis','091'),'05315':('Köln, Stadt','053'),'06412':('Frankfurt am Main, Stadt','064'),
-         '08111':('Stuttgart, Landeshauptstadt','081'),'05111':('Düsseldorf, Stadt','051'),'09564':('Nürnberg','095')}
+# Kreis (AGS 5 chiffres) : nom, district (None si le Land n'a pas de district), type (colonne TypeKreise du fichier source)
+KREIS = {'11000':('Berlin',None,'Kreisfreie Stadt'),'02000':('Hamburg',None,'Kreisfreie Stadt'),
+         '09162':('München, Landeshauptstadt','091','Kreisfreie Stadt'),'09184':('München, Landkreis','091','Landkreis'),
+         '05315':('Köln, Stadt','053','Kreisfreie Stadt'),'06412':('Frankfurt am Main, Stadt','064','Kreisfreie Stadt'),
+         '08111':('Stuttgart, Landeshauptstadt','081','Kreisfreie Stadt'),'05111':('Düsseldorf, Stadt','051','Kreisfreie Stadt'),
+         '09564':('Nürnberg','095','Kreisfreie Stadt')}
 GEM = {'11000000':'Berlin','02000000':'Hamburg','09162000':'München','09184119':'Garching b.München',
        '05315000':'Köln','06412000':'Frankfurt am Main','08111000':'Stuttgart','05111000':'Düsseldorf','09564000':'Nürnberg'}
 for c,n in LAND.items(): ins('ZONE_GEO', CodeZG='DE'+c, NomZG=n, NiveauZG='LAND', CodeZG_zone_englobante=None, CodePays='DE')
 for c,n in RB.items(): ins('ZONE_GEO', CodeZG='DE'+c, NomZG=n, NiveauZG='DISTRICT', CodeZG_zone_englobante='DE'+c[:2], CodePays='DE')
-for c,(n,rb) in KREIS.items(): ins('ZONE_GEO', CodeZG='DE'+c, NomZG=n, NiveauZG='KREIS', CodeZG_zone_englobante='DE'+(rb or c[:2]), CodePays='DE')
+for c,(n,rb,ty) in KREIS.items(): ins('ZONE_GEO', CodeZG='DE'+c, NomZG=n, NiveauZG=ty.upper(), CodeZG_zone_englobante='DE'+(rb or c[:2]), CodePays='DE')
 for c,n in GEM.items(): ins('ZONE_GEO', CodeZG='DE'+c, NomZG=n, NiveauZG='GEMEINDE', CodeZG_zone_englobante='DE'+c[:5], CodePays='DE')
 
 # ------------------------------------------------------------------ DOMAINE (NAF rév. 2)
@@ -499,7 +501,7 @@ chk(len({r['CodeE'] for r in R['SALARIE_RH']}) == len(R['SALARIE_RH']), "UNIQUE 
 chk(len({r['NumSerieEX'] for r in R['EXEMPLAIRE']}) == len(R['EXEMPLAIRE']), "UNIQUE NumSerieEX")
 # CHECK
 zg = {r['CodeZG']: r for r in R['ZONE_GEO']}
-OK_PAR = {('COMMUNE','DEPARTEMENT'),('DEPARTEMENT','REGION'),('GEMEINDE','KREIS'),('BEZIRK','LAND'),('KREIS','DISTRICT'),('KREIS','LAND'),('DISTRICT','LAND')}
+OK_PAR = {('COMMUNE','DEPARTEMENT'),('DEPARTEMENT','REGION'),('GEMEINDE','LANDKREIS'),('GEMEINDE','KREISFREIE STADT'),('LANDKREIS','DISTRICT'),('LANDKREIS','LAND'),('KREISFREIE STADT','DISTRICT'),('KREISFREIE STADT','LAND'),('DISTRICT','LAND')}
 for r in R['ZONE_GEO']:
     chk(len(r['CodeZG']) <= 10, f"CodeZG trop long {r['CodeZG']}")
     chk((r['NiveauZG'] in ('REGION','LAND')) == (r['CodeZG_zone_englobante'] is None), f"ck_zg_sommet {r['CodeZG']}")
