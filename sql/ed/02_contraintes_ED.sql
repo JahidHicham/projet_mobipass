@@ -10,12 +10,14 @@ ALTER TABLE PAYS ADD (
 );
 
 -- Figure 2 : Land > District (4 Länder seulement) > Kreis (Landkreis ou kreisfreie Stadt) > Gemeinde ;
--- les villes-États (Berlin, Hambourg, Brême) sont découpées directement en Bezirke.
+-- les villes-États (Berlin, Hambourg, Brême) sont des Länder comme les autres : Land > Kreis (kreisfreie Stadt) > Gemeinde,
+-- sans district. Les Bezirke (subdivisions internes des villes) ne figurent pas dans le Gemeindeverzeichnis : non modélisés.
 -- Codes allemands : 'DE' + préfixe du code AGS Destatis (Land 2 chiffres, district 3, Kreis 5, Gemeinde 8),
--- ex. DE09, DE091, DE09162, DE09162000 (München). Les Bezirke n'ont pas de code AGS officiel.
+-- ex. DE09, DE091, DE09162, DE09162000 (München).
+-- Le niveau Kreis porte directement son type (colonne TypeKreise du fichier source) : LANDKREIS ou KREISFREIE STADT.
 ALTER TABLE ZONE_GEO ADD (
   CONSTRAINT ck_zg_niveau CHECK ( (CodePays = 'FR' AND NiveauZG IN ('COMMUNE','DEPARTEMENT','REGION'))
-                               OR (CodePays = 'DE' AND NiveauZG IN ('GEMEINDE','BEZIRK','KREIS','DISTRICT','LAND')) ),
+                               OR (CodePays = 'DE' AND NiveauZG IN ('GEMEINDE','LANDKREIS','KREISFREIE STADT','DISTRICT','LAND')) ),
   CONSTRAINT ck_zg_sommet CHECK ( (NiveauZG IN ('REGION','LAND') AND CodeZG_zone_englobante IS NULL)
                                OR (NiveauZG NOT IN ('REGION','LAND') AND CodeZG_zone_englobante IS NOT NULL) )
 );
@@ -190,9 +192,8 @@ BEGIN
    WHERE p.CodePays <> f.CodePays
       OR NOT ( (f.NiveauZG = 'COMMUNE'     AND p.NiveauZG = 'DEPARTEMENT')
             OR (f.NiveauZG = 'DEPARTEMENT' AND p.NiveauZG = 'REGION')
-            OR (f.NiveauZG = 'GEMEINDE'    AND p.NiveauZG = 'KREIS')
-            OR (f.NiveauZG = 'BEZIRK'      AND p.NiveauZG = 'LAND')
-            OR (f.NiveauZG = 'KREIS'       AND p.NiveauZG IN ('DISTRICT','LAND'))
+            OR (f.NiveauZG = 'GEMEINDE'    AND p.NiveauZG IN ('LANDKREIS','KREISFREIE STADT'))
+            OR (f.NiveauZG IN ('LANDKREIS','KREISFREIE STADT') AND p.NiveauZG IN ('DISTRICT','LAND'))
             OR (f.NiveauZG = 'DISTRICT'    AND p.NiveauZG = 'LAND') );
   IF v_nb > 0 THEN
     RAISE_APPLICATION_ERROR(-20006, 'Zone rattachée à un parent de mauvais niveau ou d''un autre pays');
