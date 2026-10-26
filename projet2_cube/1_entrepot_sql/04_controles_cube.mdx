@@ -1,0 +1,25 @@
+-- MobiPass - Projet 2 : contrôle des totaux du cube Locations (étape 5 du sujet)
+-- Mêmes totaux que la partie 3 de 04_controles_entrepot.sql, calculés sur le cube :
+-- les valeurs doivent être identiques (au centime près) après le traitement du cube.
+-- Dans SSMS : connexion Analysis Services, base MobiPass_NABHIS, nouvelle requête MDX ;
+-- sélectionner une requête puis F5 (une requête à la fois).
+
+-- Q 3a. Totaux globaux
+SELECT {[Measures].[Nombre de locations], [Measures].[Durée], [Measures].[Montant public], [Measures].[Montant payé],
+        [Measures].[Nombre de réservations], [Measures].[Réservations non honorées]} ON COLUMNS
+FROM [Locations];
+
+-- Q 3b. Par année
+SELECT {[Measures].[Nombre de locations], [Measures].[Durée], [Measures].[Montant public], [Measures].[Montant payé]} ON COLUMNS,
+       NONEMPTY([Temps].[H_MOIS].[Année].MEMBERS, [Measures].[Nombre de locations]) ON ROWS
+FROM [Locations];
+
+-- Q 3c. Par pays de la société de l'employé
+SELECT {[Measures].[Nombre de locations], [Measures].[Durée], [Measures].[Montant payé]} ON COLUMNS,
+       NONEMPTY([Employé].[H_France].[Pays].MEMBERS, [Measures].[Nombre de locations]) ON ROWS
+FROM [Locations];
+
+-- Q 3d. Par secteur de produit
+SELECT {[Measures].[Nombre de locations], [Measures].[Durée], [Measures].[Montant payé]} ON COLUMNS,
+       NONEMPTY([Exemplaire].[H_GAMME].[Secteur].MEMBERS, [Measures].[Nombre de locations]) ON ROWS
+FROM [Locations];
