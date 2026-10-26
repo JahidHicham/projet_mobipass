@@ -33,7 +33,7 @@ AS SELECT
           e.CodeEmploye, e.NomEmploye, e.PrenomEmploye,
 
           -- Analyse C
-          e.CodeRegion, e.NomRegion, e.CodeLand, e.NomLand, e.CodePays, e.NomPays,
+          e.CodePays, e.NomPays, COALESCE(e.CodeRegion, e.CodeLand) AS CodeRegLand, COALESCE(e.NomRegion, e.NomLand) NomRegLand,
 
           SUM(l.Montant_Location_ReelPaye_MD) AS MontantPaye_Semaine,
           SUM(l.Duree_Location_MD)            AS Duree_Semaine
@@ -60,10 +60,10 @@ AS SELECT Num_Mois,
 CREATE MATERIALIZED VIEW AGG_MOIS_REGION_MD1
 BUILD IMMEDIATE 
 REFRESH COMPLETE ON DEMAND
-AS SELECT Num_Mois, CodeRegion, NomRegion, CodeLand, NomLand, CodePays, NomPays,
+AS SELECT Num_Mois, CodePays, NomPays, CodeRegLand, NomRegLand,
           SUM(Duree_Semaine) AS Duree_Mois_Region
    FROM   AGG_SEM_EMPLOYE_MD1
-   GROUP BY Num_Mois, CodeRegion, NomRegion, CodeLand, NomLand, CodePays, NomPays;
+   GROUP BY Num_Mois, CodePays, NomPays, CodeRegLand, NomRegLand;
 
 
 
