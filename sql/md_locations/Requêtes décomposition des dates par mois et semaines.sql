@@ -110,7 +110,6 @@ calcul_duree_hebdo AS
 )
 SELECT *
 FROM calcul_duree_hebdo
-WHERE codeemploye = 2 AND codeexemplaire = 184
 ORDER BY
     codeemploye, codeexemplaire, date_deb_loc, date_deb_semaine;
     
@@ -166,6 +165,5 @@ calcul_duree_hebdo AS
 )
 SELECT *
 FROM calcul_duree_hebdo
-WHERE codeemploye = 2 AND codeexemplaire = 184
 ORDER BY
     codeemploye, codeexemplaire, date_deb_loc, date_deb_semaine;
