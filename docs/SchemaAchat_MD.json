@@ -1,0 +1,892 @@
+{
+  "version": 2,
+  "facts": [
+    {
+      "id": "fact-1",
+      "name": "Achat_MD",
+      "position": {
+        "x": 447,
+        "y": 27
+      },
+      "measures": [
+        {
+          "id": "m-0",
+          "name": "Qte_Achat_MD"
+        },
+        {
+          "id": "m-2",
+          "name": "MontantPayeTTC_Achat_MD"
+        },
+        {
+          "id": "m-3",
+          "name": "BeneficeHT_Achat_MD"
+        }
+      ],
+      "dimensionIds": [
+        "dim-produit",
+        "dim-temps",
+        "dim-metier",
+        "dim-employe"
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "dim-produit",
+      "name": "Produit_MD",
+      "position": {
+        "x": 198,
+        "y": 213
+      },
+      "keyParameterId": "p-produit-codep",
+      "parameters": [
+        {
+          "id": "p-produit-codep",
+          "name": "CodeP",
+          "weakAttributes": [
+            {
+              "id": "wa-produit-nomp",
+              "name": "NomP",
+              "position": {
+                "x": 183.5,
+                "y": 90.5
+              }
+            },
+            {
+              "id": "wa-produit-descriptifp",
+              "name": "DescriptifP",
+              "position": {
+                "x": 180.5,
+                "y": 108.5
+              }
+            },
+            {
+              "id": "wa-produit-poidskg",
+              "name": "PoidsKg",
+              "position": {
+                "x": 181,
+                "y": 128
+              }
+            }
+          ],
+          "position": {
+            "x": 82,
+            "y": 57
+          }
+        },
+        {
+          "id": "p-produit-classeautonomie",
+          "name": "ClasseAutonomie",
+          "weakAttributes": [],
+          "position": {
+            "x": -100,
+            "y": 91
+          }
+        },
+        {
+          "id": "p-produit-marquep",
+          "name": "MarqueP",
+          "weakAttributes": [],
+          "position": {
+            "x": 297,
+            "y": 64
+          }
+        },
+        {
+          "id": "p-produit-codeg",
+          "name": "CodeG",
+          "weakAttributes": [
+            {
+              "id": "wa-produit-nomg",
+              "name": "NomG",
+              "position": {
+                "x": 237,
+                "y": 170
+              }
+            }
+          ],
+          "position": {
+            "x": 157,
+            "y": 152
+          }
+        },
+        {
+          "id": "p-produit-secteurg",
+          "name": "SecteurG",
+          "weakAttributes": [],
+          "position": {
+            "x": 229,
+            "y": 222
+          }
+        },
+        {
+          "id": "p-produit-codegen",
+          "name": "CodeGEN",
+          "weakAttributes": [
+            {
+              "id": "wa-produit-nomgen",
+              "name": "NomGEN",
+              "position": {
+                "x": 94,
+                "y": 153
+              }
+            },
+            {
+              "id": "wa-produit-datesortiegen",
+              "name": "DateSortieGEN",
+              "position": {
+                "x": 94,
+                "y": 170
+              }
+            }
+          ],
+          "position": {
+            "x": 14,
+            "y": 135
+          }
+        },
+        {
+          "id": "p-produit-statutgen",
+          "name": "StatutGEN",
+          "weakAttributes": [],
+          "position": {
+            "x": -143,
+            "y": 188
+          }
+        },
+        {
+          "id": "p-produit-codefab",
+          "name": "CodeFAB",
+          "weakAttributes": [
+            {
+              "id": "wa-produit-nomfab",
+              "name": "NomFAB",
+              "position": {
+                "x": 99,
+                "y": 262
+              }
+            }
+          ],
+          "position": {
+            "x": 19,
+            "y": 244
+          }
+        },
+        {
+          "id": "p-produit-paysfab",
+          "name": "PaysFAB",
+          "weakAttributes": [],
+          "position": {
+            "x": 32,
+            "y": 328
+          }
+        }
+      ],
+      "hierarchies": [
+        {
+          "id": "h-produit-h-autonomie",
+          "name": "H_autonomie",
+          "path": [
+            "p-produit-codep",
+            "p-produit-classeautonomie"
+          ],
+          "linkTypes": {
+            "p-produit-codep->p-produit-classeautonomie": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-produit-h-marque",
+          "name": "H_marque",
+          "path": [
+            "p-produit-codep",
+            "p-produit-marquep"
+          ]
+        },
+        {
+          "id": "h-produit-h-gamme",
+          "name": "H_gamme",
+          "path": [
+            "p-produit-codep",
+            "p-produit-codeg",
+            "p-produit-secteurg"
+          ]
+        },
+        {
+          "id": "h-produit-h-fabricant",
+          "name": "H_fabricant",
+          "path": [
+            "p-produit-codep",
+            "p-produit-codegen",
+            "p-produit-codefab",
+            "p-produit-paysfab"
+          ]
+        },
+        {
+          "id": "h-produit-h-statut",
+          "name": "H_statut",
+          "path": [
+            "p-produit-codep",
+            "p-produit-codegen",
+            "p-produit-statutgen"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dim-temps",
+      "name": "Temps_MD",
+      "position": {
+        "x": 481,
+        "y": 341
+      },
+      "keyParameterId": "p-temps-date",
+      "parameters": [
+        {
+          "id": "p-temps-date",
+          "name": "Date",
+          "weakAttributes": [],
+          "position": {
+            "x": 79,
+            "y": 55
+          }
+        },
+        {
+          "id": "p-temps-mois",
+          "name": "Num_Mois",
+          "weakAttributes": [
+            {
+              "id": "wa-mvoi830y-2",
+              "name": "LibMois",
+              "position": {
+                "x": 120.5,
+                "y": 193.5
+              }
+            }
+          ],
+          "position": {
+            "x": 78,
+            "y": 162.5
+          }
+        },
+        {
+          "id": "p-temps-annee",
+          "name": "Année",
+          "weakAttributes": [],
+          "position": {
+            "x": 79,
+            "y": 246
+          }
+        }
+      ],
+      "hierarchies": [
+        {
+          "id": "h-temps-h-temps",
+          "name": "H_temps",
+          "path": [
+            "p-temps-date",
+            "p-temps-mois",
+            "p-temps-annee"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dim-metier",
+      "name": "Metier_MD",
+      "position": {
+        "x": 648.5,
+        "y": 339
+      },
+      "keyParameterId": "p-metier-codeapp",
+      "parameters": [
+        {
+          "id": "p-metier-codeapp",
+          "name": "CodeAPP",
+          "weakAttributes": [
+            {
+              "id": "wa-metier-libelleapp",
+              "name": "LibelleAPP",
+              "position": {
+                "x": 165,
+                "y": 74
+              }
+            }
+          ],
+          "position": {
+            "x": 85,
+            "y": 56
+          }
+        },
+        {
+          "id": "p-metier-coderome",
+          "name": "CodeROME",
+          "weakAttributes": [
+            {
+              "id": "wa-metier-libellemetier",
+              "name": "LibelleMetier",
+              "position": {
+                "x": 165,
+                "y": 163
+              }
+            }
+          ],
+          "position": {
+            "x": 85,
+            "y": 145
+          }
+        },
+        {
+          "id": "p-metier-codedp",
+          "name": "CodeDP",
+          "weakAttributes": [
+            {
+              "id": "wa-metier-libelledp",
+              "name": "LibelleDP",
+              "position": {
+                "x": 165,
+                "y": 253
+              }
+            }
+          ],
+          "position": {
+            "x": 85,
+            "y": 235
+          }
+        },
+        {
+          "id": "p-metier-codegd",
+          "name": "CodeGD",
+          "weakAttributes": [
+            {
+              "id": "wa-metier-libellegd",
+              "name": "LibelleGD",
+              "position": {
+                "x": 165,
+                "y": 343
+              }
+            }
+          ],
+          "position": {
+            "x": 85,
+            "y": 325
+          }
+        }
+      ],
+      "hierarchies": [
+        {
+          "id": "h-metier-h-metier",
+          "name": "H_metier",
+          "path": [
+            "p-metier-codeapp",
+            "p-metier-coderome",
+            "p-metier-codedp",
+            "p-metier-codegd"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dim-employe",
+      "name": "Employe_MD",
+      "position": {
+        "x": 1007,
+        "y": 57
+      },
+      "keyParameterId": "p-employe-codee",
+      "parameters": [
+        {
+          "id": "p-employe-codee",
+          "name": "CodeE",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nome",
+              "name": "NomE",
+              "position": {
+                "x": 166,
+                "y": 74
+              }
+            },
+            {
+              "id": "wa-employe-prenome",
+              "name": "PrenomE",
+              "position": {
+                "x": 166,
+                "y": 91
+              }
+            }
+          ],
+          "position": {
+            "x": 86,
+            "y": 56
+          }
+        },
+        {
+          "id": "p-employe-trancheage",
+          "name": "TrancheAge",
+          "weakAttributes": [],
+          "position": {
+            "x": -101,
+            "y": 110
+          }
+        },
+        {
+          "id": "p-employe-codecat",
+          "name": "CodeCAT",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomcat",
+              "name": "NomCAT",
+              "position": {
+                "x": 19,
+                "y": 193.5
+              }
+            }
+          ],
+          "position": {
+            "x": -16,
+            "y": 164.5
+          }
+        },
+        {
+          "id": "p-employe-supercat",
+          "name": "SuperCAT",
+          "weakAttributes": [],
+          "position": {
+            "x": -90,
+            "y": 235
+          }
+        },
+        {
+          "id": "p-employe-codese",
+          "name": "CodeSE",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomse",
+              "name": "NomSE",
+              "position": {
+                "x": 134,
+                "y": 195
+              }
+            }
+          ],
+          "position": {
+            "x": 87.5,
+            "y": 183.5
+          }
+        },
+        {
+          "id": "p-employe-codesoc",
+          "name": "CodeSOC",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomsoc",
+              "name": "NomSOC",
+              "position": {
+                "x": 122,
+                "y": 323
+              }
+            }
+          ],
+          "position": {
+            "x": 86,
+            "y": 269
+          }
+        },
+        {
+          "id": "p-employe-codev",
+          "name": "CodeV",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomv",
+              "name": "NomV",
+              "position": {
+                "x": -10,
+                "y": 409
+              }
+            }
+          ],
+          "position": {
+            "x": -90,
+            "y": 391
+          }
+        },
+        {
+          "id": "p-employe-codedep",
+          "name": "CodeDep",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomdep",
+              "name": "NomDep",
+              "position": {
+                "x": -10,
+                "y": 510
+              }
+            }
+          ],
+          "position": {
+            "x": -90,
+            "y": 492
+          }
+        },
+        {
+          "id": "p-employe-coderegion",
+          "name": "CodeRegion",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomregion",
+              "name": "NomRegion",
+              "position": {
+                "x": -10,
+                "y": 633
+              }
+            }
+          ],
+          "position": {
+            "x": -90,
+            "y": 615
+          }
+        },
+        {
+          "id": "p-employe-codegem",
+          "name": "CodeGem",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomgemeinde",
+              "name": "NomGemeinde",
+              "position": {
+                "x": 248,
+                "y": 409
+              }
+            }
+          ],
+          "position": {
+            "x": 168,
+            "y": 391
+          }
+        },
+        {
+          "id": "p-employe-codekre",
+          "name": "CodeKre",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomkreis",
+              "name": "NomKreis",
+              "position": {
+                "x": 258.5,
+                "y": 493.5
+              }
+            },
+            {
+              "id": "wa-employe-typekreis",
+              "name": "TypeKreis",
+              "position": {
+                "x": 259,
+                "y": 515.5
+              }
+            }
+          ],
+          "position": {
+            "x": 168,
+            "y": 492
+          }
+        },
+        {
+          "id": "p-employe-codedist",
+          "name": "CodeDist",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomdistrict",
+              "name": "NomDistrict",
+              "position": {
+                "x": 393,
+                "y": 599
+              }
+            }
+          ],
+          "position": {
+            "x": 313,
+            "y": 581
+          }
+        },
+        {
+          "id": "p-employe-codeland",
+          "name": "CodeLand",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomland",
+              "name": "NomLand",
+              "position": {
+                "x": 248,
+                "y": 651
+              }
+            },
+            {
+              "id": "wa-employe-typeland",
+              "name": "TypeLand",
+              "position": {
+                "x": 248,
+                "y": 668
+              }
+            }
+          ],
+          "position": {
+            "x": 168,
+            "y": 633
+          }
+        },
+        {
+          "id": "p-employe-codepays",
+          "name": "CodePays",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nompays",
+              "name": "NomPays",
+              "position": {
+                "x": 125,
+                "y": 745
+              }
+            },
+            {
+              "id": "wa-employe-tauxtva",
+              "name": "TauxTVA",
+              "position": {
+                "x": 125,
+                "y": 762
+              }
+            }
+          ],
+          "position": {
+            "x": 45,
+            "y": 727
+          }
+        },
+        {
+          "id": "p-employe-codedo",
+          "name": "CodeDO",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomdo",
+              "name": "NomDO",
+              "position": {
+                "x": 461,
+                "y": 427.5
+              }
+            }
+          ],
+          "position": {
+            "x": 421.5,
+            "y": 412
+          }
+        },
+        {
+          "id": "p-employe-codesuperdo",
+          "name": "CodeSuperDO",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-nomsuperdo",
+              "name": "NomSuperDO",
+              "position": {
+                "x": 458.5,
+                "y": 510
+              }
+            }
+          ],
+          "position": {
+            "x": 419,
+            "y": 509
+          }
+        },
+        {
+          "id": "p-employe-codecj3",
+          "name": "CodeCJ3",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-libellecj3",
+              "name": "LibelleCJ3",
+              "position": {
+                "x": 538,
+                "y": 384.5
+              }
+            }
+          ],
+          "position": {
+            "x": 496.5,
+            "y": 370.5
+          }
+        },
+        {
+          "id": "p-employe-codecj2",
+          "name": "CodeCJ2",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-libellecj2",
+              "name": "LibelleCJ2",
+              "position": {
+                "x": 600.5,
+                "y": 487.5
+              }
+            }
+          ],
+          "position": {
+            "x": 540,
+            "y": 467.5
+          }
+        },
+        {
+          "id": "p-employe-codecj1",
+          "name": "CodeCJ1",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-libellecj1",
+              "name": "LibelleCJ1",
+              "position": {
+                "x": 630.5,
+                "y": 584.5
+              }
+            }
+          ],
+          "position": {
+            "x": 591,
+            "y": 581.5
+          }
+        },
+        {
+          "id": "p-employe-codety",
+          "name": "CodeTy",
+          "weakAttributes": [
+            {
+              "id": "wa-employe-libelletypesoc",
+              "name": "LibelleTypeSoc",
+              "position": {
+                "x": 639,
+                "y": 359
+              }
+            }
+          ],
+          "position": {
+            "x": 578,
+            "y": 328
+          }
+        }
+      ],
+      "hierarchies": [
+        {
+          "id": "h-employe-h-age",
+          "name": "H_AGE",
+          "path": [
+            "p-employe-codee",
+            "p-employe-trancheage"
+          ],
+          "linkTypes": {
+            "p-employe-codee->p-employe-trancheage": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-employe-h-cat",
+          "name": "H_CAT",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codecat",
+            "p-employe-supercat"
+          ]
+        },
+        {
+          "id": "h-employe-h-fr",
+          "name": "H_FR",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codev",
+            "p-employe-codedep",
+            "p-employe-coderegion",
+            "p-employe-codepays"
+          ],
+          "linkTypes": {
+            "p-employe-codesoc->p-employe-codev": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-employe-h-all",
+          "name": "H_ALL",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codegem",
+            "p-employe-codekre",
+            "p-employe-codeland",
+            "p-employe-codepays"
+          ],
+          "linkTypes": {
+            "p-employe-codesoc->p-employe-codegem": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-employe-h-dist",
+          "name": "H_DIST",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codegem",
+            "p-employe-codekre",
+            "p-employe-codedist",
+            "p-employe-codeland",
+            "p-employe-codepays"
+          ],
+          "linkTypes": {
+            "p-employe-codekre->p-employe-codedist": "strict_incomplete",
+            "p-employe-codesoc->p-employe-codegem": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-employe-h-domaine",
+          "name": "H_DOMAINE",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codedo",
+            "p-employe-codesuperdo"
+          ],
+          "chipPosition": {
+            "x": 254.75,
+            "y": 339.25
+          },
+          "linkTypes": {
+            "p-employe-codesoc->p-employe-codedo": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-employe-h-catjur",
+          "name": "H_CATJUR",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codecj3",
+            "p-employe-codecj2",
+            "p-employe-codecj1"
+          ]
+        },
+        {
+          "id": "h-employe-h-ty",
+          "name": "H_TY",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codety"
+          ]
+        }
+      ]
+    }
+  ],
+  "textStyle": {
+    "fontFamily": "system-ui, sans-serif",
+    "fontSize": 13,
+    "color": "#1e293b"
+  },
+  "showCardinalities": true
+}
