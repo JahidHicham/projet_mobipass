@@ -6,12 +6,20 @@
 -- Methode du cours : vues materialisees d'agregats interrogees directement ;
 -- un agregat peut etre calcule depuis un autre (Agg2 depuis Agg1 dans le cours).
 --
+-- La semaine et le mois sont dans deux hierarchies distinctes (H_SEM et H_MOIS) :
+-- une semaine ISO peut chevaucher deux mois, donc l'agregat mensuel ne peut pas
+-- etre calcule depuis l'agregat hebdomadaire. Agg1 et Agg2 sont donc tous deux
+-- calcules depuis LOCATION_MD1 ; seul Agg3 est calcule depuis un autre agregat (Agg2).
+--
 --      (CodeEmploye, CodeExemplaire, DateJ)  =  LOCATION_MD1  (donnees detaillees)
---                              |
---                     AGG_SEM_EMPLOYE_MD1  (Num_Semaine, Num_Mois, CodeEmploye)   Agg1
---                      /                  \
---     AGG_MOIS_SOCIETE_MD1          AGG_MOIS_REGION_MD1
---     (Num_Mois, CodeSociete)       (Num_Mois, CodeRegion, CodeLand)                        Agg2, Agg3
+--                      /                              \
+--     AGG_SEM_EMPLOYE_MD1                    AGG_MOIS_SOCIETE_MD1
+--     (Num_Semaine, CodeEmploye)             (Num_Mois, CodeSociete)
+--     Agg1                                   Agg2
+--                                                     |
+--                                            AGG_MOIS_REGION_MD1
+--                                            (Num_Mois, CodeRegLand)
+--                                            Agg3
 --
 --  a) montant paye par mois et par societe   -> AGG_MOIS_SOCIETE_MD1
 --  b) montant paye et duree par semaine et par employe -> AGG_SEM_EMPLOYE_MD1
@@ -19,66 +27,71 @@
 --  Montants en TTC (cf. dictionnaire de mesures).
 -- =====================================================================
 
--- Agg1 : (Semaine, Mois, Employe) - porte societe, type, region et pays pour alimenter Agg2 et Agg3
+-- Agg1 : (Semaine, Employe) calcule depuis LOCATION_MD1 - sert l'analyse b
 CREATE MATERIALIZED VIEW AGG_SEM_EMPLOYE_MD1
-BUILD IMMEDIATE 
+BUILD IMMEDIATE
 REFRESH COMPLETE ON DEMAND
-AS SELECT 
-          -- Analyse A (et alimentation de Agg2)
-          t.Num_Mois,
-          e.CodeSociete, e.NomSociete, e.CodeTy, e.LibelleTypeSoc,
+AS SELECT
 
           -- Analyse B
           t.Num_Semaine,
           e.CodeEmploye, e.NomEmploye, e.PrenomEmploye,
 
-          -- Analyse C
-          e.CodePays, e.NomPays, COALESCE(e.CodeRegion, e.CodeLand) AS CodeRegLand, COALESCE(e.NomRegion, e.NomLand) NomRegLand,
 
           SUM(l.Montant_Location_ReelPaye_MD) AS MontantPaye_Semaine,
           SUM(l.Duree_Location_MD)            AS Duree_Semaine
    FROM   LOCATION_MD1 l, TEMPS_MD1 t, EMPLOYE_MD1 e
    WHERE  l.DateJ        = t.DateJ
    AND    l.CodeEmploye  = e.CodeEmploye
-   GROUP BY t.Num_Mois,
-          e.CodeSociete, e.NomSociete, e.CodeTy, e.LibelleTypeSoc,
-          t.Num_Semaine, e.CodeEmploye, e.NomEmploye, e.PrenomEmploye, 
-          e.CodeRegion, e.NomRegion, e.CodeLand, e.NomLand, e.CodePays, e.NomPays;
+   GROUP BY
+          t.Num_Semaine, e.CodeEmploye, e.NomEmploye, e.PrenomEmploye;
 
--- Agg2 : (Mois, Societe) calcule depuis Agg1
+-- Agg2 : (Mois, Societe) calcule depuis LOCATION_MD1 - sert l'analyse a
+--        et porte type de societe, pays et region/Land (determines par la societe)
+--        pour alimenter Agg3
 CREATE MATERIALIZED VIEW AGG_MOIS_SOCIETE_MD1
-BUILD IMMEDIATE 
+BUILD IMMEDIATE
 REFRESH COMPLETE ON DEMAND
-AS SELECT Num_Mois,
-          CodeSociete, NomSociete, CodeTy, LibelleTypeSoc,
-          SUM(MontantPaye_Semaine) AS MontantPaye_Mois
-   FROM   AGG_SEM_EMPLOYE_MD1
-   GROUP BY Num_Mois,
-          CodeSociete, NomSociete, CodeTy, LibelleTypeSoc;
+AS SELECT
+          -- Analyse A (et alimentation de Agg3)
+          t.Num_Mois,
+          e.CodeSociete, e.NomSociete, e.CodeTy, e.LibelleTypeSoc,
 
--- Agg3 : (Mois, Region) calcule depuis Agg1
+          -- Analyse C
+          e.CodePays, e.NomPays, COALESCE(e.CodeRegion, e.CodeLand) AS CodeRegLand, COALESCE(e.NomRegion, e.NomLand) NomRegLand,
+
+          SUM(l.Montant_Location_ReelPaye_MD) AS MontantPaye_Mensuel,
+          SUM(l.Duree_Location_MD)            AS Duree_Mensuel
+
+   FROM   LOCATION_MD1 l, TEMPS_MD1 t, EMPLOYE_MD1 e
+   WHERE  l.DateJ        = t.DateJ
+   AND    l.CodeEmploye  = e.CodeEmploye
+   GROUP BY Num_Mois, CodeSociete, NomSociete, CodeTy, LibelleTypeSoc, e.CodePays, e.NomPays, e.CodeRegion, e.CodeLand, e.NomRegion, e.NomLand;
+
+-- Agg3 : (Mois, Region/Land) calcule depuis Agg2 - sert l'analyse c
 CREATE MATERIALIZED VIEW AGG_MOIS_REGION_MD1
-BUILD IMMEDIATE 
+BUILD IMMEDIATE
 REFRESH COMPLETE ON DEMAND
 AS SELECT Num_Mois, CodePays, NomPays, CodeRegLand, NomRegLand,
-          SUM(Duree_Semaine) AS Duree_Mois_Region
-   FROM   AGG_SEM_EMPLOYE_MD1
+          SUM(Duree_Mensuel) AS Duree_Mensuel_Region
+   FROM   AGG_MOIS_SOCIETE_MD1
    GROUP BY Num_Mois, CodePays, NomPays, CodeRegLand, NomRegLand;
 
 
 
 -- Requetes d'analyse :
 
--- a) SELECT Num_Mois, CodeSociete, NomSociete, CodeTy, LibelleTypeSoc, MontantPaye_Mois FROM   AGG_MOIS_SOCIETE_MD1
+-- a) SELECT Num_Mois, CodeSociete, NomSociete, CodeTy, LibelleTypeSoc, MontantPaye_Mensuel FROM AGG_MOIS_SOCIETE_MD1;
 
--- b) SELECT Num_Semaine, CodeEmploye, NomEmploye, PrenomEmploye, MontantPaye_Semaine, Duree_Semaine FROM AGG_SEM_EMPLOYE_MD1
+-- b) SELECT Num_Semaine, CodeEmploye, NomEmploye, PrenomEmploye, MontantPaye_Semaine, Duree_Semaine FROM AGG_SEM_EMPLOYE_MD1;
 
--- c) SELECT Num_Mois, CodeRegion, NomRegion, CodeLand, NomLand, CodePays, NomPays, Duree_Mois_Region FROM   AGG_MOIS_REGION_MD1;
+-- c) SELECT Num_Mois, CodeRegLand, NomRegLand, CodePays, NomPays, Duree_Mensuel_Region FROM AGG_MOIS_REGION_MD1;
+--    (CodeRegLand / NomRegLand = region pour la France, Land pour l'Allemagne)
 
 
 -- =====================================================================
 -- RAFRAICHISSEMENT DES AGREGATS
--- (apres celui de la structure ; AGG_SEM_EMPLOYE_MD1 (Agg1) AVANT les agregats qui en dependent)
+-- (apres celui de la structure ; AGG_MOIS_SOCIETE_MD1 (Agg2) AVANT AGG_MOIS_REGION_MD1 (Agg3) qui en depend)
 -- =====================================================================
 BEGIN
   DBMS_MVIEW.REFRESH('AGG_SEM_EMPLOYE_MD1',  method => 'C', atomic_refresh => TRUE);
