@@ -572,16 +572,8 @@
               "id": "wa-employe-nomkreis",
               "name": "NomKreis",
               "position": {
-                "x": 258.5,
-                "y": 493.5
-              }
-            },
-            {
-              "id": "wa-employe-typekreis",
-              "name": "TypeKreis",
-              "position": {
-                "x": 259,
-                "y": 515.5
+                "x": 230.5,
+                "y": 510.6429138183594
               }
             }
           ],
@@ -616,16 +608,8 @@
               "id": "wa-employe-nomland",
               "name": "NomLand",
               "position": {
-                "x": 248,
-                "y": 651
-              }
-            },
-            {
-              "id": "wa-employe-typeland",
-              "name": "TypeLand",
-              "position": {
-                "x": 248,
-                "y": 668
+                "x": 229.142822265625,
+                "y": 629.28564453125
               }
             }
           ],
@@ -767,6 +751,24 @@
             "x": 578,
             "y": 328
           }
+        },
+        {
+          "id": "p-mvp3fq1s-3",
+          "name": "TypeKreis",
+          "weakAttributes": [],
+          "position": {
+            "x": 333.71435546875,
+            "y": 469.7142333984375
+          }
+        },
+        {
+          "id": "p-mvp3gyma-5",
+          "name": "TypeLand",
+          "weakAttributes": [],
+          "position": {
+            "x": 289.14288330078125,
+            "y": 733.1428833007812
+          }
         }
       ],
       "hierarchies": [
@@ -878,6 +880,31 @@
             "p-employe-codese",
             "p-employe-codesoc",
             "p-employe-codety"
+          ]
+        },
+        {
+          "id": "h-mvp3fq1s-2",
+          "name": "H_Type_Kreis",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codegem",
+            "p-employe-codekre",
+            "p-mvp3fq1s-3"
+          ]
+        },
+        {
+          "id": "h-mvp3gyma-4",
+          "name": "H_Type_Land",
+          "path": [
+            "p-employe-codee",
+            "p-employe-codese",
+            "p-employe-codesoc",
+            "p-employe-codegem",
+            "p-employe-codekre",
+            "p-employe-codeland",
+            "p-mvp3gyma-5"
           ]
         }
       ]
