@@ -1,0 +1,274 @@
+/* =====================================================================
+   MobiPass - Cube "Locations" - SQUELETTES MDX (BROUILLON, noms provisoires)
+   Base : Location_MD (docs/Location_MD.json + sql/md_locations/01_Location_MD_structure.sql)
+   A relire / adapter aux vrais noms une fois le projet SSAS figé.
+
+   NOMS PROVISOIRES (a remplacer)
+   Cube        : [Locations]
+   Mesures     : [Measures].[Duree_Location]        (= Duree_Location_MD)
+                 [Measures].[Montant_Location]       (= Montant_Location_MD, prix public TTC)
+                 [Measures].[Montant_ReelPaye]       (= Montant_Location_ReelPaye_MD)
+                 [Measures].[Nb_Locations]           (count du fait, a creer dans SSAS)
+   Dimensions  : [Temps]      H_SEM  : Date < Num_Semaine < Annee_ISO
+                              H_MOIS : Date < Num_Mois < Annee
+                 [Exemplaire] H_GAMME: Exemplaire < Produit < Gamme < SecteurProduit
+                              H_MAR, H_GENERATION
+                 [Employe]    H_France, H_Allemagne, H_District, H_Type_Kreis, H_Type_Land,
+                              H_Type_Societe (Employe < Service < Societe < Type), H_Categorie
+   Membres calcules (WITH MEMBER, a mettre aussi dans le cube) :
+                 Taux_Remise_Effectif = 1 - Montant_ReelPaye / Montant_Location
+                 Duree_Moyenne        = Duree_Location / Nb_Locations
+                 Taux_Occupation      = a definir (voir S1, hypothese)
+
+   POINTS A VALIDER AVANT D'ECRIRE LA VERSION FINALE
+   (1) "Classe de trajet" et "profil" : Location_MD n'a que [Employe].H_Categorie
+       (Categorie < SuperCategorie). Hypothese ici : profil = Categorie,
+       classe de trajet = SuperCategorie. A confirmer (sinon nouvelle dimension).
+   (2) S1 "pas de produit a louer" : le fait ne contient QUE des locations aboutees,
+       aucune demande refusee. Ici on prend un PROXY (taux d'occupation / pic de duree).
+   (3) Pas de niveau Saison/Trimestre dans [Temps] : on slice avec un ensemble de mois.
+   (4) Geographie : un ensemble MDX ne peut contenir que des membres d'UNE hierarchie.
+       On ne peut donc pas melanger regions francaises (H_France) et Laender (H_Allemagne)
+       dans un meme ensemble : une requete par pays (ou on passe par le niveau Pays).
+   (5) Une dimension (hierarchie) ne peut etre que sur UN axe ; si elle est dans le WHERE,
+       elle ne peut plus etre sur un axe.
+   (6) Les valeurs de cles (&[2025], &[2025-07], &[...]) sont des exemples.
+   ===================================================================== */
+
+
+/* =====================================================================
+   RECETTE
+   ===================================================================== */
+
+-- a) Montants reellement payes par mois et par societe
+SELECT
+  [Temps].[H_MOIS].[Num_Mois].Members            ON COLUMNS,
+  NonEmpty([Employe].[H_Type_Societe].[CodeSociete].Members)         ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Montant_ReelPaye]);
+
+-- b) Montants reellement payes et durees par semaine et par salarie
+
+SELECT
+  {[Measures].[Montant_ReelPaye], [Measures].[Duree_Location]} ON COLUMNS,
+  NonEmpty(
+    CROSSJOIN(
+      Descendants({[Temps].[H_SEM].[Annee_ISO].&[2023],
+                   [Temps].[H_SEM].[Annee_ISO].&[2024],
+                   [Temps].[H_SEM].[Annee_ISO].&[2025]},
+                  [Temps].[H_SEM].[Num_Semaine]),
+      [Employe].[H_Type_Societe].[CodeEmploye].Members),
+    [Measures].[Montant_ReelPaye])                       ON ROWS
+FROM [Locations];
+
+-- OOOOOUUUUUU
+
+SELECT
+  {Descendants({[Temps].[H_SEM].[Annee_ISO].&[2023],
+                 [Temps].[H_SEM].[Annee_ISO].&[2024],
+                 [Temps].[H_SEM].[Annee_ISO].&[2025]},
+                [Temps].[H_SEM].[Num_Semaine])} ON COLUMNS,
+  NonEmpty([Employe].[H_Type_Societe].[CodeEmploye].Members)   ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Montant_ReelPaye], [Measures].[Duree_Location]);   
+
+
+
+
+
+
+-- c) Durees mensuelles par region (France) - a refaire avec Land pour l'Allemagne
+--    + graphique : tableau croise dynamique Excel connecte au cube
+SELECT
+  [Temps].[H_MOIS].[Num_Mois].Members                       ON COLUMNS,
+  NonEmpty([Employe].[H_France].[CodeRegion].Members,
+           [Measures].[Duree_Location])                      ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Duree_Location]);
+
+SELECT
+  [Temps].[H_MOIS].[Num_Mois].Members                       ON COLUMNS,
+  NonEmpty([Employe].[H_Allemagne].[CodeLand].Members,
+           [Measures].[Duree_Location])                      ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Duree_Location]);
+
+
+/* =====================================================================
+   S1 - SATURATION SAISONNIERE
+   Question : quand et ou les employes ne trouvent-ils pas de produit a louer ?
+   (proxy : forte concentration de durees de location = tension sur le parc)
+   ===================================================================== */
+
+-- S1.1 Vue annuelle (ROLL-UP au niveau Annee)
+-- Question : l'activite est-elle stable d'une annee a l'autre ?
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  [Temps].[H_MOIS].[Annee].Members                          ON ROWS
+FROM [Locations];
+
+-- S1.2 DRILL-DOWN par mois sur l'annee choisie
+-- Question : quels mois concentrent l'activite ?
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  Descendants([Temps].[H_MOIS].[Annee].&[2025],
+              [Temps].[H_MOIS].[Num_Mois])                  ON ROWS
+FROM [Locations];
+
+-- S1.3 DRILL-DOWN par semaine, classees : les semaines du pic
+-- Question : quelles semaines precises sont les plus chargees ?
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  TopCount(
+    Descendants([Temps].[H_SEM].[Annee_ISO].&[2025],
+                [Temps].[H_SEM].[Num_Semaine]),
+    10, [Measures].[Duree_Location])                        ON ROWS
+FROM [Locations];
+
+-- S1.4 SLICE sur la saison (mars-aout) et eclatement par secteur
+-- Question : quels secteurs sont les plus sollicites au printemps/ete ?
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  Order([Exemplaire].[H_GAMME].[SecteurProduit].Members,
+        [Measures].[Duree_Location], BDESC)                 ON ROWS
+FROM [Locations]
+WHERE ({[Temps].[H_MOIS].[Num_Mois].&[2025-03], [Temps].[H_MOIS].[Num_Mois].&[2025-04],
+        [Temps].[H_MOIS].[Num_Mois].&[2025-05], [Temps].[H_MOIS].[Num_Mois].&[2025-06],
+        [Temps].[H_MOIS].[Num_Mois].&[2025-07], [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+
+-- S1.5 DRILL-DOWN secteur -> gamme -> produit (jusqu'au produit sous tension)
+-- Question : quelle gamme / quels produits cristallisent la saturation ?
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  TopCount(
+    Descendants([Exemplaire].[H_GAMME].[SecteurProduit].&[Secteur A],   -- secteur identifie en S1.4
+                [Exemplaire].[H_GAMME].[CodeProduit]),
+    10, [Measures].[Duree_Location])                                    ON ROWS
+FROM [Locations]
+WHERE ({[Temps].[H_MOIS].[Num_Mois].&[2025-03] : [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+
+-- S1.6a Eclatement par region (France)  -- pour le produit/secteur retenu
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  Order([Employe].[H_France].[CodeRegion].Members,
+        [Measures].[Duree_Location], BDESC)                 ON ROWS
+FROM [Locations]
+WHERE ([Exemplaire].[H_GAMME].[CodeGamme].&[Gamme X],
+       {[Temps].[H_MOIS].[Num_Mois].&[2025-03] : [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+
+-- S1.6b Eclatement par Land (Allemagne)
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  Order([Employe].[H_Allemagne].[CodeLand].Members,
+        [Measures].[Duree_Location], BDESC)                 ON ROWS
+FROM [Locations]
+WHERE ([Exemplaire].[H_GAMME].[CodeGamme].&[Gamme X],
+       {[Temps].[H_MOIS].[Num_Mois].&[2025-03] : [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+
+-- Variante : ROLL-UP geographique avec Ancestor (de la Gemeinde/commune vers le Land)
+-- Ancestor([Employe].[H_Allemagne].[CodeGemeinde].&[DE...], [Employe].[H_Allemagne].[CodeLand])
+
+
+/* =====================================================================
+   S2 - PROFILS DES LOCATAIRES
+   Question : quels profils louent le plus, le plus longtemps, avec quelle remise ?
+   (hypothese : classe de trajet = SuperCategorie, profil = Categorie)
+   ===================================================================== */
+
+-- S2.1 Vue par classe de trajet, avec membres calcules
+WITH
+  MEMBER [Measures].[Taux_Remise_Effectif] AS
+    IIF([Measures].[Montant_Location] = 0, NULL,
+        1 - [Measures].[Montant_ReelPaye] / [Measures].[Montant_Location]),
+    FORMAT_STRING = '0.00%'
+  MEMBER [Measures].[Duree_Moyenne] AS
+    IIF([Measures].[Nb_Locations] = 0, NULL,
+        [Measures].[Duree_Location] / [Measures].[Nb_Locations]),
+    FORMAT_STRING = '0.0'
+SELECT
+  {[Measures].[Nb_Locations], [Measures].[Duree_Location],
+   [Measures].[Duree_Moyenne], [Measures].[Taux_Remise_Effectif]} ON COLUMNS,
+  [Employe].[H_Categorie].[SuperCategorie].Members               ON ROWS
+FROM [Locations];
+
+-- S2.2 DRILL-DOWN : profil (Categorie) au sein de la classe qui ressort
+WITH
+  MEMBER [Measures].[Taux_Remise_Effectif] AS
+    IIF([Measures].[Montant_Location] = 0, NULL,
+        1 - [Measures].[Montant_ReelPaye] / [Measures].[Montant_Location]),
+    FORMAT_STRING = '0.00%'
+  MEMBER [Measures].[Duree_Moyenne] AS
+    IIF([Measures].[Nb_Locations] = 0, NULL,
+        [Measures].[Duree_Location] / [Measures].[Nb_Locations]),
+    FORMAT_STRING = '0.0'
+SELECT
+  {[Measures].[Nb_Locations], [Measures].[Duree_Moyenne],
+   [Measures].[Taux_Remise_Effectif]}                            ON COLUMNS,
+  Descendants([Employe].[H_Categorie].[SuperCategorie].&[Classe X],
+              [Employe].[H_Categorie].[CodeCategorie])           ON ROWS
+FROM [Locations];
+
+-- S2.3 ROLL-UP par domaine de societe (type de societe) pour les profils retenus
+SELECT
+  {[Measures].[Nb_Locations], [Measures].[Duree_Location]}       ON COLUMNS,
+  Order([Employe].[H_Type_Societe].[CodeTy].Members,
+        [Measures].[Duree_Location], BDESC)                      ON ROWS
+FROM [Locations]
+WHERE ([Employe].[H_Categorie].[CodeCategorie].&[Profil Y]);
+
+-- S2.4 Comparaison montant public / montant paye, profil x domaine (CROSSJOIN)
+SELECT
+  {[Measures].[Montant_Location], [Measures].[Montant_ReelPaye]} ON COLUMNS,
+  CrossJoin([Employe].[H_Categorie].[CodeCategorie].Members,
+            [Employe].[H_Type_Societe].[CodeTy].Members)         ON ROWS
+FROM [Locations];
+-- NB : deux hierarchies de la MEME dimension [Employe] dans un CrossJoin : accepte par SSAS
+--      tant que ce ne sont pas des hierarchies "liees" (a verifier sur le cube reel).
+
+-- S2.5 FILTER : profils dont le taux de remise effectif depasse un seuil
+WITH
+  MEMBER [Measures].[Taux_Remise_Effectif] AS
+    IIF([Measures].[Montant_Location] = 0, NULL,
+        1 - [Measures].[Montant_ReelPaye] / [Measures].[Montant_Location]),
+    FORMAT_STRING = '0.00%'
+SELECT
+  {[Measures].[Montant_Location], [Measures].[Montant_ReelPaye],
+   [Measures].[Taux_Remise_Effectif]}                            ON COLUMNS,
+  Filter([Employe].[H_Categorie].[CodeCategorie].Members,
+         [Measures].[Taux_Remise_Effectif] > 0.25)               ON ROWS   -- seuil a fixer selon S2.4
+FROM [Locations];
+
+-- S2.6 Part de chaque profil dans la classe (pourcentage par rapport au parent)
+WITH
+  MEMBER [Measures].[Part_Parent] AS
+    IIF(([Measures].[Duree_Location],
+         [Employe].[H_Categorie].CurrentMember.Parent) = 0, NULL,
+        [Measures].[Duree_Location] /
+        ([Measures].[Duree_Location],
+         [Employe].[H_Categorie].CurrentMember.Parent)),
+    FORMAT_STRING = '0.00%'
+SELECT
+  {[Measures].[Duree_Location], [Measures].[Part_Parent]}        ON COLUMNS,
+  Order([Employe].[H_Categorie].[CodeCategorie].Members,
+        [Measures].[Part_Parent], BDESC)                         ON ROWS
+FROM [Locations];
+
+
+/* =====================================================================
+   S3 - SEQUENCE LIBRE  (a ecrire apres le choix du phenomene injecte)
+   Exemple de trame si le phenomene = "ecart de comportement France / Allemagne"
+   ===================================================================== */
+
+-- S3.1 France vs Allemagne (niveau Pays)
+SELECT
+  {[Measures].[Nb_Locations], [Measures].[Duree_Moyenne],
+   [Measures].[Montant_ReelPaye]}                                ON COLUMNS,
+  [Employe].[H_France].[CodePays].Members                        ON ROWS
+FROM [Locations];
+
+-- S3.2 par annee (CROSSJOIN pays x annee) : l'ecart evolue-t-il ?
+-- S3.3 DRILL-DOWN region / Land
+-- S3.4 SLICE sur la gamme / le secteur concerne
+-- S3.5 comparaison avec un indicateur calcule (WITH MEMBER)
+-- S3.6 conclusion / recommandation
+-- (a detailler quand le phenomene et la "verite terrain" sont figes)
