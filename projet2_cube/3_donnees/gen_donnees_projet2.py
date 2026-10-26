@@ -598,22 +598,36 @@ def ecrire(chemin, entete, lignes):
     print(f"écrit : {chemin.relative_to(ICI)} ({len(lignes)} lignes)")
 
 CATS = {r['CodeCAT']: r for r in R['CATEGORIE']}
-def ligne_employe(e):
+def ligne_employe(e):            # colonnes de la dimension Employe_MD de la conception (docs/Location_MD.json)
     v = EMP[e]; s = SOC[v['soc']]; r = s['row']
-    com = ZG[s['zg']]; dep = ZG[com['CodeZG_zone_englobante']]; reg = ZG[sommet(s['zg'])]
+    com = ZG[s['zg']]; par = ZG[com['CodeZG_zone_englobante']]; som = ZG[sommet(s['zg'])]
     do = r['CodeDO']
-    dom = (do, DOM[do]['NomDO'], do[:2], DOM[do[:2]]['NomDO']) if do else ('ND', 'Non renseigné', 'ND', 'Non renseigné')
+    dom = [do, DOM[do]['NomDO'], do[:2], DOM[do[:2]]['NomDO']] if do else ['ND', 'Non renseigné', 'ND', 'Non renseigné']
+    so, lib_so = 'SO-' + s['pays'], 'Sans objet (France)' if s['pays'] == 'FR' else 'Sans objet (Allemagne)'
+    if s['pays'] == 'FR':          # commune > département > région ; niveaux allemands « sans objet »
+        fr = [com['CodeZG'], com['NomZG'], par['CodeZG'], par['NomZG'], som['CodeZG'], som['NomZG']]
+        de = [so, lib_so, so, lib_so, lib_so, so, lib_so, so, lib_so, lib_so]
+    else:                          # Gemeinde > Kreis (> District) > Land ; niveaux français « sans objet »
+        sup = ZG[par['CodeZG_zone_englobante']]
+        dis = ([sup['CodeZG'], sup['NomZG']] if sup['NiveauZG'] == 'DISTRICT'
+               else [som['CodeZG'] + '-SD', f"Sans district ({som['NomZG']})"])
+        fr = [so, lib_so] * 3
+        de = [com['CodeZG'], com['NomZG'], par['CodeZG'], par['NomZG'],
+              'Landkreis' if par['NiveauZG'] == 'LANDKREIS' else 'Kreisfreie Stadt', *dis, som['CodeZG'], som['NomZG'],
+              'Stadtstaat' if som['CodeZG'] in ('DE02', 'DE04', 'DE11') else 'Flächenland']
     return [e, v['nom'], v['pre'], v['cat'], CATS[v['cat']]['NomCAT'], CATS[v['cat']]['SuperCAT'], v['se'], SERV[v['se']]['nom'],
-            v['soc'], s['nom'], TYPES[r['CodeTy']], *dom, com['CodeZG'], com['NomZG'], dep['CodeZG'], dep['NomZG'],
-            reg['CodeZG'], reg['NomZG'], s['pays'], PAYS[s['pays']]['NomPays']]
+            v['soc'], s['nom'], r['CodeTy'], TYPES[r['CodeTy']], *dom, *fr, *de,
+            s['pays'], PAYS[s['pays']]['NomPays'], PAYS[s['pays']]['TauxTVA']]
 def ligne_location(r):
     x, v = EX[r['CodeEX']], EMP[r['CodeE']]
     pj = prix_jour(x['pays'], x['p'], r['DateL'])
     if x['pays'] == 'DE': pj = round(pj * (1 + PAYS['DE']['TauxTVA']), 2)   # prix allemands HT -> TTC
     return [r['CodeE'], r['CodeEX'], r['DateL'], r['Duree_Loc'], pj, RED[(v['cat'], GCODE[PROD[x['p']]['gamme']], r['DateL'].year)]]
-H_EMP = ['CodeEmploye', 'NomEmploye', 'PrenomEmploye', 'CodeProfil', 'LibProfil', 'ClasseTrajet', 'CodeService', 'NomService',
-         'CodeSociete', 'NomSociete', 'TypeSociete', 'CodeDomaine', 'LibDomaine', 'CodeDivision', 'LibDivision', 'CodeVille',
-         'NomVille', 'CodeDepartement', 'NomDepartement', 'CodeRegion', 'NomRegion', 'CodePays', 'NomPays']
+H_EMP = ['CodeEmploye', 'NomEmploye', 'PrenomEmploye', 'CodeCategorie', 'NomCategorie', 'SuperCategorie', 'CodeService',
+         'NomService', 'CodeSociete', 'NomSociete', 'CodeTy', 'LibelleTypeSoc', 'CodeDomaine', 'LibDomaine', 'CodeDivision',
+         'LibDivision', 'CodeVille', 'NomVille', 'CodeDepartement', 'NomDepartement', 'CodeRegion', 'NomRegion', 'CodeGemeinde',
+         'NomGemeinde', 'CodeKreis', 'NomKreis', 'TypeKreis', 'CodeDistrict', 'NomDistrict', 'CodeLand', 'NomLand', 'TypeLand',
+         'CodePays', 'NomPays', 'TauxTVA']
 L_EMP = [ligne_employe(e) for e in sorted(EMP)]
 H_PRO = ['CodeProduit', 'NomProduit', 'MarqueProduit', 'DescriptifProduit', 'PoidsKg', 'AutonomieKm', 'CodeGamme', 'NomGamme',
          'Secteur', 'CodeGeneration', 'NomGeneration', 'DateSortieGeneration', 'DateArretGeneration', 'CodeFabricant',
@@ -651,7 +665,7 @@ note('employe.csv', 'libellé de service mal écrit (casse, espaces)', n, 'corri
 sans_dom = {c for c, s_ in SOC.items() if s_['nom'] in ('Loire Logistique Express', 'Finistère Cybersécurité')}
 n = 0
 for l in L_EMP:
-    if l[8] in sans_dom: l[11:15] = [None] * 4; n += 1
+    if l[8] in sans_dom: k = H_EMP.index('CodeDomaine'); l[k:k + 4] = [None] * 4; n += 1
 note('employe.csv', 'domaine de la société manquant', n, 'complétée (domaine « non renseigné »)')
 for l in rng.sample(L_EMP, 15): L_EMP.append(l[:])
 note('employe.csv', 'ligne en double', 15, 'doublon supprimé')
@@ -704,6 +718,33 @@ ecrire(ICI / 'csv' / 'exemplaire.csv', H_EX, L_EX)
 ecrire(ICI / 'csv' / 'location.csv', H_LOC, L_LOC)
 ecrire(ICI / 'csv' / 'reservation.csv', H_RES, L_RES)
 ecrire(ICI / 'referentiels' / 'anomalies_injectees.csv', ['Fichier', 'Anomalie', 'NbLignes', 'TraitementAttendu'], ANOM)
+
+# Version du chargement sans BULK INSERT, pour un serveur distant (etu-mssql3) qui ne voit pas les fichiers du PC :
+# même script que 03_chargement_dw.sql, mais les données des CSV y sont écrites en INSERT (1 000 lignes par INSERT).
+def sql_val(v):
+    if v is None: return 'NULL'
+    if isinstance(v, D): return f"'{v.isoformat()}'"
+    if isinstance(v, (int, float)): return repr(v)
+    return "N'" + str(v).replace("'", "''") + "'"
+modele = (ICI.parent / '1_entrepot_sql' / '03_chargement_dw.sql').read_text(encoding='utf-8-sig').replace('\r\n', '\n')
+debut, fin = modele.index('SET NOCOUNT ON;'), modele.index('DECLARE @sql NVARCHAR(MAX), @options')
+out = ["-- MobiPass - Projet 2 : chargement de l'entrepôt dw, VERSION SANS BULK INSERT (serveur distant, ex. etu-mssql3)",
+       "-- Fichier produit par 3_donnees/gen_donnees_projet2.py à partir de 03_chargement_dw.sql : ne pas le modifier à la main.",
+       "-- Même traitement que 03_chargement_dw.sql (contrôle qualité, dimensions puis faits), mais les données des fichiers",
+       "-- CSV sont écrites ici en INSERT : le serveur n'a pas besoin de voir les fichiers de votre PC.",
+       "-- À lancer après 01_creation_dw.sql et 02_dimension_temps.sql, dans la même base (liste déroulante de SSMS).", "",
+       modele[modele.index('IF DB_NAME() IN'):debut].rstrip(),
+       re.sub(r"DECLARE @dossier[^\n]*\n", "", modele[debut:fin]).rstrip(), "GO"]
+for table, lignes in (('#employe', L_EMP), ('#produit', L_PRO), ('#exemplaire', L_EX), ('#location', L_LOC), ('#reservation', L_RES)):
+    out.append(f"-- {table[1:]}.csv : {len(lignes)} lignes")
+    for k in range(0, len(lignes), 1000):
+        out.append(f"INSERT INTO {table} VALUES\n" + ",\n".join("(" + ", ".join(sql_val(v) for v in l) + ")" for l in lignes[k:k + 1000]) + ";")
+        if k // 1000 % 10 == 9: out.append("GO")
+    out.append("GO")
+out += ["SET NOCOUNT ON;", modele[modele.index('CREATE INDEX ix_location'):]]
+FAC = ICI.parent / '1_entrepot_sql' / '03_chargement_dw_fac.sql'
+with open(FAC, 'w', encoding='utf-8-sig', newline='\r\n') as f: f.write("\n".join(out))
+print(f"écrit : {FAC.relative_to(ICI.parent)} ({FAC.stat().st_size / 1048576:.1f} Mo)")
 
 # référentiels à relire (origine : projet 1 ou ajout du projet 2)
 nbe, nbx = collections.Counter(v['soc'] for v in EMP.values()), collections.Counter(x['ag'] for x in EX.values())

@@ -6,8 +6,7 @@
 --   * FAIT_RESERVATION : une réservation non honorée est une demande que le parc n'a pas pu satisfaire,
 --     indicateur de saturation de la séquence S1 (« quand et où les employés ne trouvent pas de produit ») ;
 --   * le produit devient une dimension à part, partagée par les deux faits ; l'exemplaire garde son agence ;
---   * domaine NAF/WZ de la société (séquence S2) et géographie commune aux deux pays :
---     Pays > Région ou Land > Département ou Kreis > Ville ou Gemeinde ;
+--   * domaine NAF/WZ de la société (séquence S2) ; géographies française et allemande séparées, comme dans la conception ;
 --   * JOURNAL_QUALITE : anomalies des fichiers sources (manquantes, erronées, doublons) traitées au chargement.
 -- Contraintes du dictionnaire de données du sujet initial : durée > 0, pourcentage de réduction dans ]0 ; 1],
 --   dates cohérentes, aucune location au prix public, pas de chevauchement d'un exemplaire (CHECK et trigger).
@@ -62,39 +61,57 @@ CREATE TABLE dw.DIM_TEMPS(
 );
 GO
 
--- Dimension Employé : l'employé, son profil de trajet, son service et sa société (type, domaine, localisation).
--- Hiérarchies : Pays > Région > Département > Ville > Société > Service > Employé ;
---               Classe de trajet > Profil > Employé ; Division > Domaine > Société ; Type > Société.
+-- Dimension Employé : mêmes attributs et mêmes noms que la dimension Employe_MD de la conception du projet 1
+-- (docs/Location_MD.json), plus le domaine NAF/WZ de la société (ajout pour la séquence S2).
+-- Hiérarchies de la conception : H_France (Employé > Service > Société > Ville > Département > Région > Pays),
+--   H_Allemagne (... Société > Gemeinde > Kreis > Land > Pays), H_District (... Kreis > District > Land),
+--   H_Type_Kreis (... Kreis > TypeKreis), H_Type_Land (... Land > TypeLand), H_Categorie (Employé > Catégorie >
+--   SuperCatégorie), H_Type_Societe (... Société > Type). Ajout : Société > Domaine > Division.
+-- Les niveaux de l'autre pays valent « Sans objet » (code SO-FR ou SO-DE) au lieu de NULL ; un Kreis sans district
+--   a le district « Sans district (Land) » (code du Land + -SD) : chaque hiérarchie reste stricte pour le cube.
 CREATE TABLE dw.DIM_EMPLOYE(
    CleEmploye       INT,
    CodeEmploye      INT           NOT NULL,   -- code de l'employé dans les données sources
    NomEmploye       NVARCHAR(50)  NOT NULL,
    PrenomEmploye    NVARCHAR(50)  NOT NULL,
-   CodeProfil       CHAR(5)       NOT NULL,   -- profil de trajet (annexe 2 du sujet initial), ex. TC-01
-   LibProfil        NVARCHAR(100) NOT NULL,
-   ClasseTrajet     NVARCHAR(100) NOT NULL,   -- trajet court, moyen, long ou intermodal
+   CodeCategorie    CHAR(5)       NOT NULL,   -- profil de trajet (annexe 2 du sujet initial), ex. TC-01
+   NomCategorie     NVARCHAR(100) NOT NULL,
+   SuperCategorie   NVARCHAR(100) NOT NULL,   -- classe de trajet : court, moyen, long ou intermodal
    CodeService      INT           NOT NULL,
    NomService       NVARCHAR(50)  NOT NULL,
    CodeSociete      VARCHAR(14)   NOT NULL,   -- SIREN (FR) ou USt-IdNr (DE)
    NomSociete       NVARCHAR(100) NOT NULL,
-   TypeSociete      NVARCHAR(60)  NOT NULL,   -- microentreprise, PME, ETI, grande entreprise
+   CodeTy           VARCHAR(5)    NOT NULL,   -- type de société : MICRO, PME, ETI, GE
+   LibelleTypeSoc   NVARCHAR(60)  NOT NULL,
    CodeDomaine      VARCHAR(7)    NOT NULL,   -- sous-classe NAF (FR) ou équivalent WZ (DE), ex. 62.01Z
    LibDomaine       NVARCHAR(150) NOT NULL,
    CodeDivision     VARCHAR(2)    NOT NULL,   -- division NAF/WZ, ex. 62
    LibDivision      NVARCHAR(150) NOT NULL,
-   CodeVille        VARCHAR(10)   NOT NULL,   -- commune (FR) ou Gemeinde (DE)
+   CodeVille        VARCHAR(10)   NOT NULL,   -- France : commune
    NomVille         NVARCHAR(100) NOT NULL,
-   CodeDepartement  VARCHAR(10)   NOT NULL,   -- département (FR) ou Kreis (DE)
+   CodeDepartement  VARCHAR(10)   NOT NULL,   -- France : département
    NomDepartement   NVARCHAR(100) NOT NULL,
-   CodeRegion       VARCHAR(10)   NOT NULL,   -- région (FR) ou Land (DE)
+   CodeRegion       VARCHAR(10)   NOT NULL,   -- France : région
    NomRegion        NVARCHAR(100) NOT NULL,
+   CodeGemeinde     VARCHAR(10)   NOT NULL,   -- Allemagne : Gemeinde
+   NomGemeinde      NVARCHAR(100) NOT NULL,
+   CodeKreis        VARCHAR(10)   NOT NULL,   -- Allemagne : Kreis
+   NomKreis         NVARCHAR(100) NOT NULL,
+   TypeKreis        NVARCHAR(30)  NOT NULL,   -- Landkreis ou Kreisfreie Stadt
+   CodeDistrict     VARCHAR(10)   NOT NULL,   -- Allemagne : Regierungsbezirk
+   NomDistrict      NVARCHAR(100) NOT NULL,
+   CodeLand         VARCHAR(10)   NOT NULL,   -- Allemagne : Land
+   NomLand          NVARCHAR(100) NOT NULL,
+   TypeLand         NVARCHAR(30)  NOT NULL,   -- Stadtstaat (Berlin, Hamburg, Bremen) ou Flächenland
    CodePays         CHAR(2)       NOT NULL,
    NomPays          NVARCHAR(50)  NOT NULL,
+   TauxTVA          DECIMAL(4,3)  NOT NULL,
    CONSTRAINT pk_dim_employe PRIMARY KEY(CleEmploye),
    CONSTRAINT uq_dim_employe_code UNIQUE(CodeEmploye),
-   CONSTRAINT ck_dim_employe_profil CHECK(CodeProfil LIKE '[A-Z][A-Z]-[0-9][0-9]'),
+   CONSTRAINT ck_dim_employe_categorie CHECK(CodeCategorie LIKE '[A-Z][A-Z]-[0-9][0-9]'),
    CONSTRAINT ck_dim_employe_division CHECK(CodeDomaine LIKE CodeDivision + '%'),
-   CONSTRAINT ck_dim_employe_pays CHECK(CodePays IN ('FR', 'DE'))
+   CONSTRAINT ck_dim_employe_pays CHECK(CodePays IN ('FR', 'DE')),
+   CONSTRAINT ck_dim_employe_tva CHECK(TauxTVA > 0 AND TauxTVA <= 1)
 );
 GO
 

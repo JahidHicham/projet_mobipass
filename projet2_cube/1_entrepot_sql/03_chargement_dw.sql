@@ -34,11 +34,13 @@ TRUNCATE TABLE dw.JOURNAL_QUALITE;
 
 -- ============================================================ 1. lecture des fichiers sources, tels quels
 DROP TABLE IF EXISTS #employe, #produit, #exemplaire, #location, #reservation, #rejet, #bilan, #prix, #taux_emp, #taux_profil;
-CREATE TABLE #employe(CodeEmploye INT, NomEmploye NVARCHAR(50), PrenomEmploye NVARCHAR(50), CodeProfil VARCHAR(10),
-    LibProfil NVARCHAR(100), ClasseTrajet NVARCHAR(100), CodeService INT, NomService NVARCHAR(60), CodeSociete VARCHAR(14),
-    NomSociete NVARCHAR(100), TypeSociete NVARCHAR(60), CodeDomaine VARCHAR(7), LibDomaine NVARCHAR(150), CodeDivision VARCHAR(2),
-    LibDivision NVARCHAR(150), CodeVille VARCHAR(10), NomVille NVARCHAR(100), CodeDepartement VARCHAR(10),
-    NomDepartement NVARCHAR(100), CodeRegion VARCHAR(10), NomRegion NVARCHAR(100), CodePays CHAR(2), NomPays NVARCHAR(50));
+CREATE TABLE #employe(CodeEmploye INT, NomEmploye NVARCHAR(50), PrenomEmploye NVARCHAR(50), CodeCategorie VARCHAR(10),
+    NomCategorie NVARCHAR(100), SuperCategorie NVARCHAR(100), CodeService INT, NomService NVARCHAR(60), CodeSociete VARCHAR(14),
+    NomSociete NVARCHAR(100), CodeTy VARCHAR(5), LibelleTypeSoc NVARCHAR(60), CodeDomaine VARCHAR(7), LibDomaine NVARCHAR(150),
+    CodeDivision VARCHAR(2), LibDivision NVARCHAR(150), CodeVille VARCHAR(10), NomVille NVARCHAR(100), CodeDepartement VARCHAR(10),
+    NomDepartement NVARCHAR(100), CodeRegion VARCHAR(10), NomRegion NVARCHAR(100), CodeGemeinde VARCHAR(10), NomGemeinde NVARCHAR(100),
+    CodeKreis VARCHAR(10), NomKreis NVARCHAR(100), TypeKreis NVARCHAR(30), CodeDistrict VARCHAR(10), NomDistrict NVARCHAR(100),
+    CodeLand VARCHAR(10), NomLand NVARCHAR(100), TypeLand NVARCHAR(30), CodePays CHAR(2), NomPays NVARCHAR(50), TauxTVA DECIMAL(4,3));
 CREATE TABLE #produit(CodeProduit INT, NomProduit NVARCHAR(50), MarqueProduit NVARCHAR(50), DescriptifProduit NVARCHAR(500),
     PoidsKg DECIMAL(6,2), AutonomieKm INT, CodeGamme CHAR(5), NomGamme NVARCHAR(50), Secteur NVARCHAR(50),
     CodeGeneration VARCHAR(10), NomGeneration NVARCHAR(50), DateSortieGeneration DATE, DateArretGeneration DATE,
@@ -96,10 +98,10 @@ FROM #employe e JOIN r ON r.CodeService = e.CodeService AND r.n = 1
 WHERE e.NomService + N'|' COLLATE French_CS_AS <> r.Nom + N'|';
 
 -- valeurs manquantes : membre « non renseigné »
-UPDATE #employe SET CodeProfil = 'NR-00', LibProfil = N'Profil non renseigné', ClasseTrajet = N'Non renseignée'
+UPDATE #employe SET CodeCategorie = 'NR-00', NomCategorie = N'Profil non renseigné', SuperCategorie = N'Non renseignée'
 OUTPUT 'employe.csv', N'profil de trajet manquant', N'complétée', CONCAT(N'employé ', inserted.CodeEmploye), NULL
 INTO dw.JOURNAL_QUALITE(Fichier, Anomalie, Traitement, Ligne, ValeurLue)
-WHERE CodeProfil IS NULL;
+WHERE CodeCategorie IS NULL;
 UPDATE #employe SET CodeDomaine = 'ND', LibDomaine = N'Non renseigné', CodeDivision = 'ND', LibDivision = N'Non renseigné'
 OUTPUT 'employe.csv', N'domaine de la société manquant', N'complétée', CONCAT(N'employé ', inserted.CodeEmploye),
        inserted.NomSociete
@@ -126,12 +128,14 @@ SELECT ROW_NUMBER() OVER (ORDER BY CodeProduit), CodeProduit, NomProduit, Marque
        CodeFabricant, NomFabricant, PaysFabricant
 FROM #produit;
 
-INSERT INTO dw.DIM_EMPLOYE(CleEmploye, CodeEmploye, NomEmploye, PrenomEmploye, CodeProfil, LibProfil, ClasseTrajet,
-    CodeService, NomService, CodeSociete, NomSociete, TypeSociete, CodeDomaine, LibDomaine, CodeDivision, LibDivision,
-    CodeVille, NomVille, CodeDepartement, NomDepartement, CodeRegion, NomRegion, CodePays, NomPays)
-SELECT ROW_NUMBER() OVER (ORDER BY CodeEmploye), CodeEmploye, NomEmploye, PrenomEmploye, CodeProfil, LibProfil, ClasseTrajet,
-       CodeService, NomService, CodeSociete, NomSociete, TypeSociete, CodeDomaine, LibDomaine, CodeDivision, LibDivision,
-       CodeVille, NomVille, CodeDepartement, NomDepartement, CodeRegion, NomRegion, CodePays, NomPays
+INSERT INTO dw.DIM_EMPLOYE(CleEmploye, CodeEmploye, NomEmploye, PrenomEmploye, CodeCategorie, NomCategorie, SuperCategorie,
+    CodeService, NomService, CodeSociete, NomSociete, CodeTy, LibelleTypeSoc, CodeDomaine, LibDomaine, CodeDivision, LibDivision,
+    CodeVille, NomVille, CodeDepartement, NomDepartement, CodeRegion, NomRegion, CodeGemeinde, NomGemeinde, CodeKreis, NomKreis,
+    TypeKreis, CodeDistrict, NomDistrict, CodeLand, NomLand, TypeLand, CodePays, NomPays, TauxTVA)
+SELECT ROW_NUMBER() OVER (ORDER BY CodeEmploye), CodeEmploye, NomEmploye, PrenomEmploye, CodeCategorie, NomCategorie, SuperCategorie,
+       CodeService, NomService, CodeSociete, NomSociete, CodeTy, LibelleTypeSoc, CodeDomaine, LibDomaine, CodeDivision, LibDivision,
+       CodeVille, NomVille, CodeDepartement, NomDepartement, CodeRegion, NomRegion, CodeGemeinde, NomGemeinde, CodeKreis, NomKreis,
+       TypeKreis, CodeDistrict, NomDistrict, CodeLand, NomLand, TypeLand, CodePays, NomPays, TauxTVA
 FROM #employe;
 
 INSERT INTO dw.DIM_EXEMPLAIRE(CleExemplaire, CodeExemplaire, NumeroSerie, DateMiseService, DateReforme, CodeAgence,
@@ -206,14 +210,14 @@ JOIN dw.DIM_EXEMPLAIRE x ON x.CodeExemplaire = l.CodeExemplaire
 JOIN dw.DIM_PRODUIT p    ON p.CleProduit = x.CleProduit
 WHERE l.TauxReduction IS NOT NULL
 GROUP BY l.CodeEmploye, p.CodeGamme, YEAR(l.DateLocation);
-SELECT e.CodeProfil, p.CodeGamme, YEAR(l.DateLocation) AS Annee, MAX(l.TauxReduction) AS Taux
+SELECT e.CodeCategorie, p.CodeGamme, YEAR(l.DateLocation) AS Annee, MAX(l.TauxReduction) AS Taux
 INTO #taux_profil
 FROM #location l
 JOIN dw.DIM_EMPLOYE e    ON e.CodeEmploye = l.CodeEmploye
 JOIN dw.DIM_EXEMPLAIRE x ON x.CodeExemplaire = l.CodeExemplaire
 JOIN dw.DIM_PRODUIT p    ON p.CleProduit = x.CleProduit
-WHERE l.TauxReduction IS NOT NULL AND e.CodeProfil <> 'NR-00'
-GROUP BY e.CodeProfil, p.CodeGamme, YEAR(l.DateLocation);
+WHERE l.TauxReduction IS NOT NULL AND e.CodeCategorie <> 'NR-00'
+GROUP BY e.CodeCategorie, p.CodeGamme, YEAR(l.DateLocation);
 UPDATE l SET TauxReduction = COALESCE(te.Taux, tp.Taux)
 OUTPUT 'location.csv', N'taux de réduction manquant', N'complétée',
        CONCAT(N'employé ', inserted.CodeEmploye, N', exemplaire ', inserted.CodeExemplaire, N', ', CONVERT(CHAR(10), inserted.DateLocation, 23)), NULL
@@ -223,7 +227,7 @@ JOIN dw.DIM_EMPLOYE e    ON e.CodeEmploye = l.CodeEmploye
 JOIN dw.DIM_EXEMPLAIRE x ON x.CodeExemplaire = l.CodeExemplaire
 JOIN dw.DIM_PRODUIT p    ON p.CleProduit = x.CleProduit
 LEFT JOIN #taux_emp te   ON te.CodeEmploye = l.CodeEmploye AND te.CodeGamme = p.CodeGamme AND te.Annee = YEAR(l.DateLocation)
-LEFT JOIN #taux_profil tp ON tp.CodeProfil = e.CodeProfil AND tp.CodeGamme = p.CodeGamme AND tp.Annee = YEAR(l.DateLocation)
+LEFT JOIN #taux_profil tp ON tp.CodeCategorie = e.CodeCategorie AND tp.CodeGamme = p.CodeGamme AND tp.Annee = YEAR(l.DateLocation)
 WHERE l.TauxReduction IS NULL AND COALESCE(te.Taux, tp.Taux) IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM #rejet r WHERE r.CodeEmploye = l.CodeEmploye AND r.CodeAutre = l.CodeExemplaire AND r.DateLigne = l.DateLocation);
 
@@ -333,7 +337,7 @@ ORDER BY Fichier, Traitement, Anomalie;
 -- 3) volumes minimaux du sujet
 SELECT Element, Nb, Minimum, CASE WHEN Nb >= Minimum THEN 'OK' ELSE 'INSUFFISANT' END AS Verdict
 FROM (SELECT 1 AS o, N'Sociétés' AS Element, COUNT(DISTINCT CodeSociete) AS Nb, 40 AS Minimum FROM dw.DIM_EMPLOYE
-      UNION ALL SELECT 2, N'Régions (FR) et Länder (DE)', COUNT(DISTINCT CodeRegion), 5 FROM dw.DIM_EMPLOYE
+      UNION ALL SELECT 2, N'Régions (FR) et Länder (DE)', COUNT(DISTINCT CASE WHEN CodePays = 'FR' THEN CodeRegion ELSE CodeLand END), 5 FROM dw.DIM_EMPLOYE
       UNION ALL SELECT 3, N'Employés', COUNT(*), 3000 FROM dw.DIM_EMPLOYE
       UNION ALL SELECT 4, N'Produits', COUNT(*), 60 FROM dw.DIM_PRODUIT
       UNION ALL SELECT 5, N'Secteurs', COUNT(DISTINCT Secteur), 3 FROM dw.DIM_PRODUIT

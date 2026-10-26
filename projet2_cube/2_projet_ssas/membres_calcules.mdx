@@ -1,0 +1,28 @@
+﻿/* Membres calculés de base du cube Locations */
+CALCULATE;
+
+/* Remise accordée : montant public moins montant réellement payé */
+CREATE MEMBER CURRENTCUBE.[Measures].[Montant remise]
+ AS [Measures].[Montant public] - [Measures].[Montant payé],
+FORMAT_STRING = "#,##0.00", VISIBLE = 1;
+
+/* Taux de remise effectif (séquence S2) */
+CREATE MEMBER CURRENTCUBE.[Measures].[Taux de remise effectif]
+ AS IIF([Measures].[Montant public] = 0, NULL, 1 - [Measures].[Montant payé] / [Measures].[Montant public]),
+FORMAT_STRING = "Percent", VISIBLE = 1;
+
+/* Durée moyenne d'une location, en jours */
+CREATE MEMBER CURRENTCUBE.[Measures].[Durée moyenne]
+ AS IIF([Measures].[Nombre de locations] = 0, NULL, [Measures].[Durée] / [Measures].[Nombre de locations]),
+FORMAT_STRING = "#,##0.0", VISIBLE = 1;
+
+/* Montant payé moyen par location */
+CREATE MEMBER CURRENTCUBE.[Measures].[Montant payé moyen]
+ AS IIF([Measures].[Nombre de locations] = 0, NULL, [Measures].[Montant payé] / [Measures].[Nombre de locations]),
+FORMAT_STRING = "#,##0.00", VISIBLE = 1;
+
+/* Taux de demandes non satisfaites (séquence S1) : demandes sans exemplaire libre / toutes les demandes */
+CREATE MEMBER CURRENTCUBE.[Measures].[Taux de demandes non satisfaites]
+ AS IIF([Measures].[Nombre de locations] + [Measures].[Réservations non honorées] = 0, NULL,
+        [Measures].[Réservations non honorées] / ([Measures].[Nombre de locations] + [Measures].[Réservations non honorées])),
+FORMAT_STRING = "Percent", VISIBLE = 1;

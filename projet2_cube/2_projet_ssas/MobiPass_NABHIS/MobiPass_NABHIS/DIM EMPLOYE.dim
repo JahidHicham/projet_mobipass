@@ -1,0 +1,857 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="fab37430-91f9-489a-be99-dad1d3eb12db" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DIM EMPLOYE</ID>
+  <Name>Employé</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="d0547724-458e-4809-93d3-7c39f1e52f26">
+    <DataSourceViewID>MobiPass</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="be3686c8-e4a9-49ce-93fb-6935a6381d96">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="7853016e-d046-4652-91a2-f6b3cb7c551b">
+      <ID>Cle Employe</ID>
+      <Name>Employé</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="7d00744d-ebb9-4c1b-8c77-e9fb41604058">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="21977685-03e0-4ca8-9f07-e4dca074232f">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CleEmploye</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="778dd37a-58aa-491b-ad38-a992f7d75b1a">
+        <DataType>WChar</DataType>
+        <DataSize>101</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="8b0e0708-da81-4287-9ef6-a1771edd8cb9">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomComplet</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="af87b577-220d-4c77-9ffd-fd1f6ba4128e">
+          <AttributeID>Code Service</AttributeID>
+          <Name>Service</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="f0176e08-7eae-4142-806c-1ccb73396ead">
+          <AttributeID>Code Categorie</AttributeID>
+          <Name>Catégorie</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="8028dbd1-f34e-4037-bf4b-9e5bd8d50f3c">
+      <ID>Code Service</ID>
+      <Name>Service</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="12cb9c18-3860-4649-80b2-f2919c5ee3fb">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="19e36b6a-9b89-480f-a785-ae4c676bc513">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeService</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="aace18a1-5220-4308-b5ab-94c99092306c">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="528114ab-d6e2-4a6c-8c39-974b849577d2">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomService</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="bbb3ccf0-df27-4e8d-b49e-cc46af870c13">
+          <AttributeID>Code Societe</AttributeID>
+          <Name>Société</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="fd481548-eb5a-462f-b68c-defa6ecd9dec">
+      <ID>Code Societe</ID>
+      <Name>Société</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="8cc9b819-2ade-4849-a1e6-b3ece854d178">
+          <DataType>WChar</DataType>
+          <DataSize>14</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="eadee5d4-1a6b-4829-a0e9-a2e6578e26ec">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeSociete</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="565b21e6-057b-4f9d-a0df-568959c37a5a">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="ac6528ec-d047-481e-b4bd-05cc556c6cc5">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomSociete</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="0fae31f8-6b00-42aa-ba63-b8536343cf56">
+          <AttributeID>Code Ville</AttributeID>
+          <Name>Ville</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="f6ce6db8-63c1-4029-8c2b-f7619673764a">
+          <AttributeID>Code Gemeinde</AttributeID>
+          <Name>Gemeinde</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="e4df06a8-e844-4329-ade9-56d2894ca4e6">
+          <AttributeID>Code Ty</AttributeID>
+          <Name>Type Société</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="5bbe0d67-d9bc-4e50-a6ed-93f9e2895cd1">
+          <AttributeID>Code Domaine</AttributeID>
+          <Name>Domaine</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="b23288f6-2cbf-4b2a-91e4-d1ee3b2f57bc">
+      <ID>Code Domaine</ID>
+      <Name>Domaine</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="36917e79-3bdb-4c18-8e09-d603db8b581a">
+          <DataType>WChar</DataType>
+          <DataSize>7</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="af137f66-829a-4a0d-b590-7d1802acca08">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeDomaine</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="67fb0fd0-ebb0-4f2c-80a6-3d0f59ce7709">
+        <DataType>WChar</DataType>
+        <DataSize>150</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="88f55afb-bf2e-453b-bd0e-56e2bd3bbd96">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>LibDomaine</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="9108e4b0-46af-4da7-b8ab-61f1fbf52789">
+          <AttributeID>Code Division</AttributeID>
+          <Name>Division</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="5e12c2b8-dc64-4e73-b07c-dc8962697256">
+      <ID>Code Division</ID>
+      <Name>Division</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="c1f0958b-6e35-49d0-b164-c2d68127dfb6">
+          <DataType>WChar</DataType>
+          <DataSize>2</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c20f4cb4-c773-4c2b-972a-869e33b4168e">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeDivision</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="cbadff4e-9c00-466d-b5d7-39721961360d">
+        <DataType>WChar</DataType>
+        <DataSize>150</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="9d67fdb1-fe5e-46f5-b51c-11cdd86d2eea">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>LibDivision</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="804dfb32-06e6-41e9-a03e-b477c1400ab7">
+      <ID>Code Ville</ID>
+      <Name>Ville</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="cf933bbf-322b-4516-b041-2116156ac95e">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ae6461f4-4547-4126-88d5-ca98daee0c1a">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeVille</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="a480e0eb-efc5-4aae-aad7-a3e26951d4dd">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="3d3411f8-16fc-442c-8f55-03792a9e068c">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomVille</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="0a2a3bcb-3be7-432e-b63a-d5798d69f4dd">
+          <AttributeID>Code Departement</AttributeID>
+          <Name>Département</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="5036b5e5-65c7-429d-98e4-4385b177d80e">
+      <ID>Code Departement</ID>
+      <Name>Département</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="0e2be175-f9a6-43ed-8cc5-2504543518ec">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2872630e-3e3a-427c-ad8b-124f4d2cdaf4">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeDepartement</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="b2f154be-f06b-4fec-9ed4-5fdf62f538c7">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="9b014a5c-37f7-4983-9d83-39c24c1eb295">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomDepartement</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="66cfe4a0-4c06-49f5-ad0b-b7dae0c6634a">
+          <AttributeID>Code Region</AttributeID>
+          <Name>Région</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="20bd00bd-f714-432d-9ca6-6fecedcb075b">
+      <ID>Code Region</ID>
+      <Name>Région</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="7bcda9b1-3b03-4691-a003-c3ace8fcf953">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="adc3f4ab-a3e0-43cd-a9b8-eb2d7ce8ff46">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeRegion</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="9d0409cc-9519-4a80-a4b4-a965250e5d8a">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="b609c4fa-b4cc-4f0c-856b-25db33085162">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomRegion</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="a8abd601-f02b-4515-a50a-f853457b006d">
+          <AttributeID>Code Pays</AttributeID>
+          <Name>Pays</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="3c7850d0-dc9f-45a2-929f-4e258e03ba8c">
+      <ID>Code Pays</ID>
+      <Name>Pays</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="91fd3aca-92ff-4cac-bc66-7dd9e83234a9">
+          <DataType>WChar</DataType>
+          <DataSize>2</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="377f2c88-f267-46d0-9ec3-71a406663433">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodePays</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="c3662912-6676-400a-b2bc-cae8af97323d">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="d09f03c5-dc90-4d79-b21f-37786519d2b5">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomPays</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="196c3a26-1741-4240-93d4-9bf1c760a89d">
+      <ID>Code Categorie</ID>
+      <Name>Catégorie</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="7a33c07d-fcca-4a36-a276-535b30d311fc">
+          <DataType>WChar</DataType>
+          <DataSize>5</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="72383af7-e280-4983-a398-6fd8fd5e73ea">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeCategorie</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="3edffeb4-ebf6-4198-8fe0-09c162fa796f">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="374b39ad-d3a4-4bd7-b0ff-9e5346a4ecbc">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomCategorie</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="f17eb6e4-23d9-4665-92af-ddb747f76581">
+          <AttributeID>Super Categorie</AttributeID>
+          <Name>Super Catégorie</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="c90502d2-80f9-4864-9661-c53d9502fb0d">
+      <ID>Super Categorie</ID>
+      <Name>Super Catégorie</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="6422a45e-d89e-4fbc-9457-9bf52a24c1f2">
+          <DataType>WChar</DataType>
+          <DataSize>100</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="726f4e4a-a7af-477a-a72d-b47c06d2c31e">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>SuperCategorie</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="684ec9f8-2689-4747-995d-5f44dc275a9c">
+      <ID>Code Ty</ID>
+      <Name>Type Société</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="f2887bcd-073b-422b-a701-e00e853e6d88">
+          <DataType>WChar</DataType>
+          <DataSize>5</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2fca8453-9827-45f4-ad6d-6c9fed6d1def">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeTy</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="6d024443-2a5e-44c1-90a8-4a75e36632e6">
+        <DataType>WChar</DataType>
+        <DataSize>60</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="62efc4ec-6eed-4874-bf51-be1d5d647e57">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>LibelleTypeSoc</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="bacc794a-537c-4ed0-8c5d-8413529236b2">
+      <ID>Code Gemeinde</ID>
+      <Name>Gemeinde</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="f52d7f78-d2e6-4396-8dac-74be254953aa">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="a0b22872-e0c3-4d44-8800-9720f76d1919">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeGemeinde</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="0d4fb42f-71cc-426f-9e11-90d4d9a5e2f9">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="38f95ec9-7809-4dc2-87c8-a75e501633c6">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomGemeinde</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="529d238e-f822-48b5-980c-f2249baeb3b9">
+          <AttributeID>Code Kreis</AttributeID>
+          <Name>Kreis</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="972a7618-3712-4b04-b158-6d430c03c685">
+      <ID>Code Kreis</ID>
+      <Name>Kreis</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="fd35a13f-2eb6-4197-bbfa-c42cd48203fe">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="f85791b6-ae5a-4f89-ac36-3d082239d4ab">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeKreis</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="55dbe7ae-78c2-485f-a053-76cdf4d3407f">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="62821189-6c4e-4f66-b1b7-50ec5d0464a6">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomKreis</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="2d071910-89f0-4a08-9a7b-c8333e1a30fc">
+          <AttributeID>Code District</AttributeID>
+          <Name>District</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="b0af427c-1ac9-4b00-ad9f-8876654349cb">
+          <AttributeID>Type Kreis</AttributeID>
+          <Name>Type Kreis</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="d019b461-cc43-4421-9f43-52d0c71fd4f4">
+      <ID>Type Kreis</ID>
+      <Name>Type Kreis</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="1006e0ab-1a8e-4ac5-81e5-b7181f81354c">
+          <DataType>WChar</DataType>
+          <DataSize>30</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ac214905-4908-4239-86ed-8763075a9a3f">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>TypeKreis</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="9f688e03-2ac4-4151-a395-04f7646678cb">
+      <ID>Code District</ID>
+      <Name>District</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="9fa786af-e333-41c0-9072-dd6a75a456b7">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="85e09521-49f0-42ab-8ffd-f73eb130b938">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeDistrict</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="549c04b4-2b45-4e97-b360-22dc02775681">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="2c1fd12f-9d70-40ee-ad21-90d9df7c5e38">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomDistrict</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="f64c4738-5aea-40e0-8876-c06cc5f040c0">
+          <AttributeID>Code Land</AttributeID>
+          <Name>Land</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="971f21db-4c89-4f39-8cbc-97d66d65d99d">
+      <ID>Code Land</ID>
+      <Name>Land</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="7011e8af-aff4-4ab3-af1b-421d0f6a4377">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c406b761-71bc-44ef-8cab-8ba01a4cd88f">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>CodeLand</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="93d87209-3828-4a3c-8318-239ae4e85184">
+        <DataType>WChar</DataType>
+        <DataSize>100</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="0ce12aff-3889-4d4c-a383-fa69df156d58">
+          <TableID>dw_DIM_EMPLOYE</TableID>
+          <ColumnID>NomLand</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="f9fb41ea-fd68-429e-9845-b12adf458a38">
+          <AttributeID>Code Pays</AttributeID>
+          <Name>Pays</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="7887e66d-a09c-4270-97cb-ae84278f4d20">
+          <AttributeID>Type Land</AttributeID>
+          <Name>Type Land</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="cde4eea0-0d36-4cd4-bc4d-18bb47591f31">
+      <ID>Type Land</ID>
+      <Name>Type Land</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="a42e3427-eb4c-45d6-8687-b0e7323519ad">
+          <DataType>WChar</DataType>
+          <DataSize>30</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="21ede55f-2325-418f-a265-bc2beaff6aab">
+            <TableID>dw_DIM_EMPLOYE</TableID>
+            <ColumnID>TypeLand</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <Hierarchies>
+    <Hierarchy dwd:design-time-name="58354878-4d4e-4ae8-938d-b9c75b2bea6d">
+      <ID>H_France</ID>
+      <Name>H_France</Name>
+      <Levels>
+        <Level dwd:design-time-name="ec000894-6967-44c7-b49a-9585726efe9b">
+          <ID>Pays</ID>
+          <Name>Pays</Name>
+          <SourceAttributeID>Code Pays</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="3bab65a4-5f4c-4fed-90d6-4b03935f7e10">
+          <ID>Région</ID>
+          <Name>Région</Name>
+          <SourceAttributeID>Code Region</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="2202b625-6190-4b19-afec-3858812e62e8">
+          <ID>Département</ID>
+          <Name>Département</Name>
+          <SourceAttributeID>Code Departement</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="74697a5b-37d0-4b5d-879d-015c59b57dc4">
+          <ID>Ville</ID>
+          <Name>Ville</Name>
+          <SourceAttributeID>Code Ville</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="38f40f6f-1e85-405a-8509-7c7394f4817c">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="814c5866-8881-4d31-82d3-69b4dfe1680e">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="e34ebe12-86a3-45f6-9ecf-864fe5b03d81">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="639edf45-80b4-421b-9c41-ee5170491c22">
+      <ID>H_Allemagne</ID>
+      <Name>H_Allemagne</Name>
+      <Levels>
+        <Level dwd:design-time-name="26733f6d-85da-4ea9-9b2f-33081b1a137d">
+          <ID>Pays</ID>
+          <Name>Pays</Name>
+          <SourceAttributeID>Code Pays</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="b4c8ab1c-5f5d-4716-bcf4-d3d78ec62f54">
+          <ID>Land</ID>
+          <Name>Land</Name>
+          <SourceAttributeID>Code Land</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="2af12f01-e33c-43bc-a8e7-a4e317d8d9b8">
+          <ID>Kreis</ID>
+          <Name>Kreis</Name>
+          <SourceAttributeID>Code Kreis</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="a7764a2f-9853-4bcc-95d0-413aad41674d">
+          <ID>Gemeinde</ID>
+          <Name>Gemeinde</Name>
+          <SourceAttributeID>Code Gemeinde</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="7b76f15b-bc5f-4d7d-b4c5-2996b1df37db">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="ac6c87bc-c4f9-4c4b-9c51-a70e82835384">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="8cbb98fe-7972-4659-9b57-75f085f4e2c0">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="2d675e25-ff4b-44a0-bb53-c20562ed5bc3">
+      <ID>H_District</ID>
+      <Name>H_District</Name>
+      <Levels>
+        <Level dwd:design-time-name="f45a3356-01e1-4455-86bb-1c4469abe0d7">
+          <ID>Land</ID>
+          <Name>Land</Name>
+          <SourceAttributeID>Code Land</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="382f1214-3e34-4e5f-be51-2493bda50c9d">
+          <ID>District</ID>
+          <Name>District</Name>
+          <SourceAttributeID>Code District</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="3d300ea9-6e03-4bab-9477-538a8fe11e82">
+          <ID>Kreis</ID>
+          <Name>Kreis</Name>
+          <SourceAttributeID>Code Kreis</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="dc4eaaf2-94e8-4be3-9f1b-f571db5b1ed4">
+          <ID>Gemeinde</ID>
+          <Name>Gemeinde</Name>
+          <SourceAttributeID>Code Gemeinde</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="8e62f9e6-7cbd-46b6-9bb3-d6280c6961ab">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="f0ed79b4-6221-4ac4-857a-9f67ba2e21f5">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="9ce36629-41e6-41b4-a24c-3f81f7c045f7">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="22e8dba5-0f22-45a6-a98a-c3ec34956da4">
+      <ID>H_Type_Kreis</ID>
+      <Name>H_Type_Kreis</Name>
+      <Levels>
+        <Level dwd:design-time-name="ac9b8249-1340-4854-9267-83425017c16c">
+          <ID>Type Kreis</ID>
+          <Name>Type Kreis</Name>
+          <SourceAttributeID>Type Kreis</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="0447fddd-a571-4265-bd07-b17e2540b3ac">
+          <ID>Kreis</ID>
+          <Name>Kreis</Name>
+          <SourceAttributeID>Code Kreis</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="43ab8af9-a3c9-4186-984c-bb0251bc9e21">
+          <ID>Gemeinde</ID>
+          <Name>Gemeinde</Name>
+          <SourceAttributeID>Code Gemeinde</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="51bbda9b-cb32-49a7-bb8d-9de5b7d913cc">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="740402b2-4070-4e30-886e-f22b6ded305b">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="b12d3bc6-1381-4d20-8d7a-2a92ca653c23">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="238b279b-8a76-46a8-9e3a-2c46c8a7bc71">
+      <ID>H_Type_Land</ID>
+      <Name>H_Type_Land</Name>
+      <Levels>
+        <Level dwd:design-time-name="04f49884-45ce-4cc0-9f00-9276023f1bb5">
+          <ID>Type Land</ID>
+          <Name>Type Land</Name>
+          <SourceAttributeID>Type Land</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="228ffc36-c24c-4f61-acc7-ab38bfa63308">
+          <ID>Land</ID>
+          <Name>Land</Name>
+          <SourceAttributeID>Code Land</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="d76e9a8f-d08c-44ab-82e6-0226390aba8c">
+          <ID>Kreis</ID>
+          <Name>Kreis</Name>
+          <SourceAttributeID>Code Kreis</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="50b3be09-d53a-4973-a50d-1459b079545c">
+          <ID>Gemeinde</ID>
+          <Name>Gemeinde</Name>
+          <SourceAttributeID>Code Gemeinde</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="117b5e37-858f-420f-914e-f3b2029c9450">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="af3fe02a-50c4-4f44-8d76-0cfb1c34bf97">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="beea3e08-99a0-4fcb-b439-f84054fdb9df">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="1aac7d5a-a8cd-4598-b0ea-4457e724b036">
+      <ID>H_Categorie</ID>
+      <Name>H_Categorie</Name>
+      <Levels>
+        <Level dwd:design-time-name="3817ec1b-293e-4020-bef6-e876f7e0bd0a">
+          <ID>Super Catégorie</ID>
+          <Name>Super Catégorie</Name>
+          <SourceAttributeID>Super Categorie</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="dd8a4cb9-e53d-4465-89d5-a67d7661cab3">
+          <ID>Catégorie</ID>
+          <Name>Catégorie</Name>
+          <SourceAttributeID>Code Categorie</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="e96a6be1-e6c4-41df-a207-8d6a8e7ee0f7">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="0df6c227-599a-4e66-9e4a-cea8661dadf2">
+      <ID>H_Type_Societe</ID>
+      <Name>H_Type_Societe</Name>
+      <Levels>
+        <Level dwd:design-time-name="34f95f56-2107-4680-9909-11e6011987e7">
+          <ID>Type Société</ID>
+          <Name>Type Société</Name>
+          <SourceAttributeID>Code Ty</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="ae2b5dfa-abf6-4917-9f82-2e13c12d5873">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="bd3cced5-858a-427d-846e-fd47639a3164">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="3b80da24-4072-4999-98ee-394ab2f78358">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="99e5b722-d43d-4990-aaf1-6c2813130e44">
+      <ID>H_Domaine</ID>
+      <Name>H_Domaine</Name>
+      <Levels>
+        <Level dwd:design-time-name="a740f5ba-61d8-43e5-af1a-50ec7e491f4a">
+          <ID>Division</ID>
+          <Name>Division</Name>
+          <SourceAttributeID>Code Division</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="99bf9678-e8dc-4d9d-bb1c-dc2a643f5c62">
+          <ID>Domaine</ID>
+          <Name>Domaine</Name>
+          <SourceAttributeID>Code Domaine</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="06947525-f1bd-46c9-a128-7803bc474407">
+          <ID>Société</ID>
+          <Name>Société</Name>
+          <SourceAttributeID>Code Societe</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="3daf2a9b-abe7-420c-a461-d395577c6369">
+          <ID>Service</ID>
+          <Name>Service</Name>
+          <SourceAttributeID>Code Service</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="691e5f81-d362-4d5d-a12c-9a7b08873d4d">
+          <ID>Employé</ID>
+          <Name>Employé</Name>
+          <SourceAttributeID>Cle Employe</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+  </Hierarchies>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>

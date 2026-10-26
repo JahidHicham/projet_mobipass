@@ -1,0 +1,422 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="a1e4ae51-3a7f-4029-8dd0-753701fe4272" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DIM EXEMPLAIRE</ID>
+  <Name>Exemplaire</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="cc329ab3-c4f5-495f-b87e-efb61e98376c">
+    <DataSourceViewID>MobiPass</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="47ab4bd0-e6ff-4e4c-a6a8-6790ed9a22ef">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="feb4a870-4e56-4420-afbd-cfcc97864dd0">
+      <ID>Cle Exemplaire</ID>
+      <Name>Exemplaire</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="60c85dc9-cfd4-47a0-a54f-249a396e0560">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="e88a8e62-6fbf-47c2-acf5-7a714c974174">
+            <TableID>dw_DIM_EXEMPLAIRE</TableID>
+            <ColumnID>CleExemplaire</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="24d61347-b804-46cb-b332-95586fe6e85a">
+        <DataType>WChar</DataType>
+        <DataSize>30</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="befb18af-2bba-43c7-bdb4-1a03e01b9cbf">
+          <TableID>dw_DIM_EXEMPLAIRE</TableID>
+          <ColumnID>NumeroSerie</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="28033b6b-379a-4b6f-b9d4-70deb8f000c4">
+          <AttributeID>Code Agence</AttributeID>
+          <Name>Agence</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="e9286910-a447-4545-9872-b75098248b5a">
+          <AttributeID>Cle Produit</AttributeID>
+          <Name>Produit</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="fa5d2e7b-fc6b-47b3-9f29-62650296f4f6">
+      <ID>Code Agence</ID>
+      <Name>Agence</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="d29dc5eb-9a3a-444d-bde3-69863644bfa5">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="59bbb98f-e234-483c-beda-0b318fd694b6">
+            <TableID>dw_DIM_EXEMPLAIRE</TableID>
+            <ColumnID>CodeAgence</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="8c18567a-bfa7-4be4-8563-81f6f24ab592">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="012391f5-0a47-4d3b-a776-03e294f2165f">
+          <TableID>dw_DIM_EXEMPLAIRE</TableID>
+          <ColumnID>NomAgence</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="7d5f0680-2ad2-4428-911d-48d6cd281aa8">
+          <AttributeID>Pays Agence</AttributeID>
+          <Name>Pays Agence</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="28c34311-9a59-483c-bef8-c1f5d93ceab5">
+      <ID>Pays Agence</ID>
+      <Name>Pays Agence</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="47779ec6-040c-4489-acfb-bc6283d8379b">
+          <DataType>WChar</DataType>
+          <DataSize>2</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="39009ac0-55ef-4fc5-9c2f-fd76a0435355">
+            <TableID>dw_DIM_EXEMPLAIRE</TableID>
+            <ColumnID>PaysAgence</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="9bb1d501-5a4c-40f8-a248-5a0b26011393">
+      <ID>Cle Produit</ID>
+      <Name>Produit</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="a69cdebf-5ac3-4a0b-bf12-74558da9d791">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2c90b63f-739e-4166-8c6e-9330f2f0b90c">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>CleProduit</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="bcf573fe-1d7c-4bbb-8df5-93dbe19defa5">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="b0b4eb97-310c-47dd-93e8-70c86a81e1fe">
+          <TableID>dw_DIM_PRODUIT</TableID>
+          <ColumnID>NomProduit</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="c4fc7230-94ed-4cb0-b024-f3e424ad15cc">
+          <AttributeID>Marque Produit</AttributeID>
+          <Name>Marque</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="9eaa1012-e33b-4f7f-9829-d466d2fc4895">
+          <AttributeID>Code Gamme</AttributeID>
+          <Name>Gamme</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="4868e4d9-3d01-4e89-b8e4-38e7af5c7553">
+          <AttributeID>Code Generation</AttributeID>
+          <Name>Génération</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="3d2e465d-ebb8-4c86-a19c-3453384a427a">
+      <ID>Marque Produit</ID>
+      <Name>Marque</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="8eb03c6d-7701-482c-87e2-62528c6e3276">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="7731ba76-b51f-4564-8078-cb9fceefe321">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>MarqueProduit</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="59afacac-36e1-4541-b7e4-9526f7168ee0">
+      <ID>Code Gamme</ID>
+      <Name>Gamme</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="33649db9-7c4f-4800-a32d-f9a5008c02b2">
+          <DataType>WChar</DataType>
+          <DataSize>5</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c642cca9-53d9-491a-bfde-c14b106c789b">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>CodeGamme</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="87845a00-225a-4d95-b0be-28a7e96a66b7">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="38e35c41-3888-4597-a8c4-7bf61fc5d990">
+          <TableID>dw_DIM_PRODUIT</TableID>
+          <ColumnID>NomGamme</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="336ad526-cb75-4ee0-ae7e-0b57e8cb5104">
+          <AttributeID>Secteur</AttributeID>
+          <Name>Secteur</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="f1341a28-3ac8-4b11-b21b-94bc94f3846c">
+      <ID>Secteur</ID>
+      <Name>Secteur</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="19358713-5ded-464e-ac23-4918503fdec2">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="83762f05-2d71-44a7-a777-4d9bbb3f5f43">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>Secteur</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="80103349-351b-4d9b-9129-a685dbc07bed">
+      <ID>Code Generation</ID>
+      <Name>Génération</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="2e69544f-3cac-4323-b439-80e2c65c030e">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="19a2435e-33ff-4bc7-87d5-4cf8cb78d141">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>CodeGeneration</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="617830bb-f147-4b24-907a-4c7b7e5c85eb">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="7e0cef50-7a0f-4a3f-a48d-a46e52c6e38f">
+          <TableID>dw_DIM_PRODUIT</TableID>
+          <ColumnID>NomGeneration</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="b8507ab6-be16-44f2-bfee-bc94d0a8b8f7">
+          <AttributeID>Code Fabricant</AttributeID>
+          <Name>Fabricant</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="bf8814ae-cf01-4d0a-a0ef-425474df33ca">
+      <ID>Code Fabricant</ID>
+      <Name>Fabricant</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="e0bd049b-4a30-427a-ab7d-b6228fb2231b">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ca4020ce-ac7c-4b7e-837a-906f944c6b97">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>CodeFabricant</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="ee793f97-788b-4bee-b13e-56b06c8e29fd">
+        <DataType>WChar</DataType>
+        <DataSize>50</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="6e6df643-52eb-43cd-ba00-6431f64ba545">
+          <TableID>dw_DIM_PRODUIT</TableID>
+          <ColumnID>NomFabricant</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="789187de-b9d7-4a4c-825d-ed71d5d993f7">
+          <AttributeID>Pays Fabricant</AttributeID>
+          <Name>Pays Fabricant</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="44018b7f-cf0a-4ac0-916b-a3bd934928bd">
+      <ID>Pays Fabricant</ID>
+      <Name>Pays Fabricant</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="869ffb77-0eb4-45b4-95e3-4219e801e627">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="6b1407b5-1d4b-451f-bf19-cedd09e4fbc1">
+            <TableID>dw_DIM_PRODUIT</TableID>
+            <ColumnID>PaysFabricant</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <Hierarchies>
+    <Hierarchy dwd:design-time-name="c430dd40-2d60-465c-bdc5-84f491d6c4a7">
+      <ID>H_GAMME</ID>
+      <Name>H_GAMME</Name>
+      <Levels>
+        <Level dwd:design-time-name="3a9c0af6-d29b-4aae-badc-f3558441134d">
+          <ID>Secteur</ID>
+          <Name>Secteur</Name>
+          <SourceAttributeID>Secteur</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="ccd97e07-0c49-4a0e-a76b-a7b1a8943527">
+          <ID>Gamme</ID>
+          <Name>Gamme</Name>
+          <SourceAttributeID>Code Gamme</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="b3fa1f7d-eae1-425e-9ff1-0c8817eb251f">
+          <ID>Produit</ID>
+          <Name>Produit</Name>
+          <SourceAttributeID>Cle Produit</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="3eb1551e-b809-4543-9cab-61ac24eee09e">
+          <ID>Exemplaire</ID>
+          <Name>Exemplaire</Name>
+          <SourceAttributeID>Cle Exemplaire</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="21e8d7e0-0512-4a65-8287-45dab922f555">
+      <ID>H_MAR</ID>
+      <Name>H_MAR</Name>
+      <Levels>
+        <Level dwd:design-time-name="dd91c882-0899-498c-8fa7-45d3eee347d2">
+          <ID>Marque</ID>
+          <Name>Marque</Name>
+          <SourceAttributeID>Marque Produit</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="fdac79ec-7f74-46fb-8ade-bef9ccaedb6f">
+          <ID>Produit</ID>
+          <Name>Produit</Name>
+          <SourceAttributeID>Cle Produit</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="11af07f9-211e-4d90-9c88-d417d10b0fc9">
+          <ID>Exemplaire</ID>
+          <Name>Exemplaire</Name>
+          <SourceAttributeID>Cle Exemplaire</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="28b7a057-1f55-4f32-9c8a-ca445d93ce97">
+      <ID>H_GENERATION</ID>
+      <Name>H_GENERATION</Name>
+      <Levels>
+        <Level dwd:design-time-name="2515d8c7-25d9-4f91-9563-3718a7726137">
+          <ID>Pays Fabricant</ID>
+          <Name>Pays Fabricant</Name>
+          <SourceAttributeID>Pays Fabricant</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="65aca022-42d3-48b5-90c0-29519d706b6b">
+          <ID>Fabricant</ID>
+          <Name>Fabricant</Name>
+          <SourceAttributeID>Code Fabricant</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="6414eb92-6e20-493f-a5fc-1faa056cc63a">
+          <ID>Génération</ID>
+          <Name>Génération</Name>
+          <SourceAttributeID>Code Generation</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="280ed67f-6bec-482c-ba42-d7535ec0dbe4">
+          <ID>Produit</ID>
+          <Name>Produit</Name>
+          <SourceAttributeID>Cle Produit</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="e15d64bc-663e-4d2f-9021-55be9db93c43">
+          <ID>Exemplaire</ID>
+          <Name>Exemplaire</Name>
+          <SourceAttributeID>Cle Exemplaire</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+    <Hierarchy dwd:design-time-name="6d16de37-01cc-43aa-b005-036dd497ab94">
+      <ID>H_Agence</ID>
+      <Name>H_Agence</Name>
+      <Levels>
+        <Level dwd:design-time-name="d9a9854c-6f2e-4d34-acf1-3a890ac3997a">
+          <ID>Pays Agence</ID>
+          <Name>Pays Agence</Name>
+          <SourceAttributeID>Pays Agence</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="b6977abe-9e36-49cc-8344-66716e49c834">
+          <ID>Agence</ID>
+          <Name>Agence</Name>
+          <SourceAttributeID>Code Agence</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="4b52e404-47f3-4dce-bfa8-0b5a3c52271d">
+          <ID>Exemplaire</ID>
+          <Name>Exemplaire</Name>
+          <SourceAttributeID>Cle Exemplaire</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+  </Hierarchies>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>
