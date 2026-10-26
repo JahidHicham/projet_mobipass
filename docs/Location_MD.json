@@ -547,14 +547,6 @@
                 "x": 135.4287109375,
                 "y": 396.2857666015625
               }
-            },
-            {
-              "id": "wa-mvb5fwfq-3",
-              "name": "TypeKreis",
-              "position": {
-                "x": 142.2860107421875,
-                "y": 418.1713806152344
-              }
             }
           ],
           "position": {
@@ -589,16 +581,8 @@
               "id": "wa-mvban8qi-12",
               "name": "NomLand",
               "position": {
-                "x": 113.42864990234375,
-                "y": 561.9998779296875
-              }
-            },
-            {
-              "id": "wa-mvcceasd-2",
-              "name": "TypeLand",
-              "position": {
-                "x": 120.85711669921875,
-                "y": 581.0285888671875
+                "x": 88.28558349609375,
+                "y": 566.5712585449219
               }
             }
           ],
@@ -623,6 +607,24 @@
           "position": {
             "x": 254.8570556640625,
             "y": 470.8571472167969
+          }
+        },
+        {
+          "id": "p-mvp2ns5y-3",
+          "name": "TypeKreis",
+          "weakAttributes": [],
+          "position": {
+            "x": 317.714111328125,
+            "y": 394.28570556640625
+          }
+        },
+        {
+          "id": "p-mvp2phao-6",
+          "name": "TypeLand",
+          "weakAttributes": [],
+          "position": {
+            "x": 275.71417236328125,
+            "y": 589.1427307128906
           }
         }
       ],
@@ -698,6 +700,39 @@
             "p-mv8h370w-64->p-mv8h7u8h-72": "strict",
             "p-mv8h7u8h-72->p-mvbaniwr-14": "strict_incomplete",
             "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete"
+          }
+        },
+        {
+          "id": "h-mvp2ns5x-2",
+          "name": "H_Type_Kreis",
+          "path": [
+            "p-mv8dfk56-4",
+            "p-mv8ebb3s-42",
+            "p-mv8ef427-44",
+            "p-mv8h370w-64",
+            "p-mv8h7u8h-72",
+            "p-mvp2ns5y-3"
+          ],
+          "linkTypes": {
+            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete",
+            "p-mv8h370w-64->p-mv8h7u8h-72": "strict"
+          }
+        },
+        {
+          "id": "h-mvp2phao-5",
+          "name": "H_Type_Land",
+          "path": [
+            "p-mv8dfk56-4",
+            "p-mv8ebb3s-42",
+            "p-mv8ef427-44",
+            "p-mv8h370w-64",
+            "p-mv8h7u8h-72",
+            "p-mvbaedyn-8",
+            "p-mvp2phao-6"
+          ],
+          "linkTypes": {
+            "p-mv8ef427-44->p-mv8h370w-64": "strict_incomplete",
+            "p-mv8h370w-64->p-mv8h7u8h-72": "strict"
           }
         }
       ],

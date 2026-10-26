@@ -13,9 +13,10 @@
 --
 -- Ecarts volontaires entre schema en etoile et Oracle :
 --   * niveau "Date" -> colonne DateJ (DATE est un mot reserve Oracle)
---   * TypeKreis / TypeLand : TypeKreis vient du NiveauZG du Kreis (LANDKREIS / KREISFREIE STADT, colonne TypeKreise du
---     fichier source) ; TypeLand est calcule ici ('Stadtstaat' pour Berlin, Hamburg,
---     Bremen ; 'Flächenland' pour les autres Laender).
+--   * TypeKreis / TypeLand : niveaux de hierarchie (H_Type_Kreis, H_Type_Land). TypeKreis vient du
+--     NiveauZG du Kreis (LANDKREIS / KREISFREIE STADT, colonne TypeKreise du fichier source) ;
+--     TypeLand est calcule ici ('Stadtstaat' pour Berlin, Hamburg, Bremen ; 'Flächenland' pour
+--     les autres Laender).
 -- =====================================================================
 
 
@@ -126,6 +127,8 @@ ATTRIBUTE CodeGamme      DETERMINES EXEMPLAIRE_MD1.NomGamme;
 --    H_Allemagne   : CodeEmploye -> CodeService -> CodeSociete -> CodeGemeinde
 --                    -> CodeKreis -> CodeLand -> CodePays
 --    H_District    : ... -> CodeGemeinde -> CodeKreis -> CodeDistrict -> CodeLand -> CodePays
+--    H_Type_Kreis  : ... -> CodeGemeinde -> CodeKreis -> TypeKreis
+--    H_Type_Land   : ... -> CodeGemeinde -> CodeKreis -> CodeLand -> TypeLand
 --    H_Type_Societe: CodeEmploye -> CodeService -> CodeSociete -> CodeTy
 --    H_Categorie   : CodeEmploye -> CodeCategorie -> SuperCategorie
 --  Hierarchies incompletes : societe francaise -> CodeGemeinde/CodeKreis/CodeDistrict/CodeLand NULL ;
@@ -195,9 +198,11 @@ CREATE DIMENSION EMPLOYE_DIM1
    LEVEL CodeDepartement IS (EMPLOYE_MD1.CodeDepartement)
    LEVEL CodeGemeinde   IS (EMPLOYE_MD1.CodeGemeinde)
    LEVEL CodeKreis      IS (EMPLOYE_MD1.CodeKreis)
+   LEVEL TypeKreis      IS (EMPLOYE_MD1.TypeKreis)
    LEVEL CodeDistrict   IS (EMPLOYE_MD1.CodeDistrict)
    LEVEL CodeRegion     IS (EMPLOYE_MD1.CodeRegion)
    LEVEL CodeLand       IS (EMPLOYE_MD1.CodeLand)
+   LEVEL TypeLand       IS (EMPLOYE_MD1.TypeLand)
    LEVEL CodePays       IS (EMPLOYE_MD1.CodePays)
    LEVEL CodeTy         IS (EMPLOYE_MD1.CodeTy)
    LEVEL CodeCategorie  IS (EMPLOYE_MD1.CodeCategorie)
@@ -211,6 +216,11 @@ HIERARCHY H_Allemagne (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
 HIERARCHY H_District (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
                       CHILD OF CodeGemeinde CHILD OF CodeKreis CHILD OF CodeDistrict
                       CHILD OF CodeLand CHILD OF CodePays)
+HIERARCHY H_Type_Kreis (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
+                        CHILD OF CodeGemeinde CHILD OF CodeKreis CHILD OF TypeKreis)
+HIERARCHY H_Type_Land (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
+                       CHILD OF CodeGemeinde CHILD OF CodeKreis CHILD OF CodeLand
+                       CHILD OF TypeLand)
 HIERARCHY H_Type_Societe (CodeEmploye CHILD OF CodeService CHILD OF CodeSociete
                           CHILD OF CodeTy)
 HIERARCHY H_Categorie (CodeEmploye CHILD OF CodeCategorie CHILD OF SuperCategorie)
@@ -222,11 +232,9 @@ ATTRIBUTE CodeVille       DETERMINES EMPLOYE_MD1.NomVille
 ATTRIBUTE CodeDepartement DETERMINES EMPLOYE_MD1.NomDepartement
 ATTRIBUTE CodeGemeinde    DETERMINES EMPLOYE_MD1.NomGemeinde
 ATTRIBUTE CodeKreis       DETERMINES EMPLOYE_MD1.NomKreis
-ATTRIBUTE CodeKreis       DETERMINES EMPLOYE_MD1.TypeKreis
 ATTRIBUTE CodeDistrict    DETERMINES EMPLOYE_MD1.NomDistrict
 ATTRIBUTE CodeRegion      DETERMINES EMPLOYE_MD1.NomRegion
 ATTRIBUTE CodeLand        DETERMINES EMPLOYE_MD1.NomLand
-ATTRIBUTE CodeLand        DETERMINES EMPLOYE_MD1.TypeLand
 ATTRIBUTE CodePays DETERMINES EMPLOYE_MD1.NomPays
 ATTRIBUTE CodePays DETERMINES EMPLOYE_MD1.TauxTVA
 ATTRIBUTE CodeTy          DETERMINES EMPLOYE_MD1.LibelleTypeSoc
