@@ -1,0 +1,16 @@
+﻿CodeAgence,NomAgence,Ville,Pays,NbExemplaires,Origine
+AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,144,projet 1
+AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,81,projet 1
+AG-PAR,MobiPass Paris La Défense,Paris,FR,182,projet 1
+AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,61,projet 1
+AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,18,projet 1
+AG-MUC,MobiPass München Ost,München,DE,32,projet 1
+AG-KOE,MobiPass Köln Deutz,Köln,DE,90,projet 1
+AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,26,projet 1
+AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,71,projet 2
+AG-LIL,MobiPass Lille Europe,Lille,FR,23,projet 2
+AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,61,projet 2
+AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,16,projet 2
+AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,8,projet 2
+AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,72,projet 2
+AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,18,projet 2

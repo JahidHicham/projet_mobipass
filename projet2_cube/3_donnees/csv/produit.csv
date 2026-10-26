@@ -1,0 +1,78 @@
+﻿CodeProduit,NomProduit,MarqueProduit,DescriptifProduit,PoidsKg,AutonomieKm,CodeGamme,NomGamme,Secteur,CodeGeneration,NomGeneration,DateSortieGeneration,DateArretGeneration,CodeFabricant,NomFabricant,PaysFabricant
+1,Moustache Lundi 27,Moustache,Moustache Lundi 27 (Vélos électriques urbains),24.5,90,G0001,Vélos électriques urbains,Vélos,GEN01,Moustache 2022,2021-09-01,2024-12-31,FAB01,Moustache Bikes,France
+2,Moustache Lundi 27.3,Moustache,Moustache Lundi 27.3 (Vélos électriques urbains),23.9,110,G0001,Vélos électriques urbains,Vélos,GEN02,Moustache 2025,2024-09-01,,FAB01,Moustache Bikes,France
+3,Elops 920 E,Btwin,Elops 920 E (Vélos électriques urbains),25.0,80,G0001,Vélos électriques urbains,Vélos,GEN06,Decathlon Elops 2024,2023-09-01,,FAB04,Decathlon,France
+4,Cube Kathmandu Hybrid,Cube,Cube Kathmandu Hybrid (VTT électriques),26.8,120,G0002,VTT électriques,Vélos,GEN04,Cube 2023,2022-08-01,,FAB03,Cube Bikes,Allemagne
+5,Moustache Samedi 29,Moustache,Moustache Samedi 29 (VTT électriques),23.5,100,G0002,VTT électriques,Vélos,GEN02,Moustache 2025,2024-09-01,,FAB01,Moustache Bikes,France
+6,Load 75,Riese & Müller,Load 75 (Vélos cargo),38.0,100,G0003,Vélos cargo,Vélos,GEN03,Riese & Müller Gen 4,2022-03-01,,FAB02,Riese & Müller,Allemagne
+7,Packster 70,Riese & Müller,Packster 70 (Vélos cargo),36.0,90,G0003,Vélos cargo,Vélos,GEN03,Riese & Müller Gen 4,2022-03-01,,FAB02,Riese & Müller,Allemagne
+8,Brompton P Line,Brompton,Brompton P Line (Vélos pliants),10.0,,G0004,Vélos pliants,Vélos,GEN07,Brompton P Line,2022-02-01,,FAB05,Brompton,Royaume-Uni
+9,Tilt 500,Btwin,Tilt 500 (Vélos pliants),13.5,,G0004,Vélos pliants,Vélos,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+10,Triban RC 520,Btwin,Triban RC 520 (Vélos de route & gravel),9.8,,G0005,Vélos de route & gravel,Vélos,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+11,Cube Nuroad,Cube,Cube Nuroad (Vélos de route & gravel),10.2,,G0005,Vélos de route & gravel,Vélos,GEN04,Cube 2023,2022-08-01,,FAB03,Cube Bikes,Allemagne
+12,Btwin Riverside 20,Btwin,Btwin Riverside 20 (Vélos enfants),11.0,,G0006,Vélos enfants,Vélos,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+13,Casque urbain 500,Btwin,Casque urbain 500 (Casques),0.4,,G0007,Casques,Equipement du cycliste,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+14,Abus Hyban 2.0,Abus,Abus Hyban 2.0 (Casques),0.45,,G0007,Casques,Equipement du cycliste,GEN09,Abus Gen 2023,2022-10-01,,FAB07,Abus,Allemagne
+15,Poncho de pluie 900,Btwin,Poncho de pluie 900 (Vêtements de pluie),0.3,,G0008,Vêtements de pluie,Equipement du cycliste,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+16,Abus Granit X-Plus 540,Abus,Abus Granit X-Plus 540 (Antivols),1.5,,G0009,Antivols,Equipement du cycliste,GEN09,Abus Gen 2023,2022-10-01,,FAB07,Abus,Allemagne
+17,Abus Bordo 6000,Abus,Abus Bordo 6000 (Antivols),1.2,,G0009,Antivols,Equipement du cycliste,GEN09,Abus Gen 2023,2022-10-01,,FAB07,Abus,Allemagne
+18,Kit éclairage USB,Btwin,Kit éclairage USB (Eclairage & signalisation),0.2,,G0010,Eclairage & signalisation,Equipement du cycliste,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+19,Ortlieb Back-Roller Classic,Ortlieb,Ortlieb Back-Roller Classic (Sacoches & bagagerie),1.9,,G0011,Sacoches & bagagerie,Equipement du cycliste,GEN10,Ortlieb Classic,2020-01-01,,FAB08,Ortlieb,Allemagne
+20,Thule Chariot Cross,Thule,Thule Chariot Cross (Sièges enfants & remorques),13.0,,G0012,Sièges enfants & remorques,Equipement du cycliste,GEN13,Thule 2023,2022-09-01,,FAB11,Thule,Suède
+21,Siège enfant Yepp Maxi,Thule,Siège enfant Yepp Maxi (Sièges enfants & remorques),4.2,,G0012,Sièges enfants & remorques,Equipement du cycliste,GEN13,Thule 2023,2022-09-01,,FAB11,Thule,Suède
+22,Gants vélo hiver,Btwin,Gants vélo hiver (Gants & accessoires textiles),0.1,,G0013,Gants & accessoires textiles,Equipement du cycliste,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+23,Bosch Kiox 300,Bosch,Bosch Kiox 300 (Compteurs & GPS),0.1,,G0014,Compteurs & GPS,Equipement du cycliste,GEN14,Bosch Smart System,2022-06-01,,FAB12,Bosch eBike Systems,Allemagne
+24,Pompe à pied 500,Btwin,Pompe à pied 500 (Pompes & outillage),1.1,,G0015,Pompes & outillage,Equipement du cycliste,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+25,Xiaomi Electric Scooter 4 Pro,Xiaomi,Xiaomi Electric Scooter 4 Pro (Trottinettes électriques),17.0,55,G0016,Trottinettes électriques,Micromobilité,GEN08,Xiaomi Scooter 4,2023-03-01,,FAB06,Xiaomi,Chine
+26,Ninebot Max G2,Segway-Ninebot,Ninebot Max G2 (Trottinettes électriques),24.0,70,G0016,Trottinettes électriques,Micromobilité,GEN11,Ninebot Gen 3,2022-05-01,,FAB09,Segway-Ninebot,Chine
+27,Oxelo Town 9,Oxelo,Oxelo Town 9 (Trottinettes mécaniques),5.8,,G0017,Trottinettes mécaniques,Micromobilité,GEN06,Decathlon Elops 2024,2023-09-01,,FAB04,Decathlon,France
+28,Ninebot One S2,Segway-Ninebot,Ninebot One S2 (Gyroroues),11.5,30,G0018,Gyroroues,Micromobilité,GEN11,Ninebot Gen 3,2022-05-01,,FAB09,Segway-Ninebot,Chine
+29,Ninebot S Hoverboard,Segway-Ninebot,Ninebot S Hoverboard (Hoverboards & gyropodes),12.8,22,G0019,Hoverboards & gyropodes,Micromobilité,GEN11,Ninebot Gen 3,2022-05-01,,FAB09,Segway-Ninebot,Chine
+30,Skate électrique Urban,Oxelo,Skate électrique Urban (Skateboards électriques),7.5,20,G0020,Skateboards électriques,Micromobilité,GEN06,Decathlon Elops 2024,2023-09-01,,FAB04,Decathlon,France
+31,Ninebot E-Scooter E110,Segway-Ninebot,Ninebot E-Scooter E110 (Scooters électriques),80.0,100,G0021,Scooters électriques,Micromobilité,GEN11,Ninebot Gen 3,2022-05-01,,FAB09,Segway-Ninebot,Chine
+32,Rollers Fit 500,Oxelo,Rollers Fit 500 (Rollers & patins),2.8,,G0022,Rollers & patins,Micromobilité,GEN06,Decathlon Elops 2024,2023-09-01,,FAB04,Decathlon,France
+33,Batterie PowerTube 625,Bosch,Batterie PowerTube 625 (Batteries & chargeurs),3.5,,G0023,Batteries & chargeurs,Micromobilité,GEN14,Bosch Smart System,2022-06-01,,FAB12,Bosch eBike Systems,Allemagne
+34,Pneu urbain 700x40,Btwin,Pneu urbain 700x40 (Pièces détachées),0.6,,G0024,Pièces détachées,Micromobilité,GEN05,Decathlon Btwin 2022,2021-06-01,,FAB04,Decathlon,France
+35,Révision complète vélo,MobiPass,Révision complète vélo (Révision & réparation),,,G0025,Révision & réparation,Services et entretien,GEN12,Services MobiPass,2020-01-01,,FAB10,MobiPass Services,France
+36,Assurance vol & casse 1 an,MobiPass,Assurance vol & casse 1 an (Assurance vol & casse),,,G0026,Assurance vol & casse,Services et entretien,GEN12,Services MobiPass,2020-01-01,,FAB10,MobiPass Services,France
+37,Marquage Bicycode,MobiPass,Marquage Bicycode (Marquage antivol),,,G0027,Marquage antivol,Services et entretien,GEN12,Services MobiPass,2020-01-01,,FAB10,MobiPass Services,France
+38,Stage remise en selle 2 h,MobiPass,Stage remise en selle 2 h (Stage de remise en selle),,,G0028,Stage de remise en selle,Services et entretien,GEN12,Services MobiPass,2020-01-01,,FAB10,MobiPass Services,France
+39,Livraison et reprise à domicile,MobiPass,Livraison et reprise à domicile (Livraison & reprise à domicile),,,G0029,Livraison & reprise à domicile,Services et entretien,GEN12,Services MobiPass,2020-01-01,,FAB10,MobiPass Services,France
+40,Vélo cargo Btwin R500E,Btwin,Vélo cargo Btwin R500E (Vélos cargo),33.0,60,G0003,Vélos cargo,Vélos,GEN06,Decathlon Elops 2024,2023-09-01,,FAB04,Decathlon,France
+41,Gazelle Ultimate C380,Gazelle,Gazelle Ultimate C380 (Vélos électriques urbains),24.0,120,G0001,Vélos électriques urbains,Vélos,GEN15,Gazelle 2023,2022-09-01,,FAB13,Gazelle,Pays-Bas
+42,VanMoof S5,VanMoof,VanMoof S5 (Vélos électriques urbains),23.0,150,G0001,Vélos électriques urbains,Vélos,GEN16,VanMoof S5,2023-04-01,,FAB14,VanMoof,Pays-Bas
+43,Peugeot eLC01,Peugeot,Peugeot eLC01 (Vélos électriques urbains),23.5,90,G0001,Vélos électriques urbains,Vélos,GEN17,Peugeot eLC 2022,2022-03-01,,FAB15,Peugeot Cycles,France
+44,Kalkhoff Image 5.B,Kalkhoff,Kalkhoff Image 5.B (Vélos électriques urbains),26.0,140,G0001,Vélos électriques urbains,Vélos,GEN18,Kalkhoff 2023,2022-08-01,,FAB16,Kalkhoff,Allemagne
+45,O2feel Vog D8,,O2feel Vog D8 (Vélos électriques urbains),24.5,100,G0001,Vélos électriques urbains,Vélos,GEN19,O2feel 2022,2022-02-01,,FAB17,O2feel,France
+46,Elops LD 500 E,Btwin,Elops LD 500 E (Vélos électriques urbains),25.5,70,G0001,Vélos électriques urbains,Vélos,GEN41,Decathlon 2023,2022-09-01,,FAB04,Decathlon,France
+47,Specialized Turbo Vado 4.0,Specialized,Specialized Turbo Vado 4.0 (Vélos électriques urbains),23.4,130,G0001,Vélos électriques urbains,Vélos,GEN20,Specialized 2023,2022-07-01,,FAB18,Specialized,États-Unis
+48,Haibike AllMtn 3,Haibike,Haibike AllMtn 3 (VTT électriques),25.6,110,G0002,VTT électriques,Vélos,GEN21,Haibike 2023,2022-09-01,,FAB19,Haibike,Allemagne
+49,Rockrider E-ST 900,Rockrider,Rockrider E-ST 900 (VTT électriques),22.0,100,G0002,VTT électriques,Vélos,GEN41,Decathlon 2023,2022-09-01,,FAB04,Decathlon,France
+50,Trek Powerfly 5,Trek,Trek Powerfly 5 (VTT électriques),24.0,110,G0002,VTT électriques,Vélos,GEN22,Trek 2023,2022-08-01,,FAB20,Trek,États-Unis
+51,Orbea Wild H30,Orbea,Orbea Wild H30 (VTT électriques),24.3,120,G0002,VTT électriques,Vélos,GEN23,Orbea Wild,2022-06-01,,FAB21,Orbea,Espagne
+52,Urban Arrow Family,Urban Arrow,Urban Arrow Family (Vélos cargo),50.0,80,G0003,Vélos cargo,Vélos,GEN24,Urban Arrow Family,2021-09-01,,FAB22,Urban Arrow,Pays-Bas
+53,Tern GSD S10,Tern,Tern GSD S10 (Vélos cargo),33.0,110,G0003,Vélos cargo,Vélos,GEN25,Tern 2022,2022-01-01,,FAB23,Tern,Taïwan
+54,Arcade eCargo,Arcade,Arcade eCargo (Vélos cargo),38.0,80,G0003,Vélos cargo,Vélos,GEN26,Arcade eCargo,2022-04-01,,FAB24,Arcade Cycles,France
+55,Riese & Müller Multicharger,Riese & Müller,Riese & Müller Multicharger (Vélos cargo),30.0,100,G0003,Vélos cargo,Vélos,GEN43,Riese & Müller Gen 5,2023-03-01,,FAB02,Riese & Müller,Allemagne
+56,Tern Vektron Q9,Tern,Tern Vektron Q9 (Vélos pliants),21.9,80,G0004,Vélos pliants,Vélos,GEN25,Tern 2022,2022-01-01,,FAB23,Tern,Taïwan
+57,Brompton Electric C Line,Brompton,Brompton Electric C Line (Vélos pliants),16.6,70,G0004,Vélos pliants,Vélos,GEN42,Brompton Electric,2021-03-01,,FAB05,Brompton,Royaume-Uni
+58,Tilt 900,Btwin,Tilt 900 (Vélos pliants),11.6,,G0004,Vélos pliants,Vélos,GEN41,Decathlon 2023,2022-09-01,,FAB04,Decathlon,France
+59,Canyon Grail 6,Canyon,Canyon Grail 6 (Vélos de route & gravel),8.9,,G0005,Vélos de route & gravel,Vélos,GEN27,Canyon Grail 2023,2022-10-01,,FAB25,Canyon,Allemagne
+60,Specialized Diverge E5,Specialized,Specialized Diverge E5 (Vélos de route & gravel),10.4,,G0005,Vélos de route & gravel,Vélos,GEN20,Specialized 2023,2022-07-01,,FAB18,Specialized,États-Unis
+61,Lapierre Crosshill 3.0,Lapierre,Lapierre Crosshill 3.0 (Vélos de route & gravel),10.2,,G0005,Vélos de route & gravel,Vélos,GEN28,Lapierre 2023,2022-07-01,,FAB26,Lapierre,France
+62,Riverside 500 24 pouces,Btwin,Riverside 500 24 pouces (Vélos enfants),13.0,,G0006,Vélos enfants,Vélos,GEN41,Decathlon 2023,2022-09-01,,FAB04,Decathlon,France
+63,Woom 4,Woom,Woom 4 (Vélos enfants),7.7,,G0006,Vélos enfants,Vélos,GEN29,Woom Original,2021-01-01,,FAB27,Woom,Autriche
+64,Lazer Codax KinetiCore,Lazer,Lazer Codax KinetiCore (Casques),0.33,,G0007,Casques,Equipement du cycliste,GEN30,Lazer KinetiCore,2022-03-01,,FAB28,Lazer,Belgique
+65,Uvex City 4,Uvex,Uvex City 4 (Casques),0.4,,G0007,Casques,Equipement du cycliste,GEN31,Uvex City,2021-05-01,,FAB29,Uvex,Allemagne
+66,Vaude Aqua Back Plus,Vaude,Vaude Aqua Back Plus (Sacoches & bagagerie),1.6,,G0011,Sacoches & bagagerie,Equipement du cycliste,GEN32,Vaude Aqua,2020-03-01,,FAB30,Vaude,Allemagne
+67,Croozer Kid Plus for 2,Croozer,Croozer Kid Plus for 2 (Sièges enfants & remorques),15.0,,G0012,Sièges enfants & remorques,Equipement du cycliste,GEN33,Croozer Kid,2021-04-01,,FAB31,Croozer,Allemagne
+68,Burley D'Lite X,Burley,Burley D'Lite X (Sièges enfants & remorques),13.0,,G0012,Sièges enfants & remorques,Equipement du cycliste,GEN34,Burley 2022,2022-02-01,,FAB32,Burley,États-Unis
+69,Ninebot Max G30,,Ninebot Max G30 (Trottinettes électriques),19.0,65,G0016,Trottinettes électriques,Micromobilité,GEN11,Ninebot Gen 3,2022-05-01,,FAB09,Segway-Ninebot,Chine
+70,Pure Advance+,Pure Electric,Pure Advance+ (Trottinettes électriques),17.5,50,G0016,Trottinettes électriques,Micromobilité,GEN35,Pure Advance,2023-02-01,,FAB33,Pure Electric,Royaume-Uni
+71,Inokim OXO,Inokim,Inokim OXO (Trottinettes électriques),28.0,100,G0016,Trottinettes électriques,Micromobilité,GEN36,Inokim OXO,2021-06-01,,FAB34,Inokim,Israël
+72,Xiaomi Electric Scooter 4 Ultra,Xiaomi,Xiaomi Electric Scooter 4 Ultra (Trottinettes électriques),24.5,70,G0016,Trottinettes électriques,Micromobilité,GEN08,Xiaomi Scooter 4,2023-03-01,,FAB06,Xiaomi,Chine
+73,Oxelo Town 7 XL,Oxelo,Oxelo Town 7 XL (Trottinettes mécaniques),4.5,,G0017,Trottinettes mécaniques,Micromobilité,GEN41,Decathlon 2023,2022-09-01,,FAB04,Decathlon,France
+74,InMotion V12,InMotion,InMotion V12 (Gyroroues),25.0,100,G0018,Gyroroues,Micromobilité,GEN37,InMotion V12,2021-10-01,,FAB35,InMotion,Chine
+75,Evolve Stoke,Evolve,Evolve Stoke (Skateboards électriques),8.0,30,G0020,Skateboards électriques,Micromobilité,GEN38,Evolve Stoke,2022-05-01,,FAB36,Evolve Skateboards,Australie
+76,NIU MQi GT,NIU,NIU MQi GT (Scooters électriques),80.0,70,G0021,Scooters électriques,Micromobilité,GEN39,NIU MQi,2022-03-01,,FAB37,NIU,Chine
+77,Silence S01,Silence,Silence S01 (Scooters électriques),113.0,133,G0021,Scooters électriques,Micromobilité,GEN40,Silence S01,2021-03-01,,FAB38,Silence,Espagne

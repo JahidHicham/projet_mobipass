@@ -1,0 +1,904 @@
+﻿CodeExemplaire,NumeroSerie,DateMiseService,DateReforme,CodeAgence,NomAgence,VilleAgence,PaysAgence,CodeProduit
+1,MP-FR-2025-00001,2025-05-16,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,2
+2,MP-FR-2023-00002,2023-03-30,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,13
+3,MP-FR-2025-00003,2025-05-29,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,27
+4,MP-FR-2024-00004,2024-09-11,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+5,MP-FR-2024-00005,2024-07-15,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+6,MP-FR-2024-00006,2024-01-05,2025-05-22,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,11
+7,MP-FR-2024-00007,2024-10-21,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,2
+8,MP-FR-2025-00008,2025-01-30,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+9,MP-FR-2024-00009,2024-11-22,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+10,MP-FR-2024-00010,2024-08-31,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,40
+11,MP-FR-2025-00011,2025-02-07,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,40
+12,MP-FR-2023-00012,2023-03-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,20
+13,MP-FR-2024-00013,2024-12-12,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,3
+14,MP-FR-2024-00014,2024-05-25,2026-03-13,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,13
+15,MP-FR-2025-00015,2025-04-05,2026-08-17,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,5
+16,MP-FR-2023-00016,2023-04-27,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,10
+17,MP-FR-2024-00017,2024-11-04,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+18,MP-FR-2024-00018,2024-02-12,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,6
+19,MP-FR-2025-00019,2025-05-09,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,10
+20,MP-FR-2024-00020,2024-10-10,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+21,MP-FR-2024-00021,2024-09-26,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,2
+22,MP-FR-2023-00022,2023-03-30,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,9
+23,MP-FR-2023-00023,2023-06-19,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,7
+24,MP-FR-2024-00024,2024-01-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,3
+25,MP-FR-2025-00025,2025-04-19,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,7
+26,MP-FR-2025-00026,2025-03-12,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,40
+27,MP-FR-2024-00027,2024-05-23,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,6
+28,MP-FR-2025-00028,2025-05-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,13
+29,MP-FR-2023-00029,2023-10-20,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,6
+30,MP-FR-2023-00030,2023-10-04,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,3
+31,MP-FR-2025-00031,2025-03-27,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,26
+32,MP-FR-2024-00032,2024-09-07,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,29
+33,MP-FR-2025-00033,2025-01-10,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,3
+34,MP-FR-2024-00034,2024-07-22,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+35,MP-FR-2022-00035,2022-11-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,10
+36,MP-FR-2023-00036,2023-03-21,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+37,MP-FR-2024-00037,2024-02-13,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,20
+38,MP-FR-2024-00038,2024-11-09,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,40
+39,MP-FR-2023-00039,2023-01-10,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,8
+40,MP-FR-2024-00040,2024-09-14,2026-05-28,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,27
+41,MP-FR-2024-00041,2024-09-08,2026-07-02,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,2
+42,MP-FR-2023-00042,2023-02-18,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,11
+43,MP-FR-2024-00043,2024-11-01,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,2
+44,MP-FR-2023-00044,2023-11-30,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+45,MP-FR-2023-00045,2023-07-14,2026-07-17,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,13
+46,MP-FR-2023-00046,2023-06-04,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,19
+47,MP-FR-2023-00047,2023-05-27,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,8
+48,MP-FR-2025-00048,2025-06-30,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,26
+49,MP-FR-2023-00049,2023-07-25,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,6
+50,MP-FR-2024-00050,2024-10-21,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+51,MP-FR-2023-00051,2023-07-02,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,6
+52,MP-FR-2024-00052,2024-09-08,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,2
+53,MP-FR-2023-00053,2023-01-29,2026-02-19,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,6
+54,MP-FR-2022-00054,2022-10-23,2026-07-01,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,13
+55,MP-FR-2024-00055,2024-05-14,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,4
+56,MP-FR-2025-00056,2025-06-16,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,28
+57,MP-FR-2023-00057,2023-08-16,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,10
+58,MP-FR-2025-00058,2025-02-05,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,9
+59,MP-FR-2023-00059,2023-12-22,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,7
+60,MP-FR-2024-00060,2024-11-26,2026-05-11,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+61,MP-FR-2022-00061,2022-12-02,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,29
+62,MP-FR-2023-00062,2023-10-20,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,30
+63,MP-FR-2023-00063,2023-09-10,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+64,MP-FR-2022-00064,2022-10-21,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,14
+65,MP-FR-2023-00065,2023-06-10,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,9
+66,MP-FR-2024-00066,2024-11-07,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,26
+67,MP-FR-2023-00067,2023-02-09,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,9
+68,MP-FR-2024-00068,2024-11-29,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,2
+69,MP-FR-2024-00069,2024-12-30,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,8
+70,MP-FR-2025-00070,2025-05-24,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,2
+71,MP-FR-2025-00071,2025-05-27,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,2
+72,MP-FR-2023-00072,2023-10-06,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+73,MP-FR-2025-00073,2025-03-19,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,31
+74,MP-FR-2023-00074,2023-09-09,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,6
+75,MP-FR-2024-00075,2024-11-20,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,5
+76,MP-FR-2023-00076,2023-11-18,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,19
+77,MP-FR-2023-00077,2023-11-14,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,20
+78,MP-FR-2023-00078,2023-05-30,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,10
+79,MP-FR-2024-00079,2024-11-20,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,3
+80,MP-FR-2024-00080,2024-11-16,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,14
+81,MP-FR-2024-00081,2024-12-21,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+82,MP-FR-2024-00082,2024-03-20,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,9
+83,MP-FR-2024-00083,2024-06-06,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+84,MP-FR-2023-00084,2023-09-15,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,3
+85,MP-FR-2024-00085,2024-05-21,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,27
+86,MP-FR-2023-00086,2023-03-17,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+87,MP-FR-2023-00087,2023-03-12,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,4
+88,MP-FR-2024-00088,2024-08-18,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,11
+89,MP-FR-2022-00089,2022-11-17,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,7
+90,MP-FR-2023-00090,2023-11-16,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,4
+91,MP-FR-2023-00091,2023-05-03,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,7
+92,MP-FR-2024-00092,2024-01-29,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,26
+93,MP-FR-2024-00093,2024-08-30,2026-06-08,AG-PAR,MobiPass Paris La Défense,Paris,FR,31
+94,MP-FR-2024-00094,2024-03-30,,AG-PAR,MobiPass Paris La Défense,Paris,FR,26
+95,MP-FR-2024-00095,2024-01-04,,AG-PAR,MobiPass Paris La Défense,Paris,FR,3
+96,MP-FR-2022-00096,2022-10-12,,AG-PAR,MobiPass Paris La Défense,Paris,FR,6
+97,MP-FR-2022-00097,2022-12-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,4
+98,MP-FR-2024-00098,2024-11-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
+99,MP-FR-2025-00099,2025-03-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
+100,MP-FR-2024-00100,2024-07-06,2025-07-08,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
+101,MP-FR-2025-00101,2025-03-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,5
+102,MP-FR-2025-00102,2025-01-07,2024-08-26,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+103,MP-FR-2025-00103,2025-06-05,2026-09-25,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
+104,MP-FR-2023-00104,2023-11-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,14
+105,MP-FR-2023-00105,2023-10-20,2025-12-09,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+106,MP-FR-2025-00106,2025-01-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+107,MP-FR-2023-00107,2023-03-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,4
+108,MP-FR-2024-00108,2024-02-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,10
+109,MP-FR-2024-00109,2024-06-12,2025-03-12,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+110,MP-FR-2024-00110,2024-01-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,13
+111,MP-FR-2025-00111,2025-02-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
+112,MP-FR-2024-00112,2024-11-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,29
+113,MP-FR-2024-00113,2024-12-29,,AG-PAR,MobiPass Paris La Défense,Paris,FR,5
+114,MP-FR-2024-00114,2024-03-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,3
+115,MP-FR-2025-00115,2025-03-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,7
+116,MP-FR-2024-00116,2024-06-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,8
+117,MP-FR-2023-00117,2023-07-12,,AG-PAR,MobiPass Paris La Défense,Paris,FR,13
+118,MP-FR-2024-00118,2024-08-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,1
+119,MP-FR-2024-00119,2024-12-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,26
+120,MP-FR-2023-00120,2023-02-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,13
+121,MP-FR-2024-00121,2024-02-25,,AG-PAR,MobiPass Paris La Défense,Paris,FR,10
+122,MP-FR-2022-00122,2022-10-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,21
+123,MP-FR-2024-00123,2024-05-21,,AG-PAR,MobiPass Paris La Défense,Paris,FR,26
+124,MP-FR-2024-00124,2024-10-19,,AG-PAR,MobiPass Paris La Défense,Paris,FR,31
+125,MP-FR-2025-00125,2025-06-21,,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
+126,MP-FR-2023-00126,2023-12-17,2026-04-03,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
+127,MP-FR-2024-00127,2024-02-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,4
+128,MP-FR-2023-00128,2023-09-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,21
+129,MP-FR-2025-00129,2025-03-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,3
+130,MP-FR-2025-00130,2025-03-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
+131,MP-FR-2022-00131,2022-09-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,21
+132,MP-FR-2025-00132,2025-01-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,13
+133,MP-FR-2025-00133,2025-05-04,,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+134,MP-FR-2024-00134,2024-02-22,,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
+135,MP-FR-2024-00135,2024-06-06,,AG-PAR,MobiPass Paris La Défense,Paris,FR,1
+136,MP-FR-2024-00136,2024-10-30,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
+137,MP-FR-2022-00137,2022-09-05,,AG-PAR,MobiPass Paris La Défense,Paris,FR,26
+138,MP-FR-2024-00138,2024-05-12,,AG-PAR,MobiPass Paris La Défense,Paris,FR,1
+139,MP-FR-2025-00139,2025-01-06,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+140,MP-FR-2025-00140,2025-01-09,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,40
+141,MP-FR-2023-00141,2023-01-28,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,26
+142,MP-FR-2023-00142,2023-04-29,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,12
+143,MP-FR-2023-00143,2023-05-06,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,28
+144,MP-FR-2024-00144,2024-09-02,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,3
+145,MP-FR-2024-00145,2024-08-07,2025-05-29,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,7
+146,MP-FR-2025-00146,2025-05-05,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,25
+147,MP-FR-2023-00147,2023-10-18,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,25
+148,MP-FR-2024-00148,2024-07-11,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,7
+149,MP-FR-2025-00149,2025-01-18,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,27
+150,MP-FR-2025-00150,2025-04-26,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+151,MP-FR-2024-00151,2024-08-14,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,19
+152,MP-FR-2025-00152,2025-06-30,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,5
+153,MP-FR-2025-00153,2025-06-18,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+154,MP-FR-2025-00154,2025-01-16,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+155,MP-FR-2025-00155,2025-01-15,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+156,MP-FR-2023-00156,2023-06-25,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,7
+157,MP-FR-2024-00157,2024-08-05,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,3
+158,MP-FR-2023-00158,2023-05-11,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,10
+159,MP-FR-2024-00159,2024-11-30,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,10
+160,MP-FR-2024-00160,2024-07-06,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,10
+161,MP-FR-2025-00161,2025-06-10,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,4
+162,MP-FR-2023-00162,2023-11-04,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,26
+163,MP-FR-2023-00163,2023-01-01,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,13
+164,MP-FR-2022-00164,2022-09-22,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,20
+165,MP-FR-2023-00165,2023-05-26,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,19
+166,MP-FR-2024-00166,2024-12-28,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,13
+167,MP-FR-2024-00167,2024-07-07,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,25
+168,MP-FR-2023-00168,2023-11-25,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,1
+169,MP-FR-2025-00169,2025-05-22,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,14
+170,MP-FR-2023-00170,2023-11-03,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,1
+171,MP-FR-2024-00171,2024-09-26,2025-10-23,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,9
+172,MP-FR-2022-00172,2022-09-24,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,9
+173,MP-FR-2024-00173,2024-12-22,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+174,MP-FR-2024-00174,2024-02-22,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,3
+175,MP-FR-2025-00175,2025-01-02,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,1
+176,MP-FR-2024-00176,2024-04-25,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,14
+177,MP-FR-2025-00177,2025-01-07,2026-05-03,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,1
+178,MP-FR-2023-00178,2023-12-18,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,21
+179,MP-FR-2024-00179,2024-07-30,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,28
+180,MP-FR-2025-00180,2025-05-10,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,4
+181,MP-FR-2024-00181,2024-01-26,2026-07-15,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,26
+182,MP-FR-2025-00182,2025-05-05,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,2
+183,MP-FR-2024-00183,2024-12-21,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,3
+184,MP-FR-2024-00184,2024-10-14,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,3
+185,MP-DE-2026-00185,2026-03-15,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,11
+186,MP-DE-2025-00186,2025-12-09,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,6
+187,MP-DE-2026-00187,2026-02-21,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,20
+188,MP-DE-2026-00188,2026-02-26,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,14
+189,MP-DE-2026-00189,2026-03-20,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,9
+190,MP-DE-2026-00190,2026-01-31,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,3
+191,MP-DE-2026-00191,2026-03-20,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,12
+192,MP-DE-2026-00192,2026-02-05,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,9
+193,MP-DE-2026-00193,2026-02-01,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,11
+194,MP-DE-2026-00194,2026-01-13,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,4
+195,MP-DE-2025-00195,2025-12-10,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,5
+196,MP-DE-2026-00196,2026-03-21,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,40
+197,MP-DE-2026-00197,2026-03-08,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,25
+198,MP-DE-2026-00198,2026-03-22,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,3
+199,MP-DE-2026-00199,2026-03-22,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,9
+200,MP-DE-2025-00200,2025-12-14,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,5
+201,MP-DE-2025-00201,2025-12-28,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,29
+202,MP-DE-2025-00202,2025-12-31,,AG-BER,MobiPass Berlin Hauptbahnhof,Berlin,DE,1
+203,MP-DE-2026-00203,2026-02-04,,AG-MUC,MobiPass München Ost,München,DE,3
+204,MP-DE-2025-00204,2025-12-17,,AG-MUC,MobiPass München Ost,München,DE,26
+205,MP-DE-2026-00205,2026-03-12,,AG-MUC,MobiPass München Ost,München,DE,9
+206,MP-DE-2026-00206,2026-03-10,,AG-MUC,MobiPass München Ost,München,DE,26
+207,MP-DE-2026-00207,2026-02-01,,AG-MUC,MobiPass München Ost,München,DE,26
+208,MP-DE-2026-00208,2026-02-25,,AG-MUC,MobiPass München Ost,München,DE,2
+209,MP-DE-2026-00209,2026-01-11,,AG-MUC,MobiPass München Ost,München,DE,26
+210,MP-DE-2026-00210,2026-02-22,,AG-MUC,MobiPass München Ost,München,DE,5
+211,MP-DE-2026-00211,2026-02-17,,AG-MUC,MobiPass München Ost,München,DE,6
+212,MP-DE-2025-00212,2025-12-25,,AG-MUC,MobiPass München Ost,München,DE,20
+213,MP-DE-2026-00213,2026-02-09,,AG-MUC,MobiPass München Ost,München,DE,2
+214,MP-DE-2025-00214,2025-12-20,,AG-MUC,MobiPass München Ost,München,DE,19
+215,MP-DE-2025-00215,2025-12-17,,AG-MUC,MobiPass München Ost,München,DE,21
+216,MP-DE-2026-00216,2026-03-13,,AG-MUC,MobiPass München Ost,München,DE,25
+217,MP-DE-2025-00217,2025-12-08,,AG-MUC,MobiPass München Ost,München,DE,14
+218,MP-DE-2026-00218,2026-03-21,,AG-MUC,MobiPass München Ost,München,DE,25
+219,MP-DE-2026-00219,2026-03-12,,AG-MUC,MobiPass München Ost,München,DE,1
+220,MP-DE-2026-00220,2026-03-15,,AG-MUC,MobiPass München Ost,München,DE,3
+221,MP-DE-2026-00221,2026-01-04,,AG-KOE,MobiPass Köln Deutz,Köln,DE,2
+222,MP-DE-2026-00222,2026-02-27,,AG-KOE,MobiPass Köln Deutz,Köln,DE,40
+223,MP-DE-2026-00223,2026-01-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,5
+224,MP-DE-2026-00224,2026-02-27,,AG-KOE,MobiPass Köln Deutz,Köln,DE,2
+225,MP-DE-2025-00225,2025-12-24,,AG-KOE,MobiPass Köln Deutz,Köln,DE,1
+226,MP-DE-2026-00226,2026-01-22,,AG-KOE,MobiPass Köln Deutz,Köln,DE,14
+227,MP-DE-2026-00227,2026-02-01,,AG-KOE,MobiPass Köln Deutz,Köln,DE,13
+228,MP-DE-2025-00228,2025-12-04,,AG-KOE,MobiPass Köln Deutz,Köln,DE,28
+229,MP-DE-2026-00229,2026-02-04,,AG-KOE,MobiPass Köln Deutz,Köln,DE,3
+230,MP-DE-2026-00230,2026-02-08,,AG-KOE,MobiPass Köln Deutz,Köln,DE,5
+231,MP-DE-2026-00231,2026-02-26,,AG-KOE,MobiPass Köln Deutz,Köln,DE,1
+232,MP-DE-2025-00232,2025-12-20,,AG-KOE,MobiPass Köln Deutz,Köln,DE,21
+233,MP-DE-2025-00233,2025-12-19,,AG-KOE,MobiPass Köln Deutz,Köln,DE,27
+234,MP-DE-2025-00234,2025-12-06,,AG-KOE,MobiPass Köln Deutz,Köln,DE,20
+235,MP-DE-2025-00235,2025-12-08,,AG-KOE,MobiPass Köln Deutz,Köln,DE,8
+236,MP-DE-2026-00236,2026-02-14,,AG-KOE,MobiPass Köln Deutz,Köln,DE,1
+237,MP-DE-2026-00237,2026-02-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,26
+238,MP-DE-2026-00238,2026-01-02,,AG-KOE,MobiPass Köln Deutz,Köln,DE,25
+239,MP-DE-2025-00239,2025-12-04,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,4
+240,MP-DE-2025-00240,2025-12-25,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,2
+241,MP-DE-2025-00241,2025-12-12,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,26
+242,MP-DE-2026-00242,2026-01-25,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,6
+243,MP-DE-2026-00243,2026-03-18,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,2
+244,MP-DE-2025-00244,2025-12-29,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,2
+245,MP-DE-2026-00245,2026-02-02,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,14
+246,MP-DE-2025-00246,2025-12-21,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,3
+247,MP-DE-2026-00247,2026-03-22,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,9
+248,MP-DE-2026-00248,2026-01-24,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,6
+249,MP-DE-2026-00249,2026-01-16,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,7
+250,MP-DE-2026-00250,2026-01-09,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,19
+251,MP-DE-2026-00251,2026-01-26,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,13
+252,MP-DE-2026-00252,2026-02-10,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,30
+253,MP-DE-2025-00253,2025-12-12,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,12
+254,MP-DE-2025-00254,2025-12-28,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,26
+255,MP-DE-2025-00255,2025-12-15,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,21
+256,MP-DE-2026-00256,2026-01-15,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,25
+257,MP-FR-2022-00257,2022-08-27,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,29
+258,MP-FR-2022-00258,2022-07-01,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,76
+259,MP-FR-2025-00259,2025-03-02,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,31
+260,MP-FR-2022-00260,2022-06-30,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,75
+261,MP-FR-2022-00261,2022-10-22,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,73
+262,MP-FR-2024-00262,2024-09-03,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,5
+263,MP-FR-2025-00263,2025-02-10,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,48
+264,MP-FR-2022-00264,2022-08-03,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,50
+265,MP-FR-2022-00265,2022-11-17,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,10
+266,MP-FR-2022-00266,2022-11-19,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,60
+267,MP-FR-2025-00267,2025-03-14,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,63
+268,MP-FR-2025-00268,2025-02-06,2024-12-31,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,58
+269,MP-FR-2022-00269,2022-09-28,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,58
+270,MP-FR-2022-00270,2022-09-28,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,8
+271,MP-FR-2022-00271,2022-08-10,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,44
+272,MP-DE-2025-00272,2025-12-15,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,76
+273,MP-DE-2026-00273,2026-03-17,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,73
+274,MP-DE-2026-00274,2026-02-05,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,69
+275,MP-DE-2026-00275,2026-03-14,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,26
+276,MP-DE-2026-00276,2026-03-03,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,25
+277,MP-DE-2026-00277,2026-03-01,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,60
+278,MP-DE-2026-00278,2026-02-10,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,56
+279,MP-DE-2025-00279,2025-12-06,,AG-HAM,MobiPass Hamburg Altona,Hamburg,DE,58
+280,MP-DE-2026-00280,2026-02-14,,AG-KOE,MobiPass Köln Deutz,Köln,DE,64
+281,MP-DE-2026-00281,2026-03-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,65
+282,MP-DE-2026-00282,2026-01-11,,AG-KOE,MobiPass Köln Deutz,Köln,DE,13
+283,MP-DE-2025-00283,2025-12-02,,AG-KOE,MobiPass Köln Deutz,Köln,DE,29
+284,MP-DE-2026-00284,2026-02-23,,AG-KOE,MobiPass Köln Deutz,Köln,DE,19
+285,MP-DE-2026-00285,2026-02-17,,AG-KOE,MobiPass Köln Deutz,Köln,DE,19
+286,MP-DE-2025-00286,2025-12-17,,AG-KOE,MobiPass Köln Deutz,Köln,DE,19
+287,MP-DE-2026-00287,2026-02-24,,AG-KOE,MobiPass Köln Deutz,Köln,DE,76
+288,MP-DE-2025-00288,2025-12-30,,AG-KOE,MobiPass Köln Deutz,Köln,DE,31
+289,MP-DE-2025-00289,2025-12-03,,AG-KOE,MobiPass Köln Deutz,Köln,DE,76
+290,MP-DE-2026-00290,2026-01-31,,AG-KOE,MobiPass Köln Deutz,Köln,DE,68
+291,MP-DE-2026-00291,2026-02-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,75
+292,MP-DE-2026-00292,2026-02-05,,AG-KOE,MobiPass Köln Deutz,Köln,DE,73
+293,MP-DE-2026-00293,2026-02-10,,AG-KOE,MobiPass Köln Deutz,Köln,DE,27
+294,MP-DE-2026-00294,2026-03-06,,AG-KOE,MobiPass Köln Deutz,Köln,DE,25
+295,MP-DE-2025-00295,2025-12-24,,AG-KOE,MobiPass Köln Deutz,Köln,DE,70
+296,MP-DE-2025-00296,2025-12-20,,AG-KOE,MobiPass Köln Deutz,Köln,DE,26
+297,MP-DE-2026-00297,2026-01-22,,AG-KOE,MobiPass Köln Deutz,Köln,DE,71
+298,MP-DE-2026-00298,2026-02-23,,AG-KOE,MobiPass Köln Deutz,Köln,DE,26
+299,MP-DE-2026-00299,2026-02-02,,AG-KOE,MobiPass Köln Deutz,Köln,DE,25
+300,MP-DE-2026-00300,2026-01-02,,AG-KOE,MobiPass Köln Deutz,Köln,DE,69
+301,MP-DE-2026-00301,2026-01-15,,AG-KOE,MobiPass Köln Deutz,Köln,DE,26
+302,MP-DE-2025-00302,2025-12-21,,AG-KOE,MobiPass Köln Deutz,Köln,DE,26
+303,MP-DE-2025-00303,2025-12-14,,AG-KOE,MobiPass Köln Deutz,Köln,DE,70
+304,MP-DE-2025-00304,2025-12-26,,AG-KOE,MobiPass Köln Deutz,Köln,DE,70
+305,MP-DE-2026-00305,2026-02-22,,AG-KOE,MobiPass Köln Deutz,Köln,DE,25
+306,MP-DE-2025-00306,2025-12-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,72
+307,MP-DE-2026-00307,2026-01-24,,AG-KOE,MobiPass Köln Deutz,Köln,DE,26
+308,MP-DE-2026-00308,2026-01-31,,AG-KOE,MobiPass Köln Deutz,Köln,DE,71
+309,MP-DE-2026-00309,2026-03-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,71
+310,MP-DE-2026-00310,2026-02-21,,AG-KOE,MobiPass Köln Deutz,Köln,DE,25
+311,MP-DE-2026-00311,2026-01-27,,AG-KOE,MobiPass Köln Deutz,Köln,DE,70
+312,MP-DE-2026-00312,2026-02-04,,AG-KOE,MobiPass Köln Deutz,Köln,DE,70
+313,MP-DE-2026-00313,2026-01-13,,AG-KOE,MobiPass Köln Deutz,Köln,DE,49
+314,MP-DE-2026-00314,2026-01-04,,AG-KOE,MobiPass Köln Deutz,Köln,DE,49
+315,MP-DE-2025-00315,2025-12-22,,AG-KOE,MobiPass Köln Deutz,Köln,DE,48
+316,MP-DE-2026-00316,2026-01-23,,AG-KOE,MobiPass Köln Deutz,Köln,DE,48
+317,MP-DE-2026-00317,2026-03-10,,AG-KOE,MobiPass Köln Deutz,Köln,DE,7
+318,MP-DE-2026-00318,2026-01-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,54
+319,MP-DE-2026-00319,2026-03-02,,AG-KOE,MobiPass Köln Deutz,Köln,DE,53
+320,MP-DE-2025-00320,2025-12-17,,AG-KOE,MobiPass Köln Deutz,Köln,DE,53
+321,MP-DE-2026-00321,2026-02-01,,AG-KOE,MobiPass Köln Deutz,Köln,DE,40
+322,MP-DE-2026-00322,2026-03-05,,AG-KOE,MobiPass Köln Deutz,Köln,DE,6
+323,MP-DE-2025-00323,2025-12-14,,AG-KOE,MobiPass Köln Deutz,Köln,DE,53
+324,MP-DE-2026-00324,2026-03-15,,AG-KOE,MobiPass Köln Deutz,Köln,DE,52
+325,MP-DE-2026-00325,2026-03-03,,AG-KOE,MobiPass Köln Deutz,Köln,DE,53
+326,MP-DE-2026-00326,2026-02-20,,AG-KOE,MobiPass Köln Deutz,Köln,DE,55
+327,MP-DE-2026-00327,2026-02-24,,AG-KOE,MobiPass Köln Deutz,Köln,DE,40
+328,MP-DE-2026-00328,2026-01-09,,AG-KOE,MobiPass Köln Deutz,Köln,DE,59
+329,MP-DE-2026-00329,2026-01-18,,AG-KOE,MobiPass Köln Deutz,Köln,DE,11
+330,MP-DE-2025-00330,2025-12-04,,AG-KOE,MobiPass Köln Deutz,Köln,DE,59
+331,MP-DE-2026-00331,2026-03-12,,AG-KOE,MobiPass Köln Deutz,Köln,DE,10
+332,MP-DE-2026-00332,2026-03-08,,AG-KOE,MobiPass Köln Deutz,Köln,DE,62
+333,MP-DE-2025-00333,2025-12-10,,AG-KOE,MobiPass Köln Deutz,Köln,DE,12
+334,MP-DE-2025-00334,2025-12-17,,AG-KOE,MobiPass Köln Deutz,Köln,DE,63
+335,MP-DE-2026-00335,2026-02-12,,AG-KOE,MobiPass Köln Deutz,Köln,DE,9
+336,MP-DE-2025-00336,2025-12-13,,AG-KOE,MobiPass Köln Deutz,Köln,DE,56
+337,MP-DE-2026-00337,2026-03-29,,AG-KOE,MobiPass Köln Deutz,Köln,DE,56
+338,MP-DE-2026-00338,2026-01-17,,AG-KOE,MobiPass Köln Deutz,Köln,DE,8
+339,MP-DE-2026-00339,2026-02-13,,AG-KOE,MobiPass Köln Deutz,Köln,DE,58
+340,MP-DE-2026-00340,2026-02-08,,AG-KOE,MobiPass Köln Deutz,Köln,DE,57
+341,MP-DE-2025-00341,2025-12-10,,AG-KOE,MobiPass Köln Deutz,Köln,DE,9
+342,MP-DE-2025-00342,2025-12-11,,AG-KOE,MobiPass Köln Deutz,Köln,DE,2
+343,MP-DE-2026-00343,2026-01-30,,AG-KOE,MobiPass Köln Deutz,Köln,DE,3
+344,MP-DE-2025-00344,2025-12-11,,AG-KOE,MobiPass Köln Deutz,Köln,DE,42
+345,MP-DE-2026-00345,2026-01-06,,AG-KOE,MobiPass Köln Deutz,Köln,DE,41
+346,MP-DE-2026-00346,2026-02-11,,AG-KOE,MobiPass Köln Deutz,Köln,DE,3
+347,MP-DE-2026-00347,2026-03-10,,AG-KOE,MobiPass Köln Deutz,Köln,DE,1
+348,MP-DE-2025-00348,2025-12-17,,AG-KOE,MobiPass Köln Deutz,Köln,DE,2
+349,MP-DE-2026-00349,2026-01-12,,AG-KOE,MobiPass Köln Deutz,Köln,DE,2
+350,MP-DE-2026-00350,2026-03-24,,AG-KOE,MobiPass Köln Deutz,Köln,DE,44
+351,MP-DE-2026-00351,2026-03-28,,AG-KOE,MobiPass Köln Deutz,Köln,DE,43
+352,MP-DE-2026-00352,2026-01-10,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,65
+353,MP-DE-2025-00353,2025-12-08,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,65
+354,MP-DE-2026-00354,2026-03-26,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,13
+355,MP-DE-2026-00355,2026-03-20,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,14
+356,MP-DE-2026-00356,2026-01-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,74
+357,MP-DE-2025-00357,2025-12-30,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,29
+358,MP-DE-2025-00358,2025-12-22,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,19
+359,MP-DE-2026-00359,2026-01-30,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,66
+360,MP-DE-2026-00360,2026-03-13,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,76
+361,MP-DE-2026-00361,2026-03-02,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,77
+362,MP-DE-2026-00362,2026-02-08,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,21
+363,MP-DE-2026-00363,2026-01-07,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,67
+364,MP-DE-2026-00364,2026-01-17,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,75
+365,MP-DE-2026-00365,2026-01-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,73
+366,MP-DE-2026-00366,2026-01-12,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,27
+367,MP-DE-2026-00367,2026-03-12,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,27
+368,MP-DE-2025-00368,2025-12-10,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,26
+369,MP-DE-2025-00369,2025-12-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,70
+370,MP-DE-2026-00370,2026-01-03,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,26
+371,MP-DE-2026-00371,2026-01-20,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,72
+372,MP-DE-2026-00372,2026-01-15,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,72
+373,MP-DE-2025-00373,2025-12-28,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,71
+374,MP-DE-2026-00374,2026-03-26,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,70
+375,MP-DE-2026-00375,2026-01-19,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,69
+376,MP-DE-2026-00376,2026-02-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,70
+377,MP-DE-2026-00377,2026-03-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,26
+378,MP-DE-2026-00378,2026-02-23,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,26
+379,MP-DE-2025-00379,2025-12-10,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,69
+380,MP-DE-2026-00380,2026-03-30,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,26
+381,MP-DE-2026-00381,2026-02-03,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,70
+382,MP-DE-2026-00382,2026-03-28,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,72
+383,MP-DE-2026-00383,2026-03-23,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,72
+384,MP-DE-2026-00384,2026-02-07,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,70
+385,MP-DE-2026-00385,2026-01-06,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,72
+386,MP-DE-2026-00386,2026-02-15,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,4
+387,MP-DE-2026-00387,2026-02-15,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,50
+388,MP-DE-2025-00388,2025-12-12,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,4
+389,MP-DE-2025-00389,2025-12-28,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,5
+390,MP-DE-2026-00390,2026-03-30,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,48
+391,MP-DE-2026-00391,2026-03-27,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,40
+392,MP-DE-2026-00392,2026-02-05,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,53
+393,MP-DE-2025-00393,2025-12-10,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,7
+394,MP-DE-2026-00394,2026-03-29,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,7
+395,MP-DE-2026-00395,2026-01-28,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,53
+396,MP-DE-2026-00396,2026-01-12,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,53
+397,MP-DE-2026-00397,2026-02-28,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,53
+398,MP-DE-2026-00398,2026-03-14,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,53
+399,MP-DE-2026-00399,2026-02-08,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,52
+400,MP-DE-2025-00400,2025-12-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,61
+401,MP-DE-2026-00401,2026-01-21,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,59
+402,MP-DE-2025-00402,2025-12-10,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,11
+403,MP-DE-2026-00403,2026-03-25,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,62
+404,MP-DE-2026-00404,2026-03-15,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,63
+405,MP-DE-2025-00405,2025-12-12,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,9
+406,MP-DE-2026-00406,2026-03-29,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,57
+407,MP-DE-2025-00407,2025-12-05,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,9
+408,MP-DE-2026-00408,2026-02-03,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,57
+409,MP-DE-2026-00409,2026-03-15,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,9
+410,MP-DE-2025-00410,2025-12-24,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,56
+411,MP-DE-2026-00411,2026-01-18,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,56
+412,MP-DE-2026-00412,2026-03-18,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,44
+413,MP-DE-2026-00413,2026-01-31,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,44
+414,MP-DE-2026-00414,2026-01-06,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,44
+415,MP-DE-2026-00415,2026-02-02,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,42
+416,MP-DE-2026-00416,2026-01-17,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,1
+417,MP-DE-2025-00417,2025-12-03,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,42
+418,MP-DE-2026-00418,2026-03-26,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,2
+419,MP-DE-2026-00419,2026-03-15,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,1
+420,MP-DE-2026-00420,2026-02-13,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,1
+421,MP-DE-2025-00421,2025-12-16,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,46
+422,MP-DE-2026-00422,2026-01-17,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,45
+423,MP-DE-2025-00423,2025-12-18,,AG-LEJ,MobiPass Leipzig Hauptbahnhof,Leipzig,DE,42
+424,MP-FR-2024-00424,2024-01-19,,AG-LIL,MobiPass Lille Europe,Lille,FR,14
+425,MP-FR-2022-00425,2022-10-16,,AG-LIL,MobiPass Lille Europe,Lille,FR,13
+426,MP-FR-2025-00426,2025-03-05,,AG-LIL,MobiPass Lille Europe,Lille,FR,19
+427,MP-FR-2025-00427,2025-03-14,,AG-LIL,MobiPass Lille Europe,Lille,FR,31
+428,MP-FR-2022-00428,2022-09-24,,AG-LIL,MobiPass Lille Europe,Lille,FR,21
+429,MP-FR-2024-00429,2024-03-16,2026-02-21,AG-LIL,MobiPass Lille Europe,Lille,FR,73
+430,MP-FR-2025-00430,2025-02-01,,AG-LIL,MobiPass Lille Europe,Lille,FR,26
+431,MP-FR-2022-00431,2022-10-29,,AG-LIL,MobiPass Lille Europe,Lille,FR,69
+432,MP-FR-2023-00432,2023-02-15,,AG-LIL,MobiPass Lille Europe,Lille,FR,70
+433,MP-FR-2025-00433,2025-04-10,,AG-LIL,MobiPass Lille Europe,Lille,FR,4
+434,MP-FR-2022-00434,2022-11-30,,AG-LIL,MobiPass Lille Europe,Lille,FR,50
+435,MP-FR-2022-00435,2022-07-08,,AG-LIL,MobiPass Lille Europe,Lille,FR,7
+436,MP-FR-2022-00436,2022-08-10,,AG-LIL,MobiPass Lille Europe,Lille,FR,7
+437,MP-FR-2022-00437,2022-10-11,,AG-LIL,MobiPass Lille Europe,Lille,FR,11
+438,MP-FR-2024-00438,2024-04-10,,AG-LIL,MobiPass Lille Europe,Lille,FR,11
+439,MP-FR-2022-00439,2022-09-10,,AG-LIL,MobiPass Lille Europe,Lille,FR,62
+440,MP-FR-2022-00440,2022-10-08,,AG-LIL,MobiPass Lille Europe,Lille,FR,58
+441,MP-FR-2025-00441,2025-01-26,,AG-LIL,MobiPass Lille Europe,Lille,FR,9
+442,MP-FR-2022-00442,2022-11-23,,AG-LIL,MobiPass Lille Europe,Lille,FR,46
+443,MP-FR-2023-00443,2023-05-03,,AG-LIL,MobiPass Lille Europe,Lille,FR,42
+444,MP-FR-2025-00444,2025-01-31,,AG-LIL,MobiPass Lille Europe,Lille,FR,3
+445,MP-FR-2025-00445,2025-02-04,,AG-LIL,MobiPass Lille Europe,Lille,FR,42
+446,MP-FR-2022-00446,2022-09-11,,AG-LIL,MobiPass Lille Europe,Lille,FR,44
+447,MP-FR-2025-00447,2025-03-30,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,65
+448,MP-FR-2022-00448,2022-10-11,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,14
+449,MP-FR-2022-00449,2022-08-25,2026-06-01,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,13
+450,MP-FR-2022-00450,2022-10-14,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,64
+451,MP-FR-2022-00451,2022-06-19,2026-09-25,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,65
+452,MP-FR-2024-00452,2024-03-27,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,74
+453,MP-FR-2022-00453,2022-09-26,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,28
+454,MP-FR-2022-00454,2022-06-07,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,29
+455,MP-FR-2022-00455,2022-10-25,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,66
+456,MP-FR-2022-00456,2022-08-25,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,66
+457,MP-FR-2024-00457,2024-04-01,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,19
+458,MP-FR-2025-00458,2025-01-07,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,66
+459,MP-FR-2025-00459,2025-02-02,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,76
+460,MP-FR-2024-00460,2024-03-21,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,31
+461,MP-FR-2022-00461,2022-06-02,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,76
+462,MP-FR-2024-00462,2024-02-11,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,77
+463,MP-FR-2022-00463,2022-07-02,2025-10-14,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,77
+464,MP-FR-2024-00464,2024-01-21,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,21
+465,MP-FR-2025-00465,2025-01-31,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,67
+466,MP-FR-2024-00466,2024-02-11,2025-08-14,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,68
+467,MP-FR-2022-00467,2022-09-06,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,75
+468,MP-FR-2023-00468,2023-11-09,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,30
+469,MP-FR-2024-00469,2024-04-05,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,27
+470,MP-FR-2023-00470,2023-11-24,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,27
+471,MP-FR-2025-00471,2025-02-24,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,73
+472,MP-FR-2023-00472,2023-11-23,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,27
+473,MP-FR-2022-00473,2022-12-12,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,69
+474,MP-FR-2025-00474,2025-02-11,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,71
+475,MP-FR-2022-00475,2022-09-02,2025-04-14,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,71
+476,MP-FR-2025-00476,2025-01-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,70
+477,MP-FR-2023-00477,2023-02-10,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,70
+478,MP-FR-2023-00478,2023-03-02,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,72
+479,MP-FR-2022-00479,2022-07-19,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,71
+480,MP-FR-2023-00480,2023-03-02,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,72
+481,MP-FR-2023-00481,2023-03-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+482,MP-FR-2025-00482,2025-01-21,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+483,MP-FR-2023-00483,2023-04-14,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+484,MP-FR-2022-00484,2022-06-20,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,26
+485,MP-FR-2022-00485,2022-07-19,2026-08-03,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,71
+486,MP-FR-2024-00486,2024-01-29,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,25
+487,MP-FR-2024-00487,2024-04-01,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+488,MP-FR-2022-00488,2022-10-12,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,50
+489,MP-FR-2022-00489,2022-09-16,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+490,MP-FR-2024-00490,2024-10-29,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,5
+491,MP-FR-2022-00491,2022-10-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+492,MP-FR-2022-00492,2022-08-18,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+493,MP-FR-2022-00493,2022-06-19,2025-07-16,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,51
+494,MP-FR-2024-00494,2024-11-17,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,5
+495,MP-FR-2025-00495,2025-04-04,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,50
+496,MP-FR-2022-00496,2022-11-26,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,49
+497,MP-FR-2025-00497,2025-01-07,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,48
+498,MP-FR-2024-00498,2024-09-05,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,5
+499,MP-FR-2022-00499,2022-11-20,2025-04-13,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,51
+500,MP-FR-2025-00500,2025-02-13,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+501,MP-FR-2022-00501,2022-11-25,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,49
+502,MP-FR-2024-00502,2024-11-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,5
+503,MP-FR-2022-00503,2022-08-01,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,51
+504,MP-FR-2022-00504,2022-09-20,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,51
+505,MP-FR-2025-00505,2025-03-31,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,48
+506,MP-FR-2022-00506,2022-08-05,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,50
+507,MP-FR-2022-00507,2022-08-13,2025-08-06,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+508,MP-FR-2022-00508,2022-12-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,48
+509,MP-FR-2022-00509,2022-08-09,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,50
+510,MP-FR-2022-00510,2022-08-25,2025-03-16,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,4
+511,MP-FR-2022-00511,2022-10-11,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,50
+512,MP-FR-2024-00512,2024-03-27,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,51
+513,MP-FR-2022-00513,2022-09-25,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,49
+514,MP-FR-2024-00514,2024-03-28,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,51
+515,MP-FR-2024-00515,2024-02-12,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,55
+516,MP-FR-2024-00516,2024-01-19,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,55
+517,MP-FR-2022-00517,2022-09-29,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,60
+518,MP-FR-2022-00518,2022-08-16,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,61
+519,MP-FR-2022-00519,2022-12-04,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,10
+520,MP-FR-2024-00520,2024-04-06,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,62
+521,MP-FR-2022-00521,2022-06-16,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,63
+522,MP-FR-2022-00522,2022-07-04,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,12
+523,MP-FR-2022-00523,2022-10-16,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,62
+524,MP-FR-2025-00524,2025-02-01,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,56
+525,MP-FR-2022-00525,2022-09-29,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,9
+526,MP-FR-2022-00526,2022-11-16,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,58
+527,MP-FR-2022-00527,2022-11-23,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,58
+528,MP-FR-2024-00528,2024-02-27,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,9
+529,MP-FR-2024-00529,2024-02-14,2025-07-29,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,9
+530,MP-FR-2022-00530,2022-12-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,56
+531,MP-FR-2022-00531,2022-09-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,8
+532,MP-FR-2022-00532,2022-07-21,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,57
+533,MP-FR-2024-00533,2024-03-19,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,56
+534,MP-FR-2024-00534,2024-04-03,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,9
+535,MP-FR-2022-00535,2022-11-20,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,9
+536,MP-FR-2022-00536,2022-08-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,1
+537,MP-FR-2025-00537,2025-04-07,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,47
+538,MP-FR-2022-00538,2022-10-09,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,1
+539,MP-FR-2024-00539,2024-03-08,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,46
+540,MP-FR-2022-00540,2022-11-22,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,46
+541,MP-FR-2025-00541,2025-01-29,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,46
+542,MP-FR-2022-00542,2022-09-09,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,1
+543,MP-FR-2022-00543,2022-09-10,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,1
+544,MP-FR-2025-00544,2025-01-18,,AG-LYO,MobiPass Lyon Part-Dieu,Lyon,FR,42
+545,MP-FR-2025-00545,2025-04-14,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,13
+546,MP-FR-2024-00546,2024-01-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,65
+547,MP-FR-2024-00547,2024-01-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,13
+548,MP-FR-2022-00548,2022-07-05,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,65
+549,MP-FR-2024-00549,2024-03-21,2026-08-23,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,14
+550,MP-FR-2024-00550,2024-03-13,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,28
+551,MP-FR-2022-00551,2022-08-02,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,29
+552,MP-FR-2024-00552,2024-02-16,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,19
+553,MP-FR-2022-00553,2022-08-26,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,19
+554,MP-FR-2022-00554,2022-09-26,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,66
+555,MP-FR-2022-00555,2022-10-10,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,77
+556,MP-FR-2025-00556,2025-04-09,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,31
+557,MP-FR-2024-00557,2024-01-20,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,77
+558,MP-FR-2024-00558,2024-02-15,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,68
+559,MP-FR-2022-00559,2022-08-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,68
+560,MP-FR-2022-00560,2022-09-01,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,67
+561,MP-FR-2025-00561,2025-02-20,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,75
+562,MP-FR-2024-00562,2024-01-29,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,27
+563,MP-FR-2022-00563,2022-11-14,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,73
+564,MP-FR-2025-00564,2025-03-26,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,27
+565,MP-FR-2024-00565,2024-01-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,69
+566,MP-FR-2025-00566,2025-02-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,25
+567,MP-FR-2022-00567,2022-09-16,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,26
+568,MP-FR-2023-00568,2023-03-10,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,70
+569,MP-FR-2023-00569,2023-04-14,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,70
+570,MP-FR-2025-00570,2025-03-05,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,69
+571,MP-FR-2024-00571,2024-02-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,69
+572,MP-FR-2024-00572,2024-01-15,2025-11-30,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,25
+573,MP-FR-2025-00573,2025-04-02,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,70
+574,MP-FR-2025-00574,2025-03-30,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,25
+575,MP-FR-2024-00575,2024-02-21,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,50
+576,MP-FR-2024-00576,2024-10-23,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,5
+577,MP-FR-2022-00577,2022-11-24,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,48
+578,MP-FR-2024-00578,2024-03-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,49
+579,MP-FR-2025-00579,2025-03-28,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,51
+580,MP-FR-2024-00580,2024-11-28,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,5
+581,MP-FR-2025-00581,2025-01-22,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,7
+582,MP-FR-2022-00582,2022-08-18,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,53
+583,MP-FR-2022-00583,2022-10-06,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,7
+584,MP-FR-2025-00584,2025-03-04,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,40
+585,MP-FR-2022-00585,2022-09-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,10
+586,MP-FR-2024-00586,2024-04-09,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,59
+587,MP-FR-2022-00587,2022-10-31,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,11
+588,MP-FR-2022-00588,2022-10-18,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,11
+589,MP-FR-2022-00589,2022-08-21,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,61
+590,MP-FR-2025-00590,2025-01-24,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,62
+591,MP-FR-2025-00591,2025-02-19,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,62
+592,MP-FR-2022-00592,2022-06-03,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,63
+593,MP-FR-2025-00593,2025-01-24,2026-05-24,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,8
+594,MP-FR-2024-00594,2024-04-05,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,58
+595,MP-FR-2024-00595,2024-02-19,2026-08-28,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,8
+596,MP-FR-2022-00596,2022-09-01,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,8
+597,MP-FR-2022-00597,2022-07-10,2025-02-03,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,8
+598,MP-FR-2025-00598,2025-01-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,8
+599,MP-FR-2022-00599,2022-11-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,8
+600,MP-FR-2022-00600,2022-11-15,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,58
+601,MP-FR-2023-00601,2023-11-17,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,3
+602,MP-FR-2024-00602,2024-04-07,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,44
+603,MP-FR-2022-00603,2022-08-13,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,47
+604,MP-FR-2022-00604,2022-06-10,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,1
+605,MP-FR-2025-00605,2025-03-23,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,45
+606,MP-FR-2022-00606,2022-10-26,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,46
+607,MP-FR-2022-00607,2022-07-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,43
+608,MP-FR-2022-00608,2022-11-23,2022-10-20,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,46
+609,MP-FR-2023-00609,2023-06-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,42
+610,MP-FR-2025-00610,2025-02-04,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,45
+611,MP-FR-2024-00611,2024-10-30,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,2
+612,MP-FR-2024-00612,2024-03-20,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,45
+613,MP-FR-2025-00613,2025-04-14,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,44
+614,MP-FR-2022-00614,2022-08-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,47
+615,MP-FR-2025-00615,2025-03-23,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,2
+616,MP-DE-2026-00616,2026-03-06,,AG-MUC,MobiPass München Ost,München,DE,64
+617,MP-DE-2026-00617,2026-03-29,,AG-MUC,MobiPass München Ost,München,DE,77
+618,MP-DE-2026-00618,2026-02-20,,AG-MUC,MobiPass München Ost,München,DE,73
+619,MP-DE-2025-00619,2025-12-02,,AG-MUC,MobiPass München Ost,München,DE,25
+620,MP-DE-2026-00620,2026-03-18,,AG-MUC,MobiPass München Ost,München,DE,51
+621,MP-DE-2026-00621,2026-01-01,,AG-MUC,MobiPass München Ost,München,DE,40
+622,MP-DE-2026-00622,2026-03-23,,AG-MUC,MobiPass München Ost,München,DE,54
+623,MP-DE-2026-00623,2026-02-19,,AG-MUC,MobiPass München Ost,München,DE,53
+624,MP-DE-2026-00624,2026-01-23,,AG-MUC,MobiPass München Ost,München,DE,60
+625,MP-DE-2025-00625,2025-12-27,,AG-MUC,MobiPass München Ost,München,DE,11
+626,MP-DE-2026-00626,2026-01-25,,AG-MUC,MobiPass München Ost,München,DE,63
+627,MP-DE-2026-00627,2026-01-24,,AG-MUC,MobiPass München Ost,München,DE,8
+628,MP-DE-2026-00628,2026-01-16,,AG-MUC,MobiPass München Ost,München,DE,57
+629,MP-DE-2026-00629,2026-02-12,,AG-MUC,MobiPass München Ost,München,DE,1
+630,MP-FR-2022-00630,2022-09-19,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,64
+631,MP-FR-2022-00631,2022-11-27,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,14
+632,MP-FR-2022-00632,2022-09-02,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,65
+633,MP-FR-2022-00633,2022-06-08,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,13
+634,MP-FR-2025-00634,2025-01-09,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,28
+635,MP-FR-2025-00635,2025-03-05,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,29
+636,MP-FR-2022-00636,2022-08-22,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,66
+637,MP-FR-2022-00637,2022-11-21,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,19
+638,MP-FR-2025-00638,2025-03-23,2026-07-23,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,77
+639,MP-FR-2022-00639,2022-11-19,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,77
+640,MP-FR-2022-00640,2022-10-02,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,31
+641,MP-FR-2024-00641,2024-03-08,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,67
+642,MP-FR-2022-00642,2022-10-30,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,68
+643,MP-FR-2023-00643,2023-10-13,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,30
+644,MP-FR-2022-00644,2022-11-06,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,73
+645,MP-FR-2024-00645,2024-04-11,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,73
+646,MP-FR-2023-00646,2023-03-29,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,70
+647,MP-FR-2024-00647,2024-01-30,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,26
+648,MP-FR-2023-00648,2023-04-22,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,25
+649,MP-FR-2023-00649,2023-04-16,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,72
+650,MP-FR-2022-00650,2022-11-15,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,71
+651,MP-FR-2024-00651,2024-02-13,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,70
+652,MP-FR-2022-00652,2022-11-18,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,69
+653,MP-FR-2022-00653,2022-06-25,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,51
+654,MP-FR-2025-00654,2025-01-15,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,5
+655,MP-FR-2025-00655,2025-02-23,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,4
+656,MP-FR-2024-00656,2024-04-01,2025-06-18,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,48
+657,MP-FR-2022-00657,2022-09-30,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,49
+658,MP-FR-2024-00658,2024-01-23,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,49
+659,MP-FR-2022-00659,2022-11-28,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,54
+660,MP-FR-2022-00660,2022-07-27,2026-04-02,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,53
+661,MP-FR-2022-00661,2022-11-21,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,7
+662,MP-FR-2022-00662,2022-10-26,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,6
+663,MP-FR-2022-00663,2022-09-08,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,11
+664,MP-FR-2022-00664,2022-12-08,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,59
+665,MP-FR-2025-00665,2025-01-19,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,11
+666,MP-FR-2024-00666,2024-02-14,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,11
+667,MP-FR-2024-00667,2024-03-04,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,61
+668,MP-FR-2022-00668,2022-11-03,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,59
+669,MP-FR-2022-00669,2022-07-22,2025-12-12,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,12
+670,MP-FR-2022-00670,2022-08-15,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,12
+671,MP-FR-2025-00671,2025-03-30,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,58
+672,MP-FR-2024-00672,2024-01-19,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,8
+673,MP-FR-2024-00673,2024-01-20,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,56
+674,MP-FR-2022-00674,2022-08-28,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,9
+675,MP-FR-2025-00675,2025-04-06,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,58
+676,MP-FR-2022-00676,2022-11-27,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,8
+677,MP-FR-2022-00677,2022-10-19,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,41
+678,MP-FR-2022-00678,2022-11-20,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,43
+679,MP-FR-2025-00679,2025-03-05,2026-08-15,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,1
+680,MP-FR-2022-00680,2022-10-12,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,45
+681,MP-FR-2022-00681,2022-06-13,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,1
+682,MP-FR-2024-00682,2024-02-01,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,45
+683,MP-FR-2023-00683,2023-06-14,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,42
+684,MP-FR-2022-00684,2022-09-25,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,45
+685,MP-FR-2025-00685,2025-03-20,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,42
+686,MP-FR-2023-00686,2023-11-05,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,3
+687,MP-FR-2025-00687,2025-03-19,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,45
+688,MP-FR-2022-00688,2022-11-18,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,41
+689,MP-FR-2022-00689,2022-11-28,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,46
+690,MP-FR-2024-00690,2024-04-09,,AG-NTE,MobiPass Nantes Gare Nord,Nantes,FR,46
+691,MP-FR-2022-00691,2022-12-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,65
+692,MP-FR-2024-00692,2024-01-27,2026-05-22,AG-PAR,MobiPass Paris La Défense,Paris,FR,65
+693,MP-FR-2022-00693,2022-11-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,14
+694,MP-FR-2022-00694,2022-07-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,65
+695,MP-FR-2025-00695,2025-03-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,64
+696,MP-FR-2022-00696,2022-07-21,,AG-PAR,MobiPass Paris La Défense,Paris,FR,65
+697,MP-FR-2025-00697,2025-02-28,,AG-PAR,MobiPass Paris La Défense,Paris,FR,65
+698,MP-FR-2024-00698,2024-01-11,2025-11-09,AG-PAR,MobiPass Paris La Défense,Paris,FR,65
+699,MP-FR-2024-00699,2024-02-22,,AG-PAR,MobiPass Paris La Défense,Paris,FR,74
+700,MP-FR-2024-00700,2024-01-14,,AG-PAR,MobiPass Paris La Défense,Paris,FR,74
+701,MP-FR-2025-00701,2025-02-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,74
+702,MP-FR-2024-00702,2024-01-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,29
+703,MP-FR-2025-00703,2025-03-29,,AG-PAR,MobiPass Paris La Défense,Paris,FR,29
+704,MP-FR-2022-00704,2022-07-17,,AG-PAR,MobiPass Paris La Défense,Paris,FR,29
+705,MP-FR-2022-00705,2022-06-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,66
+706,MP-FR-2024-00706,2024-03-31,,AG-PAR,MobiPass Paris La Défense,Paris,FR,66
+707,MP-FR-2024-00707,2024-03-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,19
+708,MP-FR-2025-00708,2025-03-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,19
+709,MP-FR-2022-00709,2022-06-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,19
+710,MP-FR-2024-00710,2024-01-21,,AG-PAR,MobiPass Paris La Défense,Paris,FR,66
+711,MP-FR-2022-00711,2022-07-23,,AG-PAR,MobiPass Paris La Défense,Paris,FR,19
+712,MP-FR-2022-00712,2022-07-27,,AG-PAR,MobiPass Paris La Défense,Paris,FR,76
+713,MP-FR-2024-00713,2024-01-25,,AG-PAR,MobiPass Paris La Défense,Paris,FR,77
+714,MP-FR-2022-00714,2022-09-22,,AG-PAR,MobiPass Paris La Défense,Paris,FR,31
+715,MP-FR-2022-00715,2022-12-06,,AG-PAR,MobiPass Paris La Défense,Paris,FR,77
+716,MP-FR-2022-00716,2022-06-10,,AG-PAR,MobiPass Paris La Défense,Paris,FR,76
+717,MP-FR-2022-00717,2022-07-25,,AG-PAR,MobiPass Paris La Défense,Paris,FR,76
+718,MP-FR-2025-00718,2025-01-25,2026-08-26,AG-PAR,MobiPass Paris La Défense,Paris,FR,76
+719,MP-FR-2022-00719,2022-07-14,,AG-PAR,MobiPass Paris La Défense,Paris,FR,67
+720,MP-FR-2024-00720,2024-03-28,,AG-PAR,MobiPass Paris La Défense,Paris,FR,21
+721,MP-FR-2025-00721,2025-02-19,,AG-PAR,MobiPass Paris La Défense,Paris,FR,68
+722,MP-FR-2025-00722,2025-01-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,68
+723,MP-FR-2025-00723,2025-03-30,,AG-PAR,MobiPass Paris La Défense,Paris,FR,20
+724,MP-FR-2024-00724,2024-03-23,,AG-PAR,MobiPass Paris La Défense,Paris,FR,75
+725,MP-FR-2023-00725,2023-10-07,,AG-PAR,MobiPass Paris La Défense,Paris,FR,30
+726,MP-FR-2022-00726,2022-08-05,,AG-PAR,MobiPass Paris La Défense,Paris,FR,75
+727,MP-FR-2025-00727,2025-03-12,,AG-PAR,MobiPass Paris La Défense,Paris,FR,27
+728,MP-FR-2023-00728,2023-11-10,,AG-PAR,MobiPass Paris La Défense,Paris,FR,27
+729,MP-FR-2024-00729,2024-03-11,2026-06-18,AG-PAR,MobiPass Paris La Défense,Paris,FR,73
+730,MP-FR-2024-00730,2024-04-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,73
+731,MP-FR-2022-00731,2022-09-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,73
+732,MP-FR-2022-00732,2022-12-14,,AG-PAR,MobiPass Paris La Défense,Paris,FR,73
+733,MP-FR-2025-00733,2025-03-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,73
+734,MP-FR-2025-00734,2025-01-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,27
+735,MP-FR-2023-00735,2023-03-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,72
+736,MP-FR-2025-00736,2025-03-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,71
+737,MP-FR-2025-00737,2025-03-27,2026-07-28,AG-PAR,MobiPass Paris La Défense,Paris,FR,71
+738,MP-FR-2023-00738,2023-03-09,,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+739,MP-FR-2024-00739,2024-01-30,,AG-PAR,MobiPass Paris La Défense,Paris,FR,71
+740,MP-FR-2025-00740,2025-01-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,72
+741,MP-FR-2024-00741,2024-01-28,,AG-PAR,MobiPass Paris La Défense,Paris,FR,70
+742,MP-FR-2025-00742,2025-01-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,69
+743,MP-FR-2023-00743,2023-03-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,70
+744,MP-FR-2023-00744,2023-04-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,72
+745,MP-FR-2022-00745,2022-12-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,69
+746,MP-FR-2023-00746,2023-03-14,,AG-PAR,MobiPass Paris La Défense,Paris,FR,70
+747,MP-FR-2022-00747,2022-06-29,,AG-PAR,MobiPass Paris La Défense,Paris,FR,69
+748,MP-FR-2024-00748,2024-03-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,72
+749,MP-FR-2025-00749,2025-02-09,,AG-PAR,MobiPass Paris La Défense,Paris,FR,72
+750,MP-FR-2023-00750,2023-04-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+751,MP-FR-2022-00751,2022-08-09,2026-08-25,AG-PAR,MobiPass Paris La Défense,Paris,FR,69
+752,MP-FR-2025-00752,2025-02-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,71
+753,MP-FR-2022-00753,2022-10-19,,AG-PAR,MobiPass Paris La Défense,Paris,FR,26
+754,MP-FR-2025-00754,2025-02-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,70
+755,MP-FR-2024-00755,2024-02-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,71
+756,MP-FR-2025-00756,2025-02-27,,AG-PAR,MobiPass Paris La Défense,Paris,FR,70
+757,MP-FR-2024-00757,2024-02-27,,AG-PAR,MobiPass Paris La Défense,Paris,FR,26
+758,MP-FR-2025-00758,2025-03-07,,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+759,MP-FR-2023-00759,2023-04-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+760,MP-FR-2025-00760,2025-03-09,,AG-PAR,MobiPass Paris La Défense,Paris,FR,51
+761,MP-FR-2022-00761,2022-06-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,51
+762,MP-FR-2024-00762,2024-10-09,,AG-PAR,MobiPass Paris La Défense,Paris,FR,5
+763,MP-FR-2024-00763,2024-04-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,50
+764,MP-FR-2025-00764,2025-03-28,,AG-PAR,MobiPass Paris La Défense,Paris,FR,49
+765,MP-FR-2025-00765,2025-01-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,49
+766,MP-FR-2024-00766,2024-10-17,,AG-PAR,MobiPass Paris La Défense,Paris,FR,5
+767,MP-FR-2022-00767,2022-09-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,50
+768,MP-FR-2024-00768,2024-11-17,,AG-PAR,MobiPass Paris La Défense,Paris,FR,5
+769,MP-FR-2022-00769,2022-11-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,49
+770,MP-FR-2022-00770,2022-11-26,,AG-PAR,MobiPass Paris La Défense,Paris,FR,49
+771,MP-FR-2022-00771,2022-10-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,53
+772,MP-FR-2022-00772,2022-11-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,7
+773,MP-FR-2023-00773,2023-09-23,,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
+774,MP-FR-2022-00774,2022-09-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,61
+775,MP-FR-2025-00775,2025-01-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,61
+776,MP-FR-2022-00776,2022-07-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,60
+777,MP-FR-2022-00777,2022-11-24,,AG-PAR,MobiPass Paris La Défense,Paris,FR,11
+778,MP-FR-2025-00778,2025-02-05,,AG-PAR,MobiPass Paris La Défense,Paris,FR,10
+779,MP-FR-2022-00779,2022-12-12,,AG-PAR,MobiPass Paris La Défense,Paris,FR,59
+780,MP-FR-2022-00780,2022-11-15,2026-03-02,AG-PAR,MobiPass Paris La Défense,Paris,FR,59
+781,MP-FR-2024-00781,2024-04-05,,AG-PAR,MobiPass Paris La Défense,Paris,FR,59
+782,MP-FR-2025-00782,2025-04-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,59
+783,MP-FR-2022-00783,2022-10-06,,AG-PAR,MobiPass Paris La Défense,Paris,FR,59
+784,MP-FR-2022-00784,2022-11-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,62
+785,MP-FR-2022-00785,2022-06-22,,AG-PAR,MobiPass Paris La Défense,Paris,FR,12
+786,MP-FR-2025-00786,2025-02-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,12
+787,MP-FR-2022-00787,2022-09-19,,AG-PAR,MobiPass Paris La Défense,Paris,FR,63
+788,MP-FR-2025-00788,2025-04-04,,AG-PAR,MobiPass Paris La Défense,Paris,FR,63
+789,MP-FR-2024-00789,2024-03-07,,AG-PAR,MobiPass Paris La Défense,Paris,FR,62
+790,MP-FR-2022-00790,2022-12-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,62
+791,MP-FR-2022-00791,2022-11-27,,AG-PAR,MobiPass Paris La Défense,Paris,FR,8
+792,MP-FR-2022-00792,2022-11-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+793,MP-FR-2022-00793,2022-11-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,58
+794,MP-FR-2024-00794,2024-04-01,2026-03-15,AG-PAR,MobiPass Paris La Défense,Paris,FR,58
+795,MP-FR-2024-00795,2024-02-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,56
+796,MP-FR-2024-00796,2024-02-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+797,MP-FR-2024-00797,2024-02-05,2025-08-30,AG-PAR,MobiPass Paris La Défense,Paris,FR,58
+798,MP-FR-2025-00798,2025-03-06,,AG-PAR,MobiPass Paris La Défense,Paris,FR,58
+799,MP-FR-2024-00799,2024-03-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+800,MP-FR-2022-00800,2022-08-02,,AG-PAR,MobiPass Paris La Défense,Paris,FR,57
+801,MP-FR-2025-00801,2025-03-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,58
+802,MP-FR-2025-00802,2025-03-09,,AG-PAR,MobiPass Paris La Défense,Paris,FR,56
+803,MP-FR-2022-00803,2022-11-30,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+804,MP-FR-2025-00804,2025-03-10,,AG-PAR,MobiPass Paris La Défense,Paris,FR,58
+805,MP-FR-2024-00805,2024-01-30,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+806,MP-FR-2025-00806,2025-01-28,,AG-PAR,MobiPass Paris La Défense,Paris,FR,57
+807,MP-FR-2025-00807,2025-03-15,,AG-PAR,MobiPass Paris La Défense,Paris,FR,56
+808,MP-FR-2022-00808,2022-10-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,57
+809,MP-FR-2024-00809,2024-03-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,8
+810,MP-FR-2022-00810,2022-09-23,,AG-PAR,MobiPass Paris La Défense,Paris,FR,56
+811,MP-FR-2024-00811,2024-04-14,,AG-PAR,MobiPass Paris La Défense,Paris,FR,9
+812,MP-FR-2025-00812,2025-02-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,42
+813,MP-FR-2024-00813,2024-03-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,3
+814,MP-FR-2024-00814,2024-04-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,44
+815,MP-FR-2024-00815,2024-02-06,,AG-PAR,MobiPass Paris La Défense,Paris,FR,43
+816,MP-FR-2022-00816,2022-09-23,,AG-PAR,MobiPass Paris La Défense,Paris,FR,47
+817,MP-FR-2024-00817,2024-09-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
+818,MP-FR-2024-00818,2024-02-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,44
+819,MP-FR-2024-00819,2024-03-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,41
+820,MP-FR-2024-00820,2024-02-06,2023-12-15,AG-PAR,MobiPass Paris La Défense,Paris,FR,45
+821,MP-FR-2022-00821,2022-12-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,41
+822,MP-FR-2022-00822,2022-10-17,,AG-PAR,MobiPass Paris La Défense,Paris,FR,46
+823,MP-FR-2022-00823,2022-11-27,,AG-PAR,MobiPass Paris La Défense,Paris,FR,41
+824,MP-FR-2024-00824,2024-01-21,,AG-PAR,MobiPass Paris La Défense,Paris,FR,43
+825,MP-FR-2022-00825,2022-07-10,,AG-PAR,MobiPass Paris La Défense,Paris,FR,1
+826,MP-FR-2025-00826,2025-03-08,,AG-PAR,MobiPass Paris La Défense,Paris,FR,42
+827,MP-FR-2022-00827,2022-11-08,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,14
+828,MP-FR-2025-00828,2025-02-16,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,19
+829,MP-FR-2024-00829,2024-01-25,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,76
+830,MP-FR-2022-00830,2022-11-28,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,68
+831,MP-FR-2024-00831,2024-02-03,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,73
+832,MP-FR-2024-00832,2024-03-15,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,25
+833,MP-FR-2023-00833,2023-04-17,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,25
+834,MP-FR-2022-00834,2022-09-04,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,51
+835,MP-FR-2025-00835,2025-01-22,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,6
+836,MP-FR-2022-00836,2022-12-01,2025-03-28,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,10
+837,MP-FR-2025-00837,2025-01-11,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,62
+838,MP-FR-2022-00838,2022-10-20,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,58
+839,MP-FR-2022-00839,2022-11-18,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,58
+840,MP-FR-2023-00840,2023-09-08,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,3
+841,MP-FR-2025-00841,2025-03-09,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,46
+842,MP-FR-2025-00842,2025-01-09,,AG-STR,MobiPass Strasbourg Gare,Strasbourg,FR,2
+843,MP-DE-2026-00843,2026-03-30,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,65
+844,MP-DE-2026-00844,2026-02-15,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,19
+845,MP-DE-2026-00845,2026-01-25,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,21
+846,MP-DE-2026-00846,2026-01-06,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,73
+847,MP-DE-2026-00847,2026-03-31,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,72
+848,MP-DE-2026-00848,2026-03-24,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,72
+849,MP-DE-2026-00849,2026-02-07,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,72
+850,MP-DE-2026-00850,2026-03-05,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,26
+851,MP-DE-2026-00851,2026-03-15,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,4
+852,MP-DE-2026-00852,2026-03-12,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,53
+853,MP-DE-2026-00853,2026-01-17,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,53
+854,MP-DE-2026-00854,2026-01-12,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,11
+855,MP-DE-2026-00855,2026-02-16,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,62
+856,MP-DE-2026-00856,2026-02-09,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,8
+857,MP-DE-2026-00857,2026-02-10,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,56
+858,MP-DE-2026-00858,2026-03-21,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,46
+859,MP-DE-2026-00859,2026-02-26,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,41
+860,MP-DE-2026-00860,2026-03-18,2025-08-30,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,46
+861,MP-FR-2022-00861,2022-07-01,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,13
+862,MP-FR-2025-00862,2025-03-02,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,14
+863,MP-FR-2022-00863,2022-12-09,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,74
+864,MP-FR-2025-00864,2025-01-09,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,19
+865,MP-FR-2024-00865,2024-02-26,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,66
+866,MP-FR-2022-00866,2022-10-22,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,77
+867,MP-FR-2022-00867,2022-12-01,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,77
+868,MP-FR-2024-00868,2024-04-01,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,20
+869,MP-FR-2025-00869,2025-04-13,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,20
+870,MP-FR-2024-00870,2024-01-24,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,27
+871,MP-FR-2022-00871,2022-11-03,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,73
+872,MP-FR-2023-00872,2023-03-04,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+873,MP-FR-2022-00873,2022-10-04,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,69
+874,MP-FR-2025-00874,2025-02-26,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,71
+875,MP-FR-2023-00875,2023-04-27,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+876,MP-FR-2025-00876,2025-02-16,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,70
+877,MP-FR-2023-00877,2023-04-29,2025-01-30,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,25
+878,MP-FR-2024-00878,2024-09-24,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,5
+879,MP-FR-2024-00879,2024-03-12,2026-04-16,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,49
+880,MP-FR-2025-00880,2025-02-17,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,60
+881,MP-FR-2022-00881,2022-09-07,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,60
+882,MP-FR-2022-00882,2022-10-12,2025-04-14,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,62
+883,MP-FR-2022-00883,2022-09-26,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,62
+884,MP-FR-2025-00884,2025-01-27,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,12
+885,MP-FR-2025-00885,2025-01-30,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,57
+886,MP-FR-2024-00886,2024-02-16,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,56
+887,MP-FR-2024-00887,2024-02-07,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,58
+888,MP-FR-2025-00888,2025-03-18,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+889,MP-FR-2024-00889,2024-10-05,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,2
+890,MP-FR-2023-00890,2023-10-14,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,3
+891,MP-FR-2022-00891,2022-08-12,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,45
+892,MP-FR-2022-00892,2022-11-03,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+893,MP-FR-2022-00893,2022-07-08,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+894,MP-FR-2025-00894,2025-04-08,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,1
+895,MP-FR-2025-00895,2025-03-08,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,43
+896,MP-DE-2026-00896,2026-03-06,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,25
+897,MP-DE-2025-00897,2025-12-28,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,46
+898,MP-DE-2026-00898,2026-01-26,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,8
+899,MP-DE-2026-00899,2026-01-20,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,55
+900,MP-DE-2025-00900,2025-12-26,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,4
+901,MP-DE-2026-00901,2026-01-30,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,10
+902,MP-DE-2025-00902,2025-12-07,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,14
+903,MP-DE-2026-00903,2026-03-28,,AG-FRA,MobiPass Frankfurt Hauptbahnhof,Frankfurt am Main,DE,76

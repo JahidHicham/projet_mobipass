@@ -1,0 +1,49 @@
+﻿CodeSociete,NomSociete,Pays,Ville,RegionOuLand,CodeDomaine,Domaine,TypeSociete,CategorieJuridique,NbEmployesBeneficiaires,DateAdhesion,Origine
+450309257,Occitech Solutions,FR,Toulouse,Occitanie,62.01Z,Programmation informatique,PME,5710,28,,projet 1
+857132294,AéroSud Ingénierie,FR,Blagnac,Occitanie,30.30Z,Construction aéronautique et spatiale,GE,5599,45,,projet 1
+973807241,Lumière Conseil,FR,Lyon,Auvergne-Rhône-Alpes,70.22Z,Conseil pour les affaires et autres conseils de gestion,PME,5710,22,,projet 1
+412945248,Rhône Hyper,FR,Villeurbanne,Auvergne-Rhône-Alpes,47.11F,Hypermarchés,GE,5599,38,,projet 1
+771387677,Banque Seine Patrimoine,FR,Paris,Île-de-France,64.19Z,Autres intermédiations monétaires,GE,5599,40,,projet 1
+801874397,DataCap Paris,FR,Boulogne-Billancourt,Île-de-France,62.02A,Conseil en systèmes et logiciels informatiques,ETI,5710,30,,projet 1
+736903295,Clinique des Chartrons,FR,Bordeaux,Nouvelle-Aquitaine,86.10Z,Activités hospitalières,ETI,5499,26,,projet 1
+472793488,Université Atlantique,FR,Nantes,Pays de la Loire,85.42Z,Enseignement supérieur,GE,7383,24,,projet 1
+414254300,Phocée Mobilités,FR,Marseille,Provence-Alpes-Côte d'Azur,49.39A,Transports routiers réguliers de voyageurs,ETI,5710,20,,projet 1
+821993854,Nordlog Conseil,FR,Lille,Hauts-de-France,70.22Z,Conseil pour les affaires et autres conseils de gestion,PME,5499,14,,projet 1
+894262062,Breizh Numérique,FR,Rennes,Bretagne,62.01Z,Programmation informatique,PME,5710,12,,projet 1
+579493222,Alsace Santé Services,FR,Strasbourg,Grand Est,86.10Z,Activités hospitalières,MICRO,5499,6,,projet 1
+DE579680483,Spreeware GmbH,DE,Berlin,Berlin,62.01Z,Programmation informatique,PME,D101,18,,projet 1
+DE521052681,Isar Logistik GmbH & Co. KG,DE,München,Bayern,52.10B,Entreposage et stockage non frigorifique,ETI,D203,16,,projet 1
+DE177888880,Garchinger Forschungs AG,DE,Garching b.München,Bayern,72.19Z,Recherche-développement en autres sciences physiques et naturelles,GE,D103,14,,projet 1
+DE920027295,Domstadt Consulting UG,DE,Köln,Nordrhein-Westfalen,70.22Z,Conseil pour les affaires et autres conseils de gestion,MICRO,D102,6,,projet 1
+DE175607984,Mainfinanz AG,DE,Frankfurt am Main,Hessen,64.19Z,Autres intermédiations monétaires,GE,D103,14,,projet 1
+DE686346080,Neckar Engineering GmbH,DE,Stuttgart,Baden-Württemberg,71.12B,"Ingénierie, études techniques",PME,D101,12,,projet 1
+DE708990024,Rheinmedia OHG,DE,Düsseldorf,Nordrhein-Westfalen,73.11Z,Activités des agences de publicité,PME,D202,8,,projet 1
+DE823129740,Elbe Hafen Service KG,DE,Hamburg,Hamburg,52.24A,Manutention portuaire,PME,D201,10,,projet 1
+370896169,Alpes Semi-conducteurs,FR,Grenoble,Auvergne-Rhône-Alpes,26.11Z,Fabrication de composants électroniques,GE,5599,220,2022-10-03,projet 2
+938182060,Hérault Énergies,FR,Montpellier,Occitanie,35.11Z,Production d'électricité,GE,5599,150,2022-09-05,projet 2
+621701184,Azur Assurances,FR,Nice,Provence-Alpes-Côte d'Azur,65.12Z,Autres assurances,ETI,5599,110,2022-11-07,projet 2
+531173938,Fromageries de Normandie,FR,Rouen,Normandie,10.51C,Fabrication de fromage,ETI,5710,90,2022-10-17,projet 2
+326646080,Institut Bourguignon de Recherche Agronomique,FR,Dijon,Bourgogne-Franche-Comté,72.19Z,Recherche-développement en autres sciences physiques et naturelles,ETI,7383,80,2022-09-19,projet 2
+404139875,Loire Logistique Express,FR,Orléans,Centre-Val de Loire,52.10B,Entreposage et stockage non frigorifique,PME,5499,70,2022-11-14,projet 2
+344706312,Volcans Ingénierie,FR,Clermont-Ferrand,Auvergne-Rhône-Alpes,71.12B,"Ingénierie, études techniques",PME,5710,60,2022-10-10,projet 2
+836762724,Seine Digital Factory,FR,Issy-les-Moulineaux,Île-de-France,58.29C,Édition de logiciels applicatifs,ETI,5710,180,2024-03-04,projet 2
+460567647,Défense Conseil Partners,FR,Nanterre,Île-de-France,70.22Z,Conseil pour les affaires et autres conseils de gestion,ETI,5710,140,2022-09-12,projet 2
+453071441,Hôpital Privé de la Plaine,FR,Saint-Denis,Île-de-France,86.10Z,Activités hospitalières,ETI,5499,130,2022-12-05,projet 2
+531471654,Essonne Recherche Appliquée,FR,Massy,Île-de-France,72.19Z,Recherche-développement en autres sciences physiques et naturelles,GE,7383,160,2022-10-24,projet 2
+364918821,Atlantique Aéro Composites,FR,Saint-Herblain,Pays de la Loire,30.30Z,Construction aéronautique et spatiale,GE,5599,120,2022-11-21,projet 2
+691949713,Gironde Hypermarchés,FR,Mérignac,Nouvelle-Aquitaine,47.11F,Hypermarchés,GE,5599,110,2022-09-26,projet 2
+961702776,Toulouse Space Software,FR,Labège,Occitanie,62.01Z,Programmation informatique,ETI,5710,130,2025-01-06,projet 2
+641322623,Lyon Ouest Business School,FR,Écully,Auvergne-Rhône-Alpes,85.42Z,Enseignement supérieur,ETI,5710,100,2022-10-03,projet 2
+587880246,Provence Banque Régionale,FR,Aix-en-Provence,Provence-Alpes-Côte d'Azur,64.19Z,Autres intermédiations monétaires,GE,5599,120,2022-09-05,projet 2
+663794519,Nord Retail Services,FR,Villeneuve-d'Ascq,Hauts-de-France,47.11F,Hypermarchés,GE,5710,140,2024-09-02,projet 2
+925387722,Finistère Cybersécurité,FR,Brest,Bretagne,62.02A,Conseil en systèmes et logiciels informatiques,PME,5710,50,2022-11-28,projet 2
+368849279,Moselle Mécanique de Précision,FR,Metz,Grand Est,71.12B,"Ingénierie, études techniques",PME,5499,60,2022-12-12,projet 2
+DE606879356,Leipziger Paket-Logistik GmbH,DE,Leipzig,Sachsen,52.10B,Entreposage et stockage non frigorifique,ETI,D101,90,2026-01-05,projet 2
+DE600958191,Elbtal Halbleiter AG,DE,Dresden,Sachsen,26.11Z,Fabrication de composants électroniques,GE,D103,110,2026-02-02,projet 2
+DE519878724,Ruhrtal Energiedienste GmbH,DE,Essen,Nordrhein-Westfalen,35.11Z,Production d'électricité,GE,D101,80,2026-01-12,projet 2
+DE217894223,Westfalen Versicherung AG,DE,Dortmund,Nordrhein-Westfalen,65.12Z,Autres assurances,GE,D103,70,2026-03-02,projet 2
+DE506132851,Bonner Forschungsinstitut GmbH,DE,Bonn,Nordrhein-Westfalen,72.19Z,Recherche-développement en autres sciences physiques et naturelles,PME,D101,50,2026-02-16,projet 2
+DE304476239,Kurpfalz Software GmbH & Co. KG,DE,Mannheim,Baden-Württemberg,62.01Z,Programmation informatique,PME,D203,60,2026-04-06,projet 2
+DE302436379,Fugger Handelshaus KG,DE,Augsburg,Bayern,46.90Z,Commerce de gros non spécialisé,PME,D201,45,2026-03-16,projet 2
+DE469529445,Weser Hafen Logistik GmbH,DE,Bremen,Bremen,52.24A,Manutention portuaire,ETI,D101,60,2026-01-19,projet 2
+DE539384103,Leine Consulting UG,DE,Hannover,Niedersachsen,70.22Z,Conseil pour les affaires et autres conseils de gestion,MICRO,D102,20,2026-05-04,projet 2

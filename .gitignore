@@ -1,0 +1,5 @@
+# Fichiers fabriqués par Visual Studio pour le projet SSAS (régénérés à chaque génération)
+bin/
+obj/
+.vs/
+*.user

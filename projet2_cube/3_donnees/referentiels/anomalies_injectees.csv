@@ -1,0 +1,20 @@
+﻿Fichier,Anomalie,NbLignes,TraitementAttendu
+employe.csv,profil de trajet manquant,40,complétée (profil « non renseigné »)
+employe.csv,"libellé de service mal écrit (casse, espaces)",120,corrigée (libellé majoritaire du service)
+employe.csv,domaine de la société manquant,120,complétée (domaine « non renseigné »)
+employe.csv,ligne en double,15,doublon supprimé
+produit.csv,marque manquante,2,complétée (marque « non renseignée »)
+exemplaire.csv,date de réforme antérieure à la mise en service,5,corrigée (date supprimée)
+location.csv,durée nulle ou négative,60,rejetée
+location.csv,durée aberrante (999 jours),25,rejetée
+location.csv,date future,20,rejetée
+location.csv,employé inconnu,20,rejetée
+location.csv,prix journalier manquant,300,"complétée (prix du même produit, même pays, même mois)"
+location.csv,taux de réduction manquant,200,"complétée (taux du même employé, même gamme, même année)"
+location.csv,"taux de réduction saisi en pourcentage (15 au lieu de 0,15)",150,corrigée (divisé par 100)
+location.csv,exemplaire loué deux fois en même temps,30,rejetée (on garde la location commencée la première)
+location.csv,ligne en double,250,doublon supprimé
+reservation.csv,nombre d'exemplaires manquant,80,complétée (1 exemplaire)
+reservation.csv,date de réservation après la location prévue,40,rejetée
+reservation.csv,produit inconnu,15,rejetée
+reservation.csv,ligne en double,100,doublon supprimé

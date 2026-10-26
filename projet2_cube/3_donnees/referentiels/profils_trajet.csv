@@ -1,0 +1,13 @@
+﻿CodeProfil,Profil,ClasseTrajet,DureeMoyenneVisee,FrequenceRelative
+TC-01,Trajet de moins de 2 km en zone urbaine dense,Trajet court (moins de 5 km),2.2,1.0
+TC-02,Trajet de 2 à 5 km en zone urbaine,Trajet court (moins de 5 km),2.2,1.0
+TC-03,Trajet de moins de 5 km en zone périurbaine ou rurale,Trajet court (moins de 5 km),2.2,1.0
+TM-01,Trajet de 5 à 10 km avec faible dénivelé,Trajet moyen (5 à 15 km),4.2,1.0
+TM-02,Trajet de 5 à 10 km avec dénivelé important,Trajet moyen (5 à 15 km),4.2,1.0
+TM-03,Trajet de 10 à 15 km avec faible dénivelé,Trajet moyen (5 à 15 km),4.2,1.0
+TM-04,Trajet de 10 à 15 km avec dénivelé important,Trajet moyen (5 à 15 km),4.2,1.0
+TL-01,Trajet de 15 à 25 km,Trajet long (plus de 15 km),11.3,0.7
+TL-02,Trajet de plus de 25 km,Trajet long (plus de 15 km),11.3,0.7
+TI-01,"Trajet vélo + train (TER, Regionalbahn)",Trajet intermodal,1.7,1.5
+TI-02,"Trajet vélo + transports urbains (métro, tramway, S-Bahn)",Trajet intermodal,1.7,1.5
+TI-03,Trajet vélo + covoiturage,Trajet intermodal,1.7,1.5
