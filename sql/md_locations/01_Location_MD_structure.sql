@@ -28,14 +28,29 @@
 CREATE MATERIALIZED VIEW TEMPS_MD1
 BUILD IMMEDIATE
 REFRESH COMPLETE ON DEMAND
-AS SELECT DISTINCT DateL                                      AS DateJ,
-                   TO_CHAR(DateL, 'IYYY-"S"IW')                 AS Num_Semaine,
-                   TO_NUMBER(TO_CHAR(DateL, 'IYYY'))            AS Annee_ISO,
-                   TO_CHAR(DateL, 'YYYY-MM')                    AS Num_Mois,
-                   TO_CHAR(DateL, 'fmMonth YYYY',
-                           'NLS_DATE_LANGUAGE=FRENCH')          AS LibMois,
-                   EXTRACT(YEAR FROM DateL)                     AS Annee
-   FROM LOUER;                                                  -- dates de debut de location
+AS 
+    WITH temps AS
+    (
+        SELECT  MIN(DateL) AS DateMin, MAX(DateL) AS DateMax
+        FROM LOUER
+    ), dates_location AS
+    (
+        SELECT
+            TRUNC(DateMin) + LEVEL - 1 AS DateL
+        FROM temps
+        CONNECT BY LEVEL <= (DateMax - DateMin) + 1
+            AND PRIOR DateMin = DateMin
+            AND PRIOR DateMax = DateMax
+            AND PRIOR DBMS_RANDOM.VALUE IS NOT NULL
+    ) 
+    SELECT DateL                                      AS DateJ,
+           TO_CHAR(DateL, 'IYYY-"S"IW')                 AS Num_Semaine,
+           TO_NUMBER(TO_CHAR(DateL, 'IYYY'))            AS Annee_ISO,
+           TO_CHAR(DateL, 'YYYY-MM')                    AS Num_Mois,
+           TO_CHAR(DateL, 'fmMonth YYYY',
+                   'NLS_DATE_LANGUAGE=FRENCH')          AS LibMois,
+           EXTRACT(YEAR FROM DateL)                     AS Annee
+    FROM dates_location;                                                  -- dates de debut de location
 
 ALTER TABLE TEMPS_MD1 ADD CONSTRAINT pk_temps_md1 PRIMARY KEY (DateJ);
 
@@ -256,39 +271,79 @@ ATTRIBUTE CodeCategorie   DETERMINES EMPLOYE_MD1.NomCategorie;
 --  Le fait est construit depuis l'ED (pas depuis les dimensions) : les MV
 --  de dimensions et de fait sont independantes les unes des autres.
 -- =====================================================================
+-- DROP MATERIALIZED VIEW LOCATION_MD2;
 CREATE MATERIALIZED VIEW LOCATION_MD1
 BUILD IMMEDIATE
 REFRESH COMPLETE ON DEMAND
-AS SELECT l.CodeE   AS CodeEmploye,
-          l.CodeEX  AS CodeExemplaire,
-          l.DateL   AS DateJ,
-          SUM(l.Duree_Loc) AS Duree_Location_MD,
-          ROUND(SUM(CASE WHEN t.ModePrix = 'HT'
-                         THEN l.Duree_Loc * t.Prix_loc_jour * (1 + pa.TauxTVA)
-                         ELSE l.Duree_Loc * t.Prix_loc_jour
-                    END), 2) AS Montant_Location_MD,
-          ROUND(SUM(CASE WHEN t.ModePrix = 'HT'
-                         THEN l.Duree_Loc * t.Prix_loc_jour * (1 + pa.TauxTVA)
-                         ELSE l.Duree_Loc * t.Prix_loc_jour
-                    END * (1 - NVL(r.PctReduc_Loc, 0))), 2) AS Montant_Location_ReelPaye_MD
-   FROM   LOUER l
-          JOIN EMPLOYE    e  ON e.CodeE    = l.CodeE
-          JOIN SERVICE    se ON se.CodeSE  = e.CodeSE
-          JOIN SOCIETE    so ON so.CodeSOC = se.CodeSOC
-          JOIN ZONE_GEO   zg ON zg.CodeZG  = so.CodeZG
-          JOIN PAYS       pa ON pa.CodePays = zg.CodePays
-          JOIN EXEMPLAIRE ex ON ex.CodeEX  = l.CodeEX
-          JOIN PRODUIT    pr ON pr.CodeP   = ex.CodeP
-          LEFT JOIN TARIFER t
-                 ON t.CodeP    = ex.CodeP
-                AND t.CodePays = pa.CodePays
-                AND t.DateDebutTarif <= l.DateL
-                AND (t.DateFinTarif IS NULL OR t.DateFinTarif >= l.DateL)
-          LEFT JOIN REDUCTION r
-                 ON r.CodeCAT = e.CodeCAT
-                AND r.CodeG   = pr.CodeG
-                AND r.Annee   = EXTRACT(YEAR FROM l.DateL)
-   GROUP BY l.CodeE, l.CodeEX, l.DateL;
+AS 
+
+    WITH location AS
+    (
+        SELECT
+            codee,
+            codeex,
+            Duree_Loc,
+            datel AS date_deb_loc,
+            datel + Duree_Loc AS date_fin_loc
+        FROM louer
+    ),
+    decomposition_date AS
+    (
+        SELECT
+            codee,
+            codeex,
+            TRUNC(date_deb_loc) + LEVEL - 1 jour_debut_location,
+            TRUNC(date_deb_loc) + LEVEL as jour_fin_location
+        FROM location
+        CONNECT BY LEVEL <= (Duree_Loc)
+            AND PRIOR codee = codee
+            AND PRIOR codeex = codeex
+            AND PRIOR date_deb_loc = date_deb_loc
+            AND PRIOR date_fin_loc = date_fin_loc
+            AND PRIOR DBMS_RANDOM.VALUE IS NOT NULL
+    ), location_md AS
+    (
+        SELECT
+            codee,
+            codeex,
+            jour_debut_location,
+            jour_fin_location,
+            (jour_fin_location - jour_debut_location) AS Duree_Loc
+        FROM decomposition_date
+    )
+    SELECT l.CodeE   AS CodeEmploye,
+              l.CodeEX  AS CodeExemplaire,
+              l.jour_debut_location AS DateJ,
+              --l.jour_fin_location AS Date_fin_Loc,
+              SUM(l.Duree_Loc) AS Duree_Location_MD,
+              ROUND(SUM(CASE WHEN t.ModePrix = 'HT'
+                             THEN l.Duree_Loc * t.Prix_loc_jour * (1 + pa.TauxTVA)
+                             ELSE l.Duree_Loc * t.Prix_loc_jour
+                        END), 2) AS Montant_Location_MD,
+              ROUND(SUM(CASE WHEN t.ModePrix = 'HT'
+                             THEN l.Duree_Loc * t.Prix_loc_jour * (1 + pa.TauxTVA)
+                             ELSE l.Duree_Loc * t.Prix_loc_jour
+                        END * (1 - NVL(r.PctReduc_Loc, 0))), 2) AS Montant_Location_ReelPaye_MD
+       FROM   location_md l
+              JOIN EMPLOYE    e  ON e.CodeE    = l.CodeE
+              JOIN SERVICE    se ON se.CodeSE  = e.CodeSE
+              JOIN SOCIETE    so ON so.CodeSOC = se.CodeSOC
+              JOIN ZONE_GEO   zg ON zg.CodeZG  = so.CodeZG
+              JOIN PAYS       pa ON pa.CodePays = zg.CodePays
+              JOIN EXEMPLAIRE ex ON ex.CodeEX  = l.CodeEX
+              JOIN PRODUIT    pr ON pr.CodeP   = ex.CodeP
+              LEFT JOIN TARIFER t
+                     ON t.CodeP    = ex.CodeP
+                    AND t.CodePays = pa.CodePays
+                    AND t.DateDebutTarif <= l.jour_debut_location
+                    AND (t.DateFinTarif IS NULL OR t.DateFinTarif >= l.jour_debut_location)
+              LEFT JOIN REDUCTION r
+                     ON r.CodeCAT = e.CodeCAT
+                    AND r.CodeG   = pr.CodeG
+                    AND r.Annee   = EXTRACT(YEAR FROM l.jour_debut_location)
+       GROUP BY l.CodeE, l.CodeEX, l.jour_debut_location, l.jour_fin_location
+       ORDER BY l.CodeE, l.CodeEX, l.jour_debut_location
+;
 
 -- Cle primaire : concatenation des cles etrangeres
 ALTER TABLE LOCATION_MD1 ADD CONSTRAINT pk_location_md1
