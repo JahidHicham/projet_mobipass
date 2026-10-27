@@ -21,8 +21,8 @@ Ce dossier est l'archive à rendre. Un sous-dossier par livrable du sujet (parti
 | 0 | `1_entrepot_sql/00_creation_base.sql` | base `MobiPass` créée (sur votre PC seulement) |
 | 1 | `1_entrepot_sql/01_creation_dw.sql` | 7 tables, 8 clés étrangères, 1 trigger |
 | 2 | `1_entrepot_sql/02_dimension_temps.sql` | 1 461 jours (2023 à 2026) |
-| 3 | `1_entrepot_sql/03_chargement_dw.sql` (sur votre PC) **ou** `03_chargement_dw_fac.sql` (à la fac) | bilans : 63 138 locations, 27 520 réservations, journal de qualité |
-| 4 | `1_entrepot_sql/04_controles_entrepot.sql` | 13 règles à 0 anomalie, volumes OK, totaux de référence (global, année, pays, secteur) |
+| 3 | `1_entrepot_sql/03_chargement_dw.sql` (sur votre PC) **ou** `03_chargement_dw_fac.sql` (à la fac) | bilans : 63 138 locations (215 444 lignes, une par jour loué), 27 520 réservations, journal de qualité |
+| 4 | `1_entrepot_sql/04_controles_entrepot.sql` | 14 règles à 0 anomalie, volumes OK, totaux de référence (global, année, pays, secteur) |
 | 5 | `1_entrepot_sql/04_controles_cube.mdx` (SSMS, Analysis Services, après traitement du cube) | les mêmes totaux, calculés sur le cube : identiques à ceux de l'étape 4 |
 
 Avant les scripts 1 à 3, choisir la base dans la liste déroulante de SSMS (`MobiPass` sur votre PC, votre numéro

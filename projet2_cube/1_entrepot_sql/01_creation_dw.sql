@@ -9,7 +9,8 @@
 --   * domaine NAF/WZ de la société (séquence S2) ; géographies française et allemande séparées, comme dans la conception ;
 --   * JOURNAL_QUALITE : anomalies des fichiers sources (manquantes, erronées, doublons) traitées au chargement.
 -- Contraintes du dictionnaire de données du sujet initial : durée > 0, pourcentage de réduction dans ]0 ; 1],
---   dates cohérentes, aucune location au prix public, pas de chevauchement d'un exemplaire (CHECK et trigger).
+--   dates cohérentes, aucune location au prix public, pas de chevauchement d'un exemplaire (CHECK, UNIQUE et trigger).
+-- Grain du fait Location : un jour loué (comme LOCATION_MD1 du projet 1), voir plus bas.
 -- Clés de substitution : numéros attribués au chargement (03_chargement_dw.sql), indépendants des codes sources ;
 --   pour le temps, la date au format AAAAMMJJ. Montants en euros TTC (prix allemands HT + TVA allemande).
 -- Avant d'exécuter : choisir la base dans la liste déroulante de SSMS (MobiPass sur votre PC, votre numéro
@@ -166,64 +167,63 @@ CREATE TABLE dw.DIM_EXEMPLAIRE(
 );
 GO
 
--- Fait Location : une ligne par location (même grain que LOUER : employé, exemplaire, date de début).
--- Mesures : durée en jours ; montant public = durée x prix de location journalier du tarif en vigueur ;
--- montant payé = montant public x (1 - taux de réduction de la gamme et du profil de trajet pour l'année).
+-- Fait Location : une ligne par JOUR loué (comme LOCATION_MD1 du projet 1, sql/md_locations/01_Location_MD_structure.sql) :
+-- une location de 5 jours donne 5 lignes. Les jours loués tombent ainsi dans le bon mois et la bonne semaine
+-- (une location du 28 juin au 3 juillet compte 3 jours en juin et 3 en juillet).
+-- Mesures par ligne : durée = 1 jour ; montant public = prix de location journalier TTC du tarif en vigueur au
+-- début de la location ; montant payé = montant public x (1 - taux de réduction de la gamme et du profil de trajet
+-- pour l'année de début). DebutLocation = 1 sur le premier jour seulement : la somme de DebutLocation compte les
+-- locations, la somme de DureeLocation compte les jours loués.
 CREATE TABLE dw.FAIT_LOCATION(
-   CleTemps       INT           NOT NULL,   -- date de début de la location
+   CleTemps       INT           NOT NULL,   -- jour loué
    CleEmploye     INT           NOT NULL,
    CleExemplaire  INT           NOT NULL,
    CleProduit     INT           NOT NULL,   -- produit de l'exemplaire (dimension partagée avec les réservations)
-   DureeLocation  INT           NOT NULL,   -- en jours
+   DureeLocation  INT           NOT NULL,   -- 1 jour par ligne
+   DebutLocation  TINYINT       NOT NULL,   -- 1 = premier jour de la location, 0 = jour suivant
    TauxReduction  DECIMAL(4,3)  NOT NULL,   -- %Reduc_loc appliqué
-   MontantPublic  DECIMAL(12,2) NOT NULL,   -- euros TTC
-   MontantPaye    DECIMAL(12,2) NOT NULL,   -- euros TTC
+   MontantPublic  DECIMAL(12,2) NOT NULL,   -- euros TTC, pour ce jour
+   MontantPaye    DECIMAL(12,2) NOT NULL,   -- euros TTC, pour ce jour
    CONSTRAINT pk_fait_location PRIMARY KEY(CleEmploye, CleExemplaire, CleTemps),
+   CONSTRAINT uq_fait_location_jour UNIQUE(CleExemplaire, CleTemps),   -- un exemplaire n'est pas loué deux fois le même jour
    CONSTRAINT fk_fl_temps FOREIGN KEY(CleTemps) REFERENCES dw.DIM_TEMPS(CleTemps),
    CONSTRAINT fk_fl_employe FOREIGN KEY(CleEmploye) REFERENCES dw.DIM_EMPLOYE(CleEmploye),
    CONSTRAINT fk_fl_exemplaire FOREIGN KEY(CleExemplaire, CleProduit) REFERENCES dw.DIM_EXEMPLAIRE(CleExemplaire, CleProduit),
    CONSTRAINT fk_fl_produit FOREIGN KEY(CleProduit) REFERENCES dw.DIM_PRODUIT(CleProduit),
-   CONSTRAINT ck_fl_duree CHECK(DureeLocation > 0),
+   CONSTRAINT ck_fl_duree CHECK(DureeLocation = 1),
+   CONSTRAINT ck_fl_debut CHECK(DebutLocation IN (0, 1)),
    CONSTRAINT ck_fl_taux CHECK(TauxReduction > 0 AND TauxReduction <= 1),
    CONSTRAINT ck_fl_montant_public CHECK(MontantPublic > 0),
    CONSTRAINT ck_fl_prix_public CHECK(MontantPaye >= 0 AND MontantPaye < MontantPublic),   -- aucune location au prix public
    CONSTRAINT ck_fl_montant_paye CHECK(ABS(MontantPaye - MontantPublic * (1 - TauxReduction)) < 0.01)
 );
 GO
-CREATE INDEX ix_fl_exemplaire ON dw.FAIT_LOCATION(CleExemplaire, CleTemps) INCLUDE(DureeLocation);
 CREATE INDEX ix_fl_temps ON dw.FAIT_LOCATION(CleTemps);
+CREATE INDEX ix_fl_produit ON dw.FAIT_LOCATION(CleEmploye, CleProduit, CleTemps) INCLUDE(DebutLocation);
 GO
 
 -- Règles qui portent sur plusieurs tables, vérifiées à chaque insertion ou modification de locations
+-- (le chevauchement de deux locations d'un même exemplaire est interdit par uq_fait_location_jour)
 CREATE TRIGGER dw.trg_fait_location_controle ON dw.FAIT_LOCATION
 AFTER INSERT, UPDATE
 AS
 BEGIN
     SET NOCOUNT ON;
-    -- dates cohérentes : location passée, après la mise en service, terminée avant la réforme de l'exemplaire
+    -- dates cohérentes : location commencée dans le passé, jours loués après la mise en service
+    -- et avant la réforme de l'exemplaire
     IF EXISTS (SELECT 1
                FROM inserted i
                JOIN dw.DIM_TEMPS t      ON t.CleTemps = i.CleTemps
                JOIN dw.DIM_EXEMPLAIRE x ON x.CleExemplaire = i.CleExemplaire
-               WHERE t.DateJour >= CAST(GETDATE() AS DATE)
+               WHERE (i.DebutLocation = 1 AND t.DateJour >= CAST(GETDATE() AS DATE))
                   OR t.DateJour < x.DateMiseService
-                  OR (x.DateReforme IS NOT NULL AND DATEADD(DAY, i.DureeLocation, t.DateJour) > x.DateReforme))
+                  OR (x.DateReforme IS NOT NULL AND t.DateJour >= x.DateReforme))
         THROW 50001, N'Location incohérente : date future, avant la mise en service ou après la réforme de l''exemplaire.', 1;
-    -- un exemplaire n'est pas loué deux fois sur des périodes qui se chevauchent
-    IF EXISTS (SELECT 1
-               FROM inserted i
-               JOIN dw.DIM_TEMPS ti    ON ti.CleTemps = i.CleTemps
-               JOIN dw.FAIT_LOCATION f ON f.CleExemplaire = i.CleExemplaire
-                                      AND NOT (f.CleEmploye = i.CleEmploye AND f.CleTemps = i.CleTemps)
-               JOIN dw.DIM_TEMPS tf    ON tf.CleTemps = f.CleTemps
-               WHERE tf.DateJour < DATEADD(DAY, i.DureeLocation, ti.DateJour)
-                 AND ti.DateJour < DATEADD(DAY, f.DureeLocation, tf.DateJour))
-        THROW 50002, N'Un exemplaire est loué deux fois sur des périodes qui se chevauchent.', 1;
 END;
 GO
 
 -- Fait Réservation : une ligne par réservation (même grain que RESERVER : employé, produit, date prévue).
--- NonHonoree = 1 si aucune location du produit par l'employé n'a suivi à la date prévue : faute d'exemplaire
+-- NonHonoree = 1 si aucune location du produit par l'employé n'a commencé à la date prévue : faute d'exemplaire
 -- libre, l'employé n'a pas trouvé de produit à louer. Mesures : nombre de réservations, non honorées, durée prévue.
 CREATE TABLE dw.FAIT_RESERVATION(
    CleTemps          INT     NOT NULL,   -- date de location prévue

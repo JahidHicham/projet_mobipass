@@ -26,3 +26,26 @@ CREATE MEMBER CURRENTCUBE.[Measures].[Taux de demandes non satisfaites]
  AS IIF([Measures].[Nombre de locations] + [Measures].[Réservations non honorées] = 0, NULL,
         [Measures].[Réservations non honorées] / ([Measures].[Nombre de locations] + [Measures].[Réservations non honorées])),
 FORMAT_STRING = "Percent", VISIBLE = 1;
+
+/* ---- Taux d'occupation du parc (séquence S1, saturation vue côté offre, avec les seules locations) ---- */
+
+/* Jours couverts par les données : du premier au dernier jour loué */
+CREATE SET CURRENTCUBE.[Jours observés]
+ AS {HEAD(NONEMPTY([Temps].[Jour].[Jour].MEMBERS, [Measures].[Durée]), 1).ITEM(0)
+     : TAIL(NONEMPTY([Temps].[Jour].[Jour].MEMBERS, [Measures].[Durée]), 1).ITEM(0)};
+
+/* Exemplaires loués au moins un jour dans la période et la sélection affichées */
+CREATE MEMBER CURRENTCUBE.[Measures].[Exemplaires loués]
+ AS COUNT(NONEMPTY(EXISTING [Exemplaire].[Exemplaire].[Exemplaire].MEMBERS, [Measures].[Durée])),
+FORMAT_STRING = "#,##0", VISIBLE = 1;
+
+/* Nombre de jours de la période affichée (limité aux jours couverts par les données) */
+CREATE MEMBER CURRENTCUBE.[Measures].[Jours de la période]
+ AS COUNT(EXISTING [Jours observés]),
+FORMAT_STRING = "#,##0", VISIBLE = 0;
+
+/* Taux d'occupation : jours loués / (exemplaires loués x jours de la période). À lire au mois ou à la saison */
+CREATE MEMBER CURRENTCUBE.[Measures].[Taux d'occupation]
+ AS IIF([Measures].[Exemplaires loués] = 0 OR [Measures].[Jours de la période] = 0, NULL,
+        [Measures].[Durée] / ([Measures].[Exemplaires loués] * [Measures].[Jours de la période])),
+FORMAT_STRING = "Percent", VISIBLE = 1;

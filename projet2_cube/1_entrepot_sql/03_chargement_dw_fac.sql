@@ -95697,6 +95697,8 @@ CROSS APPLY (SELECT CASE
     WHEN t.CleTemps IS NULL OR l.DateLocation >= CAST(GETDATE() AS DATE) THEN N'date future ou hors période'
     WHEN l.DureeLocation IS NULL OR l.DureeLocation <= 0 THEN N'durée nulle ou négative'
     WHEN l.DureeLocation > 90 THEN N'durée aberrante (plus de 90 jours)'
+    WHEN NOT EXISTS (SELECT 1 FROM dw.DIM_TEMPS tf WHERE tf.DateJour = DATEADD(DAY, l.DureeLocation - 1, l.DateLocation))
+         THEN N'date future ou hors période'   -- dernier jour loué hors de la dimension Temps
     WHEN l.DateLocation < x.DateMiseService
       OR (x.DateReforme IS NOT NULL AND DATEADD(DAY, l.DureeLocation, l.DateLocation) > x.DateReforme)
          THEN N'location hors période de service de l''exemplaire'
@@ -95778,12 +95780,14 @@ DELETE l FROM #location l
 JOIN #rejet r ON r.CodeEmploye = l.CodeEmploye AND r.CodeAutre = l.CodeExemplaire AND r.DateLigne = l.DateLocation;
 
 -- ============================================================ 5. chargement du fait Location (codes -> clés, mesures calculées)
-INSERT INTO dw.FAIT_LOCATION(CleTemps, CleEmploye, CleExemplaire, CleProduit, DureeLocation, TauxReduction, MontantPublic, MontantPaye)
-SELECT t.CleTemps, e.CleEmploye, x.CleExemplaire, x.CleProduit, l.DureeLocation, l.TauxReduction,
-       l.DureeLocation * l.PrixJourTTC,
-       ROUND(l.DureeLocation * l.PrixJourTTC * (1 - l.TauxReduction), 2)
+-- une ligne par jour loué : jours de la dimension Temps du premier au dernier jour de la location
+INSERT INTO dw.FAIT_LOCATION(CleTemps, CleEmploye, CleExemplaire, CleProduit, DureeLocation, DebutLocation, TauxReduction,
+    MontantPublic, MontantPaye)
+SELECT t.CleTemps, e.CleEmploye, x.CleExemplaire, x.CleProduit, 1,
+       CASE WHEN t.DateJour = l.DateLocation THEN 1 ELSE 0 END,
+       l.TauxReduction, l.PrixJourTTC, ROUND(l.PrixJourTTC * (1 - l.TauxReduction), 2)
 FROM #location l
-JOIN dw.DIM_TEMPS t      ON t.DateJour = l.DateLocation
+JOIN dw.DIM_TEMPS t      ON t.DateJour >= l.DateLocation AND t.DateJour < DATEADD(DAY, l.DureeLocation, l.DateLocation)
 JOIN dw.DIM_EMPLOYE e    ON e.CodeEmploye = l.CodeEmploye
 JOIN dw.DIM_EXEMPLAIRE x ON x.CodeExemplaire = l.CodeExemplaire;
 
@@ -95830,7 +95834,8 @@ INSERT INTO dw.FAIT_RESERVATION(CleTemps, CleEmploye, CleProduit, NbExemplaires,
 SELECT t.CleTemps, e.CleEmploye, p.CleProduit, r.NbExemplaires, r.DureePrevue,
        DATEDIFF(DAY, r.DateReservation, r.DateLocationPrevue),
        CASE WHEN EXISTS (SELECT 1 FROM dw.FAIT_LOCATION f
-                         WHERE f.CleEmploye = e.CleEmploye AND f.CleProduit = p.CleProduit AND f.CleTemps = t.CleTemps)
+                         WHERE f.CleEmploye = e.CleEmploye AND f.CleProduit = p.CleProduit AND f.CleTemps = t.CleTemps
+                           AND f.DebutLocation = 1)
             THEN 0 ELSE 1 END
 FROM #reservation r
 JOIN dw.DIM_TEMPS t   ON t.DateJour = r.DateLocationPrevue
@@ -95842,7 +95847,7 @@ UPDATE #bilan SET LignesChargees = CASE Fichier
     WHEN 'employe.csv'     THEN (SELECT COUNT(*) FROM dw.DIM_EMPLOYE)
     WHEN 'produit.csv'     THEN (SELECT COUNT(*) FROM dw.DIM_PRODUIT)
     WHEN 'exemplaire.csv'  THEN (SELECT COUNT(*) FROM dw.DIM_EXEMPLAIRE)
-    WHEN 'location.csv'    THEN (SELECT COUNT(*) FROM dw.FAIT_LOCATION)
+    WHEN 'location.csv'    THEN (SELECT SUM(DebutLocation) FROM dw.FAIT_LOCATION)   -- locations (pas jours)
     WHEN 'reservation.csv' THEN (SELECT COUNT(*) FROM dw.FAIT_RESERVATION) END;
 
 -- 1) lignes lues et chargées par fichier (l'écart = doublons supprimés + lignes rejetées)
@@ -95862,15 +95867,15 @@ FROM (SELECT 1 AS o, N'Sociétés' AS Element, COUNT(DISTINCT CodeSociete) AS Nb
       UNION ALL SELECT 4, N'Produits', COUNT(*), 60 FROM dw.DIM_PRODUIT
       UNION ALL SELECT 5, N'Secteurs', COUNT(DISTINCT Secteur), 3 FROM dw.DIM_PRODUIT
       UNION ALL SELECT 6, N'Exemplaires', COUNT(*), 400 FROM dw.DIM_EXEMPLAIRE
-      UNION ALL SELECT 7, N'Locations', COUNT(*), 60000 FROM dw.FAIT_LOCATION
+      UNION ALL SELECT 7, N'Locations', SUM(DebutLocation), 60000 FROM dw.FAIT_LOCATION
       UNION ALL SELECT 8, N'Années complètes (12 mois de locations)', COUNT(*), 3
                 FROM (SELECT t.Annee FROM dw.FAIT_LOCATION f JOIN dw.DIM_TEMPS t ON t.CleTemps = f.CleTemps
                       GROUP BY t.Annee HAVING COUNT(DISTINCT t.NumMois) = 12) a) v
 ORDER BY o;
 
 -- 4) totaux de référence de l'entrepôt, à retrouver dans le cube après son traitement
-SELECT (SELECT COUNT(*) FROM dw.FAIT_LOCATION)           AS NbLocations,
-       (SELECT SUM(DureeLocation) FROM dw.FAIT_LOCATION) AS DureeTotale,
+SELECT (SELECT SUM(DebutLocation) FROM dw.FAIT_LOCATION) AS NbLocations,
+       (SELECT SUM(DureeLocation) FROM dw.FAIT_LOCATION) AS DureeTotale,   -- = nombre de lignes (jours loués)
        (SELECT SUM(MontantPublic) FROM dw.FAIT_LOCATION) AS MontantPublicTotal,
        (SELECT SUM(MontantPaye) FROM dw.FAIT_LOCATION)   AS MontantPayeTotal,
        (SELECT COUNT(*) FROM dw.FAIT_RESERVATION)        AS NbReservations,

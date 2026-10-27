@@ -755,6 +755,7 @@
                   <xs:element name="CleExemplaire" msprop:FriendlyName="CleExemplaire" msprop:DbColumnName="CleExemplaire" msprop:design-time-name="879c7352-2732-4e29-9f86-a27bf25ca236" type="xs:int" />
                   <xs:element name="CleProduit" msprop:FriendlyName="CleProduit" msprop:DbColumnName="CleProduit" msprop:design-time-name="0a3a951f-811b-4b4b-bf39-9227d0563fc1" type="xs:int" />
                   <xs:element name="DureeLocation" msprop:FriendlyName="DureeLocation" msprop:DbColumnName="DureeLocation" msprop:design-time-name="48042717-d01c-4810-b546-5bdc87c1ad69" type="xs:int" />
+                  <xs:element name="DebutLocation" msprop:FriendlyName="DebutLocation" msprop:DbColumnName="DebutLocation" msprop:design-time-name="077efaf2-fdc1-4d42-9a3a-ee91acbf660e" type="xs:unsignedByte" />
                   <xs:element name="TauxReduction" msprop:FriendlyName="TauxReduction" msprop:DbColumnName="TauxReduction" msprop:design-time-name="7743679f-58e2-4a52-b0d4-4209c0fa9777" type="xs:decimal" />
                   <xs:element name="MontantPublic" msprop:FriendlyName="MontantPublic" msprop:DbColumnName="MontantPublic" msprop:design-time-name="4bb2f6a9-a325-4a67-b5aa-19044dcb39e7" type="xs:decimal" />
                   <xs:element name="MontantPaye" msprop:FriendlyName="MontantPaye" msprop:DbColumnName="MontantPaye" msprop:design-time-name="da5033b1-6c0f-402a-ac0a-a9c0c79965fd" type="xs:decimal" />
