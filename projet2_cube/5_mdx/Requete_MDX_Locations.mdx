@@ -1,38 +1,43 @@
 /* =====================================================================
-   MobiPass - Cube "Locations" - SQUELETTES MDX (BROUILLON, noms provisoires)
-   Base : Location_MD (docs/Location_MD.json + sql/md_locations/01_Location_MD_structure.sql)
-   A relire / adapter aux vrais noms une fois le projet SSAS figé.
+   MobiPass - Cube "Locations" - REQUETES MDX (noms du projet SSAS MobiPass_NABHIS)
+   Version relue : noms alignes sur Locations.cube, DIM TEMPS / EMPLOYE / EXEMPLAIRE.dim
+   et membres_calcules.mdx. NON TESTE sur un cube deploye : a executer dans SSMS
+   (Analysis Services) et a corriger au besoin (voir NOTES).
 
-   NOMS PROVISOIRES (a remplacer)
-   Cube        : [Locations]
-   Mesures     : [Measures].[Duree_Location]        (= Duree_Location_MD)
-                 [Measures].[Montant_Location]       (= Montant_Location_MD, prix public TTC)
-                 [Measures].[Montant_ReelPaye]       (= Montant_Location_ReelPaye_MD)
-                 [Measures].[Nb_Locations]           (count du fait, a creer dans SSAS)
-   Dimensions  : [Temps]      H_SEM  : Date < Num_Semaine < Annee_ISO
-                              H_MOIS : Date < Num_Mois < Annee
-                 [Exemplaire] H_GAMME: Exemplaire < Produit < Gamme < SecteurProduit
-                              H_MAR, H_GENERATION
-                 [Employe]    H_France, H_Allemagne, H_District, H_Type_Kreis, H_Type_Land,
-                              H_Type_Societe (Employe < Service < Societe < Type), H_Categorie
-   Membres calcules (WITH MEMBER, a mettre aussi dans le cube) :
-                 Taux_Remise_Effectif = 1 - Montant_ReelPaye / Montant_Location
-                 Duree_Moyenne        = Duree_Location / Nb_Locations
-                 Taux_Occupation      = a definir (voir S1, hypothese)
+   CUBE        : [Locations]
+   MESURES     : groupe Location    : [Durée], [Montant public], [Montant payé], [Nombre de locations]
+                 groupe Réservation : [Réservations non honorées], [Nombre de réservations]
+   CALCULEES (deja dans le cube, membres_calcules.mdx) :
+                 [Montant remise], [Taux de remise effectif], [Durée moyenne],
+                 [Montant payé moyen], [Taux de demandes non satisfaites]
+   DIMENSIONS  : [Temps]      H_MOIS (Année > Mois > Jour)   H_SEM (Année ISO > Semaine > Jour)
+                              + attributs : [Saison], [Trimestre], [Jour de la semaine]
+                 [Employé]    H_France (Pays > Région > Département > Ville > Société > Service > Employé)
+                              H_Allemagne (Pays > Land > Kreis > Gemeinde > Société > Service > Employé)
+                              H_District, H_Type_Kreis, H_Type_Land
+                              H_Categorie (Super Catégorie > Catégorie > Employé)
+                              H_Type_Societe (Type Société > Société > Service > Employé)
+                              H_Domaine (Division > Domaine > Société > Service > Employé)
+                 [Exemplaire] H_GAMME (Secteur > Gamme > Produit > Exemplaire)
+                              H_MAR, H_GENERATION, H_Agence (Pays Agence > Agence > Exemplaire)
 
-   POINTS A VALIDER AVANT D'ECRIRE LA VERSION FINALE
-   (1) "Classe de trajet" et "profil" : Location_MD n'a que [Employe].H_Categorie
-       (Categorie < SuperCategorie). Hypothese ici : profil = Categorie,
-       classe de trajet = SuperCategorie. A confirmer (sinon nouvelle dimension).
-   (2) S1 "pas de produit a louer" : le fait ne contient QUE des locations aboutees,
-       aucune demande refusee. Ici on prend un PROXY (taux d'occupation / pic de duree).
-   (3) Pas de niveau Saison/Trimestre dans [Temps] : on slice avec un ensemble de mois.
-   (4) Geographie : un ensemble MDX ne peut contenir que des membres d'UNE hierarchie.
-       On ne peut donc pas melanger regions francaises (H_France) et Laender (H_Allemagne)
-       dans un meme ensemble : une requete par pays (ou on passe par le niveau Pays).
-   (5) Une dimension (hierarchie) ne peut etre que sur UN axe ; si elle est dans le WHERE,
-       elle ne peut plus etre sur un axe.
-   (6) Les valeurs de cles (&[2025], &[2025-07], &[...]) sont des exemples.
+   CLES DES MEMBRES (d'apres le script de la dimension Temps et le DW)
+     Année / Année ISO : 2025            Mois : 202504 (année x 100 + mois)
+     Semaine : 202538 (année ISO x 100 + semaine)       Saison : printemps | été | automne | hiver
+     Pays : FR | DE      Super Catégorie : libellé complet (ex. Trajet long (plus de 15 km))
+   NOTES (a verifier dans SSAS avant de figer)
+   (1) Noms de niveaux / hierarchies : copies des fichiers .dim ; si un nom a change dans
+       Visual Studio, adapter. Un nom avec accent ou espace s'ecrit entre crochets.
+   (2) Les membres "Sans objet" : pour un employe allemand, les niveaux francais (Région...)
+       valent "Sans objet", et inversement. On passe donc par Descendants([Pays].&[FR], ...)
+       pour ne pas faire apparaitre ce membre parasite.
+   (3) Le groupe Réservation n'est relie a [Exemplaire] qu'au niveau PRODUIT : les mesures
+       de reservation ne se decoupent pas par Agence ni par Exemplaire, mais par Produit,
+       Gamme, Secteur (et par Employé / Temps). "Où" se lit donc par la geographie de
+       l'employe, pas par l'agence.
+   (4) Une hierarchie ne peut etre que sur un axe ; une dimension dans le WHERE (meme
+       attribut) ne peut pas etre sur un axe. Un ensemble ne contient que les membres
+       d'une seule hierarchie.
    ===================================================================== */
 
 
@@ -42,233 +47,232 @@
 
 -- a) Montants reellement payes par mois et par societe
 SELECT
-  [Temps].[H_MOIS].[Num_Mois].Members            ON COLUMNS,
-  NonEmpty([Employe].[H_Type_Societe].[CodeSociete].Members)         ON ROWS
+  NON EMPTY [Temps].[H_MOIS].[Mois].Members                    ON COLUMNS,
+  NON EMPTY [Employé].[H_Type_Societe].[Société].Members       ON ROWS
 FROM [Locations]
-WHERE ([Measures].[Montant_ReelPaye]);
+WHERE ([Measures].[Montant payé]);
 
--- b) Montants reellement payes et durees par semaine et par salarie
+-- b) Montants reellement payes et durees par semaine et par salarie (3 annees completes)
+--    (3 000 salaries x 156 semaines : le NON EMPTY est indispensable)
 
 SELECT
-  {[Measures].[Montant_ReelPaye], [Measures].[Duree_Location]} ON COLUMNS,
+  {[Measures].[Montant payé], [Measures].[Durée]} ON COLUMNS,
   NonEmpty(
     CROSSJOIN(
-      Descendants({[Temps].[H_SEM].[Annee_ISO].&[2023],
-                   [Temps].[H_SEM].[Annee_ISO].&[2024],
-                   [Temps].[H_SEM].[Annee_ISO].&[2025]},
-                  [Temps].[H_SEM].[Num_Semaine]),
-      [Employe].[H_Type_Societe].[CodeEmploye].Members),
-    [Measures].[Montant_ReelPaye])                       ON ROWS
+      Descendants({[Temps].[H_SEM].[Année ISO].&[2023],
+                   [Temps].[H_SEM].[Année ISO].&[2024],
+                   [Temps].[H_SEM].[Année ISO].&[2025]},
+                  [Temps].[H_SEM].[Semaine]),
+      [Employé].[H_Type_Societe].[Employé].Members),
+    [Measures].[Montant payé])                     ON ROWS
 FROM [Locations];
 
--- OOOOOUUUUUU
+
+--OOOOOOUUUUUUU
+
 
 SELECT
-  {Descendants({[Temps].[H_SEM].[Annee_ISO].&[2023],
-                 [Temps].[H_SEM].[Annee_ISO].&[2024],
-                 [Temps].[H_SEM].[Annee_ISO].&[2025]},
-                [Temps].[H_SEM].[Num_Semaine])} ON COLUMNS,
-  NonEmpty([Employe].[H_Type_Societe].[CodeEmploye].Members)   ON ROWS
-FROM [Locations]
-WHERE ([Measures].[Montant_ReelPaye], [Measures].[Duree_Location]);   
+  {[Measures].[Montant payé], [Measures].[Durée]}              ON COLUMNS,
+  NON EMPTY
+    Descendants({[Temps].[H_SEM].[Année ISO].&[2023],
+                 [Temps].[H_SEM].[Année ISO].&[2024],
+                 [Temps].[H_SEM].[Année ISO].&[2025]},
+                [Temps].[H_SEM].[Semaine])
+    * [Employé].[H_Type_Societe].[Employé].Members             ON ROWS
+FROM [Locations];
 
-
-
-
-
-
--- c) Durees mensuelles par region (France) - a refaire avec Land pour l'Allemagne
+-- c) Durees mensuelles par region (France) puis par Land (Allemagne)
 --    + graphique : tableau croise dynamique Excel connecte au cube
-SELECT
-  [Temps].[H_MOIS].[Num_Mois].Members                       ON COLUMNS,
-  NonEmpty([Employe].[H_France].[CodeRegion].Members,
-           [Measures].[Duree_Location])                      ON ROWS
-FROM [Locations]
-WHERE ([Measures].[Duree_Location]);
 
+-- FRANCE
 SELECT
-  [Temps].[H_MOIS].[Num_Mois].Members                       ON COLUMNS,
-  NonEmpty([Employe].[H_Allemagne].[CodeLand].Members,
-           [Measures].[Duree_Location])                      ON ROWS
+  NON EMPTY [Temps].[H_MOIS].[Mois].Members                    ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_France].[Pays].&[FR],
+                        [Employé].[H_France].[Région])         ON ROWS
 FROM [Locations]
-WHERE ([Measures].[Duree_Location]);
+WHERE ([Measures].[Durée]);
+
+
+-- ALLEMAGNE
+SELECT
+  NON EMPTY [Temps].[H_MOIS].[Mois].Members                    ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_Allemagne].[Pays].&[DE],
+                        [Employé].[H_Allemagne].[Land])        ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Durée]);
 
 
 /* =====================================================================
    S1 - SATURATION SAISONNIERE
    Question : quand et ou les employes ne trouvent-ils pas de produit a louer ?
-   (proxy : forte concentration de durees de location = tension sur le parc)
+   Indicateur : [Taux de demandes non satisfaites] (fait Réservation, NonHonoree = 1)
    ===================================================================== */
 
--- S1.1 Vue annuelle (ROLL-UP au niveau Annee)
--- Question : l'activite est-elle stable d'une annee a l'autre ?
+-- S1.1 Vue annuelle (ROLL-UP au niveau Année)
+-- Question : la part de demandes non satisfaites est-elle stable d'une annee a l'autre ?
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
-  [Temps].[H_MOIS].[Annee].Members                          ON ROWS
+  {[Measures].[Nombre de locations], [Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
+  [Temps].[H_MOIS].[Année].Members                             ON ROWS
 FROM [Locations];
 
--- S1.2 DRILL-DOWN par mois sur l'annee choisie
--- Question : quels mois concentrent l'activite ?
+-- S1.2 DRILL-DOWN par mois sur l'annee retenue
+-- Question : quels mois concentrent les demandes non satisfaites ?
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
-  Descendants([Temps].[H_MOIS].[Annee].&[2025],
-              [Temps].[H_MOIS].[Num_Mois])                  ON ROWS
+  {[Measures].[Nombre de locations], [Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
+  Descendants([Temps].[H_MOIS].[Année].&[2025],
+              [Temps].[H_MOIS].[Mois])                         ON ROWS
 FROM [Locations];
 
 -- S1.3 DRILL-DOWN par semaine, classees : les semaines du pic
--- Question : quelles semaines precises sont les plus chargees ?
+-- Question : quelles semaines precises sont les plus touchees ? (attendu : semaines 38-39)
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  {[Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
   TopCount(
-    Descendants([Temps].[H_SEM].[Annee_ISO].&[2025],
-                [Temps].[H_SEM].[Num_Semaine]),
-    10, [Measures].[Duree_Location])                        ON ROWS
+    Descendants([Temps].[H_SEM].[Année ISO].&[2025],
+                [Temps].[H_SEM].[Semaine]),
+    10, [Measures].[Réservations non honorées])                ON ROWS
 FROM [Locations];
 
--- S1.4 SLICE sur la saison (mars-aout) et eclatement par secteur
--- Question : quels secteurs sont les plus sollicites au printemps/ete ?
+-- S1.4 SLICE sur la saison (ete 2025) et eclatement par secteur
+-- Question : quels secteurs sont les plus touches pendant la saison chargee ?
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
-  Order([Exemplaire].[H_GAMME].[SecteurProduit].Members,
-        [Measures].[Duree_Location], BDESC)                 ON ROWS
+  {[Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
+  Order([Exemplaire].[H_GAMME].[Secteur].Members,
+        [Measures].[Réservations non honorées], BDESC)         ON ROWS
 FROM [Locations]
-WHERE ({[Temps].[H_MOIS].[Num_Mois].&[2025-03], [Temps].[H_MOIS].[Num_Mois].&[2025-04],
-        [Temps].[H_MOIS].[Num_Mois].&[2025-05], [Temps].[H_MOIS].[Num_Mois].&[2025-06],
-        [Temps].[H_MOIS].[Num_Mois].&[2025-07], [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+WHERE ([Temps].[Saison].&[été], [Temps].[H_MOIS].[Année].&[2025]);
 
--- S1.5 DRILL-DOWN secteur -> gamme -> produit (jusqu'au produit sous tension)
--- Question : quelle gamme / quels produits cristallisent la saturation ?
+-- S1.5 DRILL-DOWN secteur -> gamme -> produit
+-- Question : quelles gammes et quels produits cristallisent la saturation ?
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
+  {[Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
   TopCount(
-    Descendants([Exemplaire].[H_GAMME].[SecteurProduit].&[Secteur A],   -- secteur identifie en S1.4
-                [Exemplaire].[H_GAMME].[CodeProduit]),
-    10, [Measures].[Duree_Location])                                    ON ROWS
+    Descendants([Exemplaire].[H_GAMME].[Secteur].&[Vélos],
+                [Exemplaire].[H_GAMME].[Produit]),
+    10, [Measures].[Réservations non honorées])                ON ROWS
 FROM [Locations]
-WHERE ({[Temps].[H_MOIS].[Num_Mois].&[2025-03] : [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+WHERE ([Temps].[Saison].&[été], [Temps].[H_MOIS].[Année].&[2025]);
 
--- S1.6a Eclatement par region (France)  -- pour le produit/secteur retenu
+-- S1.6 ECLATEMENT par region (France) pour la gamme retenue
+-- Question : dans quelles regions les demandes de cette gamme ne sont-elles pas satisfaites ?
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
-  Order([Employe].[H_France].[CodeRegion].Members,
-        [Measures].[Duree_Location], BDESC)                 ON ROWS
+  {[Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
+  Order(Descendants([Employé].[H_France].[Pays].&[FR],
+                    [Employé].[H_France].[Région]),
+        [Measures].[Réservations non honorées], BDESC)         ON ROWS
 FROM [Locations]
-WHERE ([Exemplaire].[H_GAMME].[CodeGamme].&[Gamme X],
-       {[Temps].[H_MOIS].[Num_Mois].&[2025-03] : [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+WHERE ([Exemplaire].[H_GAMME].[Gamme].[Vélos électriques urbains],
+       [Temps].[Saison].&[été], [Temps].[H_MOIS].[Année].&[2025]);
 
--- S1.6b Eclatement par Land (Allemagne)
+-- S1.7 DRILL-DOWN geographique : de la region retenue vers ses departements
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Nb_Locations]} ON COLUMNS,
-  Order([Employe].[H_Allemagne].[CodeLand].Members,
-        [Measures].[Duree_Location], BDESC)                 ON ROWS
+  {[Measures].[Réservations non honorées],
+   [Measures].[Taux de demandes non satisfaites]}              ON COLUMNS,
+  Order(Descendants([Employé].[H_France].[Région].[Île-de-France],
+                    [Employé].[H_France].[Département]),
+        [Measures].[Réservations non honorées], BDESC)         ON ROWS
 FROM [Locations]
-WHERE ([Exemplaire].[H_GAMME].[CodeGamme].&[Gamme X],
-       {[Temps].[H_MOIS].[Num_Mois].&[2025-03] : [Temps].[H_MOIS].[Num_Mois].&[2025-08]});
+WHERE ([Exemplaire].[H_GAMME].[Gamme].[Vélos électriques urbains],
+       [Temps].[Saison].&[été], [Temps].[H_MOIS].[Année].&[2025]);
 
--- Variante : ROLL-UP geographique avec Ancestor (de la Gemeinde/commune vers le Land)
--- Ancestor([Employe].[H_Allemagne].[CodeGemeinde].&[DE...], [Employe].[H_Allemagne].[CodeLand])
+-- Variante : ROLL-UP geographique avec Ancestor (d'une ville vers sa region)
+-- Ancestor([Employé].[H_France].[Ville].[Paris], [Employé].[H_France].[Région])
 
 
 /* =====================================================================
    S2 - PROFILS DES LOCATAIRES
    Question : quels profils louent le plus, le plus longtemps, avec quelle remise ?
-   (hypothese : classe de trajet = SuperCategorie, profil = Categorie)
+   profil = Catégorie ; classe de trajet = Super Catégorie ; domaine = Domaine / Division NAF
+   (les mesures calculees sont celles du cube : plus de WITH MEMBER, sauf S2.6)
    ===================================================================== */
 
--- S2.1 Vue par classe de trajet, avec membres calcules
-WITH
-  MEMBER [Measures].[Taux_Remise_Effectif] AS
-    IIF([Measures].[Montant_Location] = 0, NULL,
-        1 - [Measures].[Montant_ReelPaye] / [Measures].[Montant_Location]),
-    FORMAT_STRING = '0.00%'
-  MEMBER [Measures].[Duree_Moyenne] AS
-    IIF([Measures].[Nb_Locations] = 0, NULL,
-        [Measures].[Duree_Location] / [Measures].[Nb_Locations]),
-    FORMAT_STRING = '0.0'
+-- S2.1 Vue par classe de trajet
 SELECT
-  {[Measures].[Nb_Locations], [Measures].[Duree_Location],
-   [Measures].[Duree_Moyenne], [Measures].[Taux_Remise_Effectif]} ON COLUMNS,
-  [Employe].[H_Categorie].[SuperCategorie].Members               ON ROWS
+  {[Measures].[Nombre de locations], [Measures].[Durée],
+   [Measures].[Durée moyenne], [Measures].[Taux de remise effectif]}   ON COLUMNS,
+  [Employé].[H_Categorie].[Super Catégorie].Members                    ON ROWS
 FROM [Locations];
 
--- S2.2 DRILL-DOWN : profil (Categorie) au sein de la classe qui ressort
-WITH
-  MEMBER [Measures].[Taux_Remise_Effectif] AS
-    IIF([Measures].[Montant_Location] = 0, NULL,
-        1 - [Measures].[Montant_ReelPaye] / [Measures].[Montant_Location]),
-    FORMAT_STRING = '0.00%'
-  MEMBER [Measures].[Duree_Moyenne] AS
-    IIF([Measures].[Nb_Locations] = 0, NULL,
-        [Measures].[Duree_Location] / [Measures].[Nb_Locations]),
-    FORMAT_STRING = '0.0'
+-- S2.2 DRILL-DOWN : profils (Catégorie) de la classe qui ressort
 SELECT
-  {[Measures].[Nb_Locations], [Measures].[Duree_Moyenne],
-   [Measures].[Taux_Remise_Effectif]}                            ON COLUMNS,
-  Descendants([Employe].[H_Categorie].[SuperCategorie].&[Classe X],
-              [Employe].[H_Categorie].[CodeCategorie])           ON ROWS
+  {[Measures].[Nombre de locations], [Measures].[Durée moyenne],
+   [Measures].[Taux de remise effectif]}                               ON COLUMNS,
+  Descendants([Employé].[H_Categorie].[Super Catégorie].&[Trajet long (plus de 15 km)],
+              [Employé].[H_Categorie].[Catégorie])                     ON ROWS
 FROM [Locations];
 
--- S2.3 ROLL-UP par domaine de societe (type de societe) pour les profils retenus
+-- S2.3 ROLL-UP par domaine d'activite (division NAF) pour la classe retenue
 SELECT
-  {[Measures].[Nb_Locations], [Measures].[Duree_Location]}       ON COLUMNS,
-  Order([Employe].[H_Type_Societe].[CodeTy].Members,
-        [Measures].[Duree_Location], BDESC)                      ON ROWS
+  {[Measures].[Nombre de locations], [Measures].[Durée]}               ON COLUMNS,
+  NON EMPTY Order([Employé].[H_Domaine].[Division].Members,
+                  [Measures].[Durée], BDESC)                           ON ROWS
 FROM [Locations]
-WHERE ([Employe].[H_Categorie].[CodeCategorie].&[Profil Y]);
+WHERE ([Employé].[H_Categorie].[Super Catégorie].&[Trajet long (plus de 15 km)]);
 
--- S2.4 Comparaison montant public / montant paye, profil x domaine (CROSSJOIN)
+-- S2.4 Montant public / montant paye : classe de trajet x secteur (CROSSJOIN)
 SELECT
-  {[Measures].[Montant_Location], [Measures].[Montant_ReelPaye]} ON COLUMNS,
-  CrossJoin([Employe].[H_Categorie].[CodeCategorie].Members,
-            [Employe].[H_Type_Societe].[CodeTy].Members)         ON ROWS
+  {[Measures].[Montant public], [Measures].[Montant payé],
+   [Measures].[Taux de remise effectif]}                               ON COLUMNS,
+  [Employé].[H_Categorie].[Super Catégorie].Members
+    * [Exemplaire].[H_GAMME].[Secteur].Members                         ON ROWS
 FROM [Locations];
--- NB : deux hierarchies de la MEME dimension [Employe] dans un CrossJoin : accepte par SSAS
---      tant que ce ne sont pas des hierarchies "liees" (a verifier sur le cube reel).
 
 -- S2.5 FILTER : profils dont le taux de remise effectif depasse un seuil
-WITH
-  MEMBER [Measures].[Taux_Remise_Effectif] AS
-    IIF([Measures].[Montant_Location] = 0, NULL,
-        1 - [Measures].[Montant_ReelPaye] / [Measures].[Montant_Location]),
-    FORMAT_STRING = '0.00%'
 SELECT
-  {[Measures].[Montant_Location], [Measures].[Montant_ReelPaye],
-   [Measures].[Taux_Remise_Effectif]}                            ON COLUMNS,
-  Filter([Employe].[H_Categorie].[CodeCategorie].Members,
-         [Measures].[Taux_Remise_Effectif] > 0.25)               ON ROWS   -- seuil a fixer selon S2.4
+  {[Measures].[Montant public], [Measures].[Montant payé],
+   [Measures].[Taux de remise effectif]}                               ON COLUMNS,
+  Filter([Employé].[H_Categorie].[Catégorie].Members,
+         [Measures].[Taux de remise effectif] > 0.15)                  ON ROWS   -- seuil a ajuster d'apres S2.4
 FROM [Locations];
 
--- S2.6 Part de chaque profil dans la classe (pourcentage par rapport au parent)
+-- S2.6 Part de chaque profil dans sa classe (pourcentage par rapport au parent)
 WITH
-  MEMBER [Measures].[Part_Parent] AS
-    IIF(([Measures].[Duree_Location],
-         [Employe].[H_Categorie].CurrentMember.Parent) = 0, NULL,
-        [Measures].[Duree_Location] /
-        ([Measures].[Duree_Location],
-         [Employe].[H_Categorie].CurrentMember.Parent)),
+  MEMBER [Measures].[Part de la classe] AS
+    IIF(([Measures].[Durée], [Employé].[H_Categorie].CurrentMember.Parent) = 0, NULL,
+        [Measures].[Durée] /
+        ([Measures].[Durée], [Employé].[H_Categorie].CurrentMember.Parent)),
     FORMAT_STRING = '0.00%'
 SELECT
-  {[Measures].[Duree_Location], [Measures].[Part_Parent]}        ON COLUMNS,
-  Order([Employe].[H_Categorie].[CodeCategorie].Members,
-        [Measures].[Part_Parent], BDESC)                         ON ROWS
+  {[Measures].[Durée], [Measures].[Part de la classe]}                 ON COLUMNS,
+  Order([Employé].[H_Categorie].[Catégorie].Members,
+        [Measures].[Part de la classe], BDESC)                         ON ROWS
 FROM [Locations];
 
 
 /* =====================================================================
-   S3 - SEQUENCE LIBRE  (a ecrire apres le choix du phenomene injecte)
-   Exemple de trame si le phenomene = "ecart de comportement France / Allemagne"
+   S3 - SEQUENCE LIBRE (trame, a choisir parmi P2 / P4 / P5 de 4_verite_terrain.md)
+   Trame proposee : P2, les VTT electriques sont 4 fois plus demandes en Auvergne-Rhone-Alpes.
    ===================================================================== */
 
--- S3.1 France vs Allemagne (niveau Pays)
+-- S3.1 Poids de chaque gamme dans le secteur Vélos (pourcentage par rapport au parent)
+WITH
+  MEMBER [Measures].[Part du secteur] AS
+    IIF(([Measures].[Nombre de locations], [Exemplaire].[H_GAMME].CurrentMember.Parent) = 0, NULL,
+        [Measures].[Nombre de locations] /
+        ([Measures].[Nombre de locations], [Exemplaire].[H_GAMME].CurrentMember.Parent)),
+    FORMAT_STRING = '0.0%'
 SELECT
-  {[Measures].[Nb_Locations], [Measures].[Duree_Moyenne],
-   [Measures].[Montant_ReelPaye]}                                ON COLUMNS,
-  [Employe].[H_France].[CodePays].Members                        ON ROWS
+  {[Measures].[Nombre de locations], [Measures].[Part du secteur]}     ON COLUMNS,
+  Descendants([Exemplaire].[H_GAMME].[Secteur].&[Vélos],
+              [Exemplaire].[H_GAMME].[Gamme])                          ON ROWS
 FROM [Locations];
 
--- S3.2 par annee (CROSSJOIN pays x annee) : l'ecart evolue-t-il ?
--- S3.3 DRILL-DOWN region / Land
--- S3.4 SLICE sur la gamme / le secteur concerne
--- S3.5 comparaison avec un indicateur calcule (WITH MEMBER)
+-- S3.2 Gamme x region (CROSSJOIN) : une gamme ressort-elle dans une region ?
+SELECT
+  [Exemplaire].[H_GAMME].[Gamme].Members                               ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_France].[Pays].&[FR],
+                        [Employé].[H_France].[Région])                 ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Nombre de locations]);
+
+-- S3.3 SLICE sur la gamme (VTT electriques) : classement des regions
+-- S3.4 DRILL-DOWN region -> departement -> societe
+-- S3.5 comparaison dans le temps (annee par annee) : le phenomene est-il stable ?
 -- S3.6 conclusion / recommandation
--- (a detailler quand le phenomene et la "verite terrain" sont figes)
+-- (a detailler quand le groupe a choisi le phenomene)
