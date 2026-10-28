@@ -1,13 +1,11 @@
 ﻿-- MobiPass - Projet 2 : entrepôt du cube « Locations » sous SQL Server (schéma dw)
 -- Schéma en étoile issu de la conception du projet 1 (docs/Location_MD.json) : dimensions DIM_TEMPS,
---   DIM_EMPLOYE, DIM_PRODUIT, DIM_EXEMPLAIRE (clés de substitution) et deux faits :
---   FAIT_LOCATION (les locations) et FAIT_RESERVATION (les réservations, honorées ou non).
+--   DIM_EMPLOYE, DIM_PRODUIT, DIM_EXEMPLAIRE (clés de substitution) et un seul fait, FAIT_LOCATION.
+-- Séquence S1 (« quand et où les employés ne trouvent pas de produit ») : le produit n'est pas disponible quand
+--   tous ses exemplaires sont déjà loués ; le cube le déduit des locations (taux d'occupation, jours de rupture).
 -- Ajouts par rapport au projet 1 :
---   * FAIT_RESERVATION : une réservation non honorée est une demande que le parc n'a pas pu satisfaire,
---     indicateur de saturation de la séquence S1 (« quand et où les employés ne trouvent pas de produit ») ;
---   * le produit devient une dimension à part, partagée par les deux faits ; l'exemplaire garde son agence ;
+--   * le produit est rangé dans sa propre table, reliée à l'exemplaire (flocon) ; l'exemplaire garde son agence ;
 --   * domaine NAF/WZ de la société (séquence S2) ; géographies française et allemande séparées, comme dans la conception ;
---   * JOURNAL_QUALITE : anomalies des fichiers sources (manquantes, erronées, doublons) traitées au chargement.
 -- Contraintes du dictionnaire de données du sujet initial : durée > 0, pourcentage de réduction dans ]0 ; 1],
 --   dates cohérentes, aucune location au prix public, pas de chevauchement d'un exemplaire (CHECK, UNIQUE et trigger).
 -- Grain du fait Location : un jour loué (comme LOCATION_MD1 du projet 1), voir plus bas.
@@ -26,8 +24,10 @@ IF SCHEMA_ID(N'dw') IS NULL
     EXEC (N'CREATE SCHEMA dw');
 GO
 
-DROP TABLE IF EXISTS dw.FAIT_RESERVATION, dw.FAIT_LOCATION, dw.DIM_EXEMPLAIRE, dw.DIM_PRODUIT,
-                     dw.DIM_EMPLOYE, dw.DIM_TEMPS, dw.JOURNAL_QUALITE;
+DROP TABLE IF EXISTS dw.FAIT_RESERVATION;   -- table d'une ancienne version (supprimée à la demande du prof)
+DROP TABLE IF EXISTS dw.FAIT_LOCATION, dw.DIM_EXEMPLAIRE, dw.DIM_PRODUIT,
+                     dw.DIM_EMPLOYE, dw.DIM_TEMPS;
+DROP TABLE IF EXISTS dw.JOURNAL_QUALITE;   -- table d'une ancienne version (plus de données à nettoyer)
 GO
 
 -- Dimension Temps : une ligne par jour ; clé de substitution = date au format AAAAMMJJ.
@@ -178,7 +178,7 @@ CREATE TABLE dw.FAIT_LOCATION(
    CleTemps       INT           NOT NULL,   -- jour loué
    CleEmploye     INT           NOT NULL,
    CleExemplaire  INT           NOT NULL,
-   CleProduit     INT           NOT NULL,   -- produit de l'exemplaire (dimension partagée avec les réservations)
+   CleProduit     INT           NOT NULL,   -- produit de l'exemplaire
    DureeLocation  INT           NOT NULL,   -- 1 jour par ligne
    DebutLocation  TINYINT       NOT NULL,   -- 1 = premier jour de la location, 0 = jour suivant
    TauxReduction  DECIMAL(4,3)  NOT NULL,   -- %Reduc_loc appliqué
@@ -199,7 +199,6 @@ CREATE TABLE dw.FAIT_LOCATION(
 );
 GO
 CREATE INDEX ix_fl_temps ON dw.FAIT_LOCATION(CleTemps);
-CREATE INDEX ix_fl_produit ON dw.FAIT_LOCATION(CleEmploye, CleProduit, CleTemps) INCLUDE(DebutLocation);
 GO
 
 -- Règles qui portent sur plusieurs tables, vérifiées à chaque insertion ou modification de locations
@@ -222,43 +221,7 @@ BEGIN
 END;
 GO
 
--- Fait Réservation : une ligne par réservation (même grain que RESERVER : employé, produit, date prévue).
--- NonHonoree = 1 si aucune location du produit par l'employé n'a commencé à la date prévue : faute d'exemplaire
--- libre, l'employé n'a pas trouvé de produit à louer. Mesures : nombre de réservations, non honorées, durée prévue.
-CREATE TABLE dw.FAIT_RESERVATION(
-   CleTemps          INT     NOT NULL,   -- date de location prévue
-   CleEmploye        INT     NOT NULL,
-   CleProduit        INT     NOT NULL,
-   NbExemplaires     INT     NOT NULL,   -- nombre d'exemplaires prévus
-   DureePrevue       INT     NOT NULL,   -- en jours
-   DelaiReservation  INT     NOT NULL,   -- jours entre la réservation et la location prévue
-   NonHonoree        TINYINT NOT NULL,   -- 1 = demande non satisfaite, 0 = suivie d'une location
-   CONSTRAINT pk_fait_reservation PRIMARY KEY(CleEmploye, CleProduit, CleTemps),
-   CONSTRAINT fk_fr_temps FOREIGN KEY(CleTemps) REFERENCES dw.DIM_TEMPS(CleTemps),
-   CONSTRAINT fk_fr_employe FOREIGN KEY(CleEmploye) REFERENCES dw.DIM_EMPLOYE(CleEmploye),
-   CONSTRAINT fk_fr_produit FOREIGN KEY(CleProduit) REFERENCES dw.DIM_PRODUIT(CleProduit),
-   CONSTRAINT ck_fr_nb CHECK(NbExemplaires > 0),
-   CONSTRAINT ck_fr_duree CHECK(DureePrevue > 0),
-   CONSTRAINT ck_fr_delai CHECK(DelaiReservation >= 0),
-   CONSTRAINT ck_fr_non_honoree CHECK(NonHonoree IN (0, 1))
-);
-GO
-
--- Journal de qualité : anomalies trouvées dans les fichiers sources par 03_chargement_dw.sql
--- (doublons, valeurs manquantes ou erronées) et traitement appliqué à chaque ligne concernée.
-CREATE TABLE dw.JOURNAL_QUALITE(
-   IdAnomalie      INT IDENTITY(1,1),
-   DateChargement  DATETIME2(0)  NOT NULL DEFAULT SYSDATETIME(),
-   Fichier         VARCHAR(20)   NOT NULL,   -- fichier source (ex. location.csv)
-   Anomalie        NVARCHAR(80)  NOT NULL,   -- ex. durée nulle ou négative
-   Traitement      NVARCHAR(20)  NOT NULL,   -- doublon supprimé, complétée, corrigée ou rejetée
-   Ligne           NVARCHAR(100) NOT NULL,   -- identifiant de la ligne concernée
-   ValeurLue       NVARCHAR(100),            -- valeur trouvée dans le fichier
-   CONSTRAINT pk_journal_qualite PRIMARY KEY(IdAnomalie)
-);
-GO
-
--- Vérification : 7 tables, 8 clés étrangères, 1 trigger attendus
+-- Vérification : 5 tables, 5 clés étrangères, 1 trigger attendus
 SELECT (SELECT COUNT(*) FROM sys.tables       WHERE schema_id = SCHEMA_ID(N'dw')) AS nb_tables,
        (SELECT COUNT(*) FROM sys.foreign_keys WHERE schema_id = SCHEMA_ID(N'dw')) AS nb_cles_etrangeres,
        (SELECT COUNT(*) FROM sys.triggers t JOIN sys.tables tb ON tb.object_id = t.parent_id

@@ -21,12 +21,6 @@ CREATE MEMBER CURRENTCUBE.[Measures].[Montant payé moyen]
  AS IIF([Measures].[Nombre de locations] = 0, NULL, [Measures].[Montant payé] / [Measures].[Nombre de locations]),
 FORMAT_STRING = "#,##0.00", VISIBLE = 1;
 
-/* Taux de demandes non satisfaites (séquence S1) : demandes sans exemplaire libre / toutes les demandes */
-CREATE MEMBER CURRENTCUBE.[Measures].[Taux de demandes non satisfaites]
- AS IIF([Measures].[Nombre de locations] + [Measures].[Réservations non honorées] = 0, NULL,
-        [Measures].[Réservations non honorées] / ([Measures].[Nombre de locations] + [Measures].[Réservations non honorées])),
-FORMAT_STRING = "Percent", VISIBLE = 1;
-
 /* ---- Taux d'occupation du parc (séquence S1, saturation vue côté offre, avec les seules locations) ---- */
 
 /* Jours couverts par les données : du premier au dernier jour loué */
@@ -48,4 +42,37 @@ FORMAT_STRING = "#,##0", VISIBLE = 0;
 CREATE MEMBER CURRENTCUBE.[Measures].[Taux d'occupation]
  AS IIF([Measures].[Exemplaires loués] = 0 OR [Measures].[Jours de la période] = 0, NULL,
         [Measures].[Durée] / ([Measures].[Exemplaires loués] * [Measures].[Jours de la période])),
+FORMAT_STRING = "Percent", VISIBLE = 1;
+
+/* ---- Indisponibilité des produits (séquence S1, avec les seules locations) ----
+   Un produit n'est pas disponible un jour donné dans une agence quand tous ses exemplaires y sont loués :
+   un employé qui venait ce jour-là ne trouvait pas ce produit. Grâce au grain du jour, la Durée d'un jour, d'une
+   agence et d'un produit est le nombre d'exemplaires de ce produit loués ce jour-là dans cette agence. */
+
+/* Parc actif : exemplaires du produit et de l'agence loués au moins un jour dans le mois du jour considéré.
+   Le mois est redonné explicitement : remettre le jour à All remettrait aussi le mois à All. */
+CREATE MEMBER CURRENTCUBE.[Measures].[Parc actif du mois]
+ AS ([Measures].[Exemplaires loués], [Temps].[Jour].[All], [Temps].[Semaine].[All],
+     [Temps].[Jour de la semaine].[All], [Temps].[Année ISO].[All], [Temps].[Mois].CurrentMember),
+FORMAT_STRING = "#,##0", VISIBLE = 0;
+
+/* Jours de rupture : nombre de couples (jour, agence, produit) où tous les exemplaires du parc actif sont loués */
+CREATE MEMBER CURRENTCUBE.[Measures].[Jours de rupture]
+ AS SUM(EXISTING [Temps].[Jour].[Jour].MEMBERS,
+        COUNT(FILTER(NONEMPTY(EXISTING ([Exemplaire].[Agence].[Agence].MEMBERS * [Exemplaire].[Produit].[Produit].MEMBERS),
+                              [Measures].[Durée]),
+                     [Measures].[Durée] >= [Measures].[Parc actif du mois]))),
+FORMAT_STRING = "#,##0", VISIBLE = 1;
+
+/* Jours-produits proposés : couples (jour, agence, produit) où le produit a un parc actif dans l'agence */
+CREATE MEMBER CURRENTCUBE.[Measures].[Jours-produits proposés]
+ AS SUM(EXISTING [Temps].[Jour].[Jour].MEMBERS,
+        COUNT(NONEMPTY(EXISTING ([Exemplaire].[Agence].[Agence].MEMBERS * [Exemplaire].[Produit].[Produit].MEMBERS),
+                       ([Measures].[Durée], [Temps].[Jour].[All], [Temps].[Semaine].[All], [Temps].[Jour de la semaine].[All],
+                        [Temps].[Année ISO].[All], [Temps].[Mois].CurrentMember)))),
+FORMAT_STRING = "#,##0", VISIBLE = 0;
+
+/* Taux de rupture : part des jours-produits où le produit n'était pas disponible (compare des agences de tailles différentes) */
+CREATE MEMBER CURRENTCUBE.[Measures].[Taux de rupture]
+ AS IIF([Measures].[Jours-produits proposés] = 0, NULL, [Measures].[Jours de rupture] / [Measures].[Jours-produits proposés]),
 FORMAT_STRING = "Percent", VISIBLE = 1;

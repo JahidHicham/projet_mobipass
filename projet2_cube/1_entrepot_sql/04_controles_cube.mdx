@@ -5,8 +5,7 @@
 -- sélectionner une requête puis F5 (une requête à la fois).
 
 -- Q 3a. Totaux globaux
-SELECT {[Measures].[Nombre de locations], [Measures].[Durée], [Measures].[Montant public], [Measures].[Montant payé],
-        [Measures].[Nombre de réservations], [Measures].[Réservations non honorées]} ON COLUMNS
+SELECT {[Measures].[Nombre de locations], [Measures].[Durée], [Measures].[Montant public], [Measures].[Montant payé]} ON COLUMNS
 FROM [Locations];
 
 -- Q 3b. Par année

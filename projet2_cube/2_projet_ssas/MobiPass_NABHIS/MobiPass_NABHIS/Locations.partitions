@@ -21,25 +21,5 @@
         </Partition>
       </Partitions>
     </MeasureGroup>
-    <MeasureGroup>
-      <ID>FAIT RESERVATION</ID>
-      <Partitions>
-        <Partition dwd:design-time-name="c590a317-8d69-469f-9bf1-39cba5d6aaa8">
-          <ID>FAIT RESERVATION</ID>
-          <Name>FAIT RESERVATION</Name>
-          <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
-          <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
-          <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
-          <State>Unprocessed</State>
-          <Source xsi:type="DsvTableBinding" dwd:design-time-name="fa63163e-4d06-4a61-a261-d1a1edc29a7f">
-            <DataSourceViewID>MobiPass</DataSourceViewID>
-            <TableID>dw_FAIT_RESERVATION</TableID>
-          </Source>
-          <StorageMode>Molap</StorageMode>
-          <CurrentStorageMode>Molap</CurrentStorageMode>
-          <ProcessingMode>Regular</ProcessingMode>
-        </Partition>
-      </Partitions>
-    </MeasureGroup>
   </MeasureGroups>
 </Cube>

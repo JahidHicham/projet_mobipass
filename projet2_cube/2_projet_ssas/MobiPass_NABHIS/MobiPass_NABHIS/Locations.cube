@@ -19,17 +19,6 @@
           <layoutmanager>
             <ddsxmlobj />
           </layoutmanager>
-          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="FAIT_RESERVATION" left="11946" top="14302" logicalid="15" controlid="1" masterid="0" hint1="0" hint2="0" width="3263" height="3298" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
-            <control>
-              <ddsxmlobjectstreaminitwrapper binary="000e0000bf0c0000e20c0000" />
-            </control>
-            <layoutobject>
-              <ddsxmlobj>
-                <property name="LogicalObject" value="dw_FAIT_RESERVATION" vartype="8" />
-              </ddsxmlobj>
-            </layoutobject>
-            <shape groupshapeid="0" groupnode="0" />
-          </ddscontrol>
           <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="DIM_EMPLOYE" left="17609" top="13451" logicalid="16" controlid="2" masterid="0" hint1="0" hint2="0" width="3404" height="5000" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
             <control>
               <ddsxmlobjectstreaminitwrapper binary="000e00004c0d000088130000" />
@@ -84,60 +73,6 @@
               </ddsxmlobj>
             </layoutobject>
             <shape groupshapeid="0" groupnode="0" />
-          </ddscontrol>
-          <ddscontrol controlprogid="MSDDS.Polyline.080.1" left="9246" top="15552" logicalid="21" controlid="7" masterid="0" hint1="0" hint2="0" width="3000" height="799" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
-            <control>
-              <ddsxmlobj>
-                <polyline endtypedst="6" endtypesrc="3" usercolor="16448250" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" />
-              </ddsxmlobj>
-            </control>
-            <layoutobject>
-              <ddsxmlobj>
-                <property name="LogicalObject" value="dataSet.Relations[fk_fr_produit]" vartype="8" />
-                <property name="Virtual" value="0" vartype="11" />
-                <property name="VisibleAP" value="0" vartype="3" />
-              </ddsxmlobj>
-            </layoutobject>
-            <connector lineroutestyle="MSDDS.Rectilinear" sourceid="5" destid="1" sourceattachpoint="23" destattachpoint="14" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="0" relatedid="0" virtual="0">
-              <point x="9546" y="15951" />
-              <point x="11946" y="15951" />
-            </connector>
-          </ddscontrol>
-          <ddscontrol controlprogid="MSDDS.Polyline.080.1" left="14909" top="15552" logicalid="22" controlid="8" masterid="0" hint1="0" hint2="0" width="3000" height="799" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
-            <control>
-              <ddsxmlobj>
-                <polyline endtypedst="6" endtypesrc="3" usercolor="16448250" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" />
-              </ddsxmlobj>
-            </control>
-            <layoutobject>
-              <ddsxmlobj>
-                <property name="LogicalObject" value="dataSet.Relations[fk_fr_employe]" vartype="8" />
-                <property name="Virtual" value="0" vartype="11" />
-                <property name="VisibleAP" value="0" vartype="3" />
-              </ddsxmlobj>
-            </layoutobject>
-            <connector lineroutestyle="MSDDS.Rectilinear" sourceid="2" destid="1" sourceattachpoint="18" destattachpoint="15" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="0" relatedid="0" virtual="0">
-              <point x="17609" y="15951" />
-              <point x="15209" y="15951" />
-            </connector>
-          </ddscontrol>
-          <ddscontrol controlprogid="MSDDS.Polyline.080.1" left="13178" top="10552" logicalid="23" controlid="9" masterid="0" hint1="0" hint2="0" width="799" height="4050" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
-            <control>
-              <ddsxmlobj>
-                <polyline endtypedst="6" endtypesrc="3" usercolor="16448250" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" />
-              </ddsxmlobj>
-            </control>
-            <layoutobject>
-              <ddsxmlobj>
-                <property name="LogicalObject" value="dataSet.Relations[fk_fr_temps]" vartype="8" />
-                <property name="Virtual" value="0" vartype="11" />
-                <property name="VisibleAP" value="0" vartype="3" />
-              </ddsxmlobj>
-            </layoutobject>
-            <connector lineroutestyle="MSDDS.Rectilinear" sourceid="3" destid="1" sourceattachpoint="5" destattachpoint="4" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="0" relatedid="0" virtual="0">
-              <point x="13577" y="11051" />
-              <point x="13577" y="14302" />
-            </connector>
           </ddscontrol>
           <ddscontrol controlprogid="MSDDS.Polyline.080.1" left="10766" top="3351" logicalid="24" controlid="10" masterid="0" hint1="0" hint2="0" width="8945" height="10600" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
             <control>
@@ -587,98 +522,6 @@
       </Dimensions>
       <Partitions />
     </MeasureGroup>
-    <MeasureGroup dwd:design-time-name="f84001ec-5aaf-4ef7-b8e7-daa56462c12c">
-      <ID>FAIT RESERVATION</ID>
-      <Name>Réservation</Name>
-      <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
-      <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
-      <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
-      <State>Unprocessed</State>
-      <Measures>
-        <Measure dwd:design-time-name="3505fb05-dd48-4325-9b2a-cf8480b7a336">
-          <ID>Non Honoree</ID>
-          <Name>Réservations non honorées</Name>
-          <Source dwd:design-time-name="3226e11b-5c61-45d5-8c3e-7e61f445d4c6">
-            <DataType>UnsignedInt</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="42267c87-f733-4b0e-a5df-4239f5500d76">
-              <TableID>dw_FAIT_RESERVATION</TableID>
-              <ColumnID>NonHonoree</ColumnID>
-            </Source>
-          </Source>
-        </Measure>
-        <Measure dwd:design-time-name="60fb3c9f-c6c4-4d9d-9722-9ecdb1552d99">
-          <ID>FAIT RESERVATION Nombre</ID>
-          <Name>Nombre de réservations</Name>
-          <AggregateFunction>Count</AggregateFunction>
-          <Source dwd:design-time-name="84d04c17-d6bf-4afc-9d54-da4ea12b7ada">
-            <DataType>Integer</DataType>
-            <DataSize>4</DataSize>
-            <Source xsi:type="RowBinding" dwd:design-time-name="31f9b6b6-3cac-49f1-a3f5-cfce8412e8ba">
-              <TableID>dw_FAIT_RESERVATION</TableID>
-            </Source>
-          </Source>
-        </Measure>
-      </Measures>
-      <StorageMode>Molap</StorageMode>
-      <ProcessingMode>Regular</ProcessingMode>
-      <Dimensions>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="fc21bf25-2b1f-45ae-b25d-3a328b88e15e">
-          <CubeDimensionID>Exemplaire</CubeDimensionID>
-          <Attributes>
-            <Attribute dwd:design-time-name="43cd32d3-b967-406e-a8a8-59bdc0ce1fd0">
-              <AttributeID>Cle Produit</AttributeID>
-              <KeyColumns>
-                <KeyColumn dwd:design-time-name="f7c65b60-ea57-41c6-be44-173315bd8a49">
-                  <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="d79d8ad8-7f5c-427d-897a-a75723969b72">
-                    <TableID>dw_FAIT_RESERVATION</TableID>
-                    <ColumnID>CleProduit</ColumnID>
-                  </Source>
-                </KeyColumn>
-              </KeyColumns>
-              <Type>Granularity</Type>
-            </Attribute>
-          </Attributes>
-        </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="fd49034a-5b95-484a-8785-45d41aa51d13">
-          <CubeDimensionID>Employé</CubeDimensionID>
-          <Attributes>
-            <Attribute dwd:design-time-name="09ae2fc6-358a-4cfe-bac1-c59e9875eeea">
-              <AttributeID>Cle Employe</AttributeID>
-              <KeyColumns>
-                <KeyColumn dwd:design-time-name="29428f63-9ffa-4d34-a231-a0621c87f0c8">
-                  <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="978df709-6c9b-494e-b553-39a403df83f6">
-                    <TableID>dw_FAIT_RESERVATION</TableID>
-                    <ColumnID>CleEmploye</ColumnID>
-                  </Source>
-                </KeyColumn>
-              </KeyColumns>
-              <Type>Granularity</Type>
-            </Attribute>
-          </Attributes>
-        </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="6fd6305b-9794-48ea-83b6-b8cba0dc6742">
-          <CubeDimensionID>Temps</CubeDimensionID>
-          <Attributes>
-            <Attribute dwd:design-time-name="51c11b31-d913-4ecf-be3b-bda235798e2d">
-              <AttributeID>Cle Temps</AttributeID>
-              <KeyColumns>
-                <KeyColumn dwd:design-time-name="cc62a26d-7e3d-4002-8d92-7c898975f314">
-                  <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="d119146e-c8cb-4cd4-b56a-86eff0638477">
-                    <TableID>dw_FAIT_RESERVATION</TableID>
-                    <ColumnID>CleTemps</ColumnID>
-                  </Source>
-                </KeyColumn>
-              </KeyColumns>
-              <Type>Granularity</Type>
-            </Attribute>
-          </Attributes>
-        </Dimension>
-      </Dimensions>
-      <Partitions />
-    </MeasureGroup>
   </MeasureGroups>
   <Source dwd:design-time-name="06faec6e-5dc1-4a66-9727-e88909c3a47f">
     <DataSourceViewID>MobiPass</DataSourceViewID>
@@ -714,12 +557,6 @@ CREATE MEMBER CURRENTCUBE.[Measures].[Montant payé moyen]
  AS IIF([Measures].[Nombre de locations] = 0, NULL, [Measures].[Montant payé] / [Measures].[Nombre de locations]),
 FORMAT_STRING = "#,##0.00", VISIBLE = 1;
 
-/* Taux de demandes non satisfaites (séquence S1) : demandes sans exemplaire libre / toutes les demandes */
-CREATE MEMBER CURRENTCUBE.[Measures].[Taux de demandes non satisfaites]
- AS IIF([Measures].[Nombre de locations] + [Measures].[Réservations non honorées] = 0, NULL,
-        [Measures].[Réservations non honorées] / ([Measures].[Nombre de locations] + [Measures].[Réservations non honorées])),
-FORMAT_STRING = "Percent", VISIBLE = 1;
-
 /* ---- Taux d'occupation du parc (séquence S1, saturation vue côté offre, avec les seules locations) ---- */
 
 /* Jours couverts par les données : du premier au dernier jour loué */
@@ -741,6 +578,39 @@ FORMAT_STRING = "#,##0", VISIBLE = 0;
 CREATE MEMBER CURRENTCUBE.[Measures].[Taux d'occupation]
  AS IIF([Measures].[Exemplaires loués] = 0 OR [Measures].[Jours de la période] = 0, NULL,
         [Measures].[Durée] / ([Measures].[Exemplaires loués] * [Measures].[Jours de la période])),
+FORMAT_STRING = "Percent", VISIBLE = 1;
+
+/* ---- Indisponibilité des produits (séquence S1, avec les seules locations) ----
+   Un produit n'est pas disponible un jour donné dans une agence quand tous ses exemplaires y sont loués :
+   un employé qui venait ce jour-là ne trouvait pas ce produit. Grâce au grain du jour, la Durée d'un jour, d'une
+   agence et d'un produit est le nombre d'exemplaires de ce produit loués ce jour-là dans cette agence. */
+
+/* Parc actif : exemplaires du produit et de l'agence loués au moins un jour dans le mois du jour considéré.
+   Le mois est redonné explicitement : remettre le jour à All remettrait aussi le mois à All. */
+CREATE MEMBER CURRENTCUBE.[Measures].[Parc actif du mois]
+ AS ([Measures].[Exemplaires loués], [Temps].[Jour].[All], [Temps].[Semaine].[All],
+     [Temps].[Jour de la semaine].[All], [Temps].[Année ISO].[All], [Temps].[Mois].CurrentMember),
+FORMAT_STRING = "#,##0", VISIBLE = 0;
+
+/* Jours de rupture : nombre de couples (jour, agence, produit) où tous les exemplaires du parc actif sont loués */
+CREATE MEMBER CURRENTCUBE.[Measures].[Jours de rupture]
+ AS SUM(EXISTING [Temps].[Jour].[Jour].MEMBERS,
+        COUNT(FILTER(NONEMPTY(EXISTING ([Exemplaire].[Agence].[Agence].MEMBERS * [Exemplaire].[Produit].[Produit].MEMBERS),
+                              [Measures].[Durée]),
+                     [Measures].[Durée] &gt;= [Measures].[Parc actif du mois]))),
+FORMAT_STRING = "#,##0", VISIBLE = 1;
+
+/* Jours-produits proposés : couples (jour, agence, produit) où le produit a un parc actif dans l'agence */
+CREATE MEMBER CURRENTCUBE.[Measures].[Jours-produits proposés]
+ AS SUM(EXISTING [Temps].[Jour].[Jour].MEMBERS,
+        COUNT(NONEMPTY(EXISTING ([Exemplaire].[Agence].[Agence].MEMBERS * [Exemplaire].[Produit].[Produit].MEMBERS),
+                       ([Measures].[Durée], [Temps].[Jour].[All], [Temps].[Semaine].[All], [Temps].[Jour de la semaine].[All],
+                        [Temps].[Année ISO].[All], [Temps].[Mois].CurrentMember)))),
+FORMAT_STRING = "#,##0", VISIBLE = 0;
+
+/* Taux de rupture : part des jours-produits où le produit n'était pas disponible (compare des agences de tailles différentes) */
+CREATE MEMBER CURRENTCUBE.[Measures].[Taux de rupture]
+ AS IIF([Measures].[Jours-produits proposés] = 0, NULL, [Measures].[Jours de rupture] / [Measures].[Jours-produits proposés]),
 FORMAT_STRING = "Percent", VISIBLE = 1;</Text>
         </Command>
       </Commands>

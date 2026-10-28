@@ -100,7 +100,7 @@
 99,MP-FR-2025-00099,2025-03-01,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
 100,MP-FR-2024-00100,2024-07-06,2025-07-08,AG-PAR,MobiPass Paris La Défense,Paris,FR,40
 101,MP-FR-2025-00101,2025-03-16,,AG-PAR,MobiPass Paris La Défense,Paris,FR,5
-102,MP-FR-2025-00102,2025-01-07,2024-08-26,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
+102,MP-FR-2025-00102,2025-01-07,,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
 103,MP-FR-2025-00103,2025-06-05,2026-09-25,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
 104,MP-FR-2023-00104,2023-11-11,,AG-PAR,MobiPass Paris La Défense,Paris,FR,14
 105,MP-FR-2023-00105,2023-10-20,2025-12-09,AG-PAR,MobiPass Paris La Défense,Paris,FR,25
@@ -266,7 +266,7 @@
 265,MP-FR-2022-00265,2022-11-17,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,10
 266,MP-FR-2022-00266,2022-11-19,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,60
 267,MP-FR-2025-00267,2025-03-14,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,63
-268,MP-FR-2025-00268,2025-02-06,2024-12-31,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,58
+268,MP-FR-2025-00268,2025-02-06,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,58
 269,MP-FR-2022-00269,2022-09-28,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,58
 270,MP-FR-2022-00270,2022-09-28,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,8
 271,MP-FR-2022-00271,2022-08-10,,AG-BOR,MobiPass Bordeaux Saint-Jean,Bordeaux,FR,44
@@ -606,7 +606,7 @@
 605,MP-FR-2025-00605,2025-03-23,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,45
 606,MP-FR-2022-00606,2022-10-26,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,46
 607,MP-FR-2022-00607,2022-07-12,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,43
-608,MP-FR-2022-00608,2022-11-23,2022-10-20,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,46
+608,MP-FR-2022-00608,2022-11-23,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,46
 609,MP-FR-2023-00609,2023-06-27,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,42
 610,MP-FR-2025-00610,2025-02-04,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,45
 611,MP-FR-2024-00611,2024-10-30,,AG-MRS,MobiPass Marseille Saint-Charles,Marseille,FR,2
@@ -818,7 +818,7 @@
 817,MP-FR-2024-00817,2024-09-20,,AG-PAR,MobiPass Paris La Défense,Paris,FR,2
 818,MP-FR-2024-00818,2024-02-18,,AG-PAR,MobiPass Paris La Défense,Paris,FR,44
 819,MP-FR-2024-00819,2024-03-13,,AG-PAR,MobiPass Paris La Défense,Paris,FR,41
-820,MP-FR-2024-00820,2024-02-06,2023-12-15,AG-PAR,MobiPass Paris La Défense,Paris,FR,45
+820,MP-FR-2024-00820,2024-02-06,,AG-PAR,MobiPass Paris La Défense,Paris,FR,45
 821,MP-FR-2022-00821,2022-12-03,,AG-PAR,MobiPass Paris La Défense,Paris,FR,41
 822,MP-FR-2022-00822,2022-10-17,,AG-PAR,MobiPass Paris La Défense,Paris,FR,46
 823,MP-FR-2022-00823,2022-11-27,,AG-PAR,MobiPass Paris La Défense,Paris,FR,41
@@ -858,7 +858,7 @@
 857,MP-DE-2026-00857,2026-02-10,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,56
 858,MP-DE-2026-00858,2026-03-21,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,46
 859,MP-DE-2026-00859,2026-02-26,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,41
-860,MP-DE-2026-00860,2026-03-18,2025-08-30,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,46
+860,MP-DE-2026-00860,2026-03-18,,AG-STU,MobiPass Stuttgart Hauptbahnhof,Stuttgart,DE,46
 861,MP-FR-2022-00861,2022-07-01,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,13
 862,MP-FR-2025-00862,2025-03-02,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,14
 863,MP-FR-2022-00863,2022-12-09,,AG-TLS,MobiPass Toulouse Matabiau,Toulouse,FR,74

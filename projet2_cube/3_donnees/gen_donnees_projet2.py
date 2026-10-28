@@ -7,10 +7,9 @@ sur 3 secteurs, 400 exemplaires et 60 000 locations sur 3 années complètes (20
 au 13/10/2026 comme au projet 1). Graine fixe : le script produit toujours les mêmes fichiers.
 
 Sorties :
-  csv/          les 5 fichiers sources chargés par 1_entrepot_sql/03_chargement_dw.sql (employe, produit,
-                exemplaire, location, reservation). Comme de vraies sources, ils contiennent environ 2 % de
-                données manquantes ou erronées, que le chargement doit traiter : liste et nombre exact dans
-                referentiels/anomalies_injectees.csv ;
+  csv/          les 4 fichiers sources chargés par 1_entrepot_sql/03_chargement_dw.sql (employe, produit,
+                exemplaire, location). Données complètes et cohérentes (consigne du prof : pas de données
+                manquantes, seulement des phénomènes visibles dans le cube) ;
   referentiels/ les référentiels à relire par le groupe (sociétés, produits, agences, tarifs, réductions,
                 profils de trajet), avec leur origine (projet 1 ou ajout du projet 2).
 
@@ -18,7 +17,8 @@ Lois de probabilité (réglages ci-dessous, à valider par le groupe) et phénom
   P1 saisonnalité et saturation : demande pondérée par mois (pic d'avril à juin et en septembre, creux en
      hiver), par jour (week-end faible) et x1,7 pendant la semaine européenne de la mobilité (16-22 sept.) ;
      parc volontairement sous-dimensionné à Paris (vélos électriques urbains, vélos cargo) et à Lyon
-     (vélos électriques urbains) : une demande sans exemplaire libre devient une réservation non honorée ;
+     (vélos électriques urbains) : une demande sans exemplaire libre est refusée (pas de location). Le cube
+     n'a que les locations : il voit ces moments comme des jours de rupture (tous les exemplaires loués) ;
   P2 concentration : les VTT électriques sont 4 fois plus demandés en Auvergne-Rhône-Alpes ;
   P3 profil de trajet : trajet long = locations longues (environ 11 jours) mais moins fréquentes ;
      intermodal = locations courtes (environ 2 jours), 1,5 fois plus fréquentes, surtout des vélos pliants
@@ -27,7 +27,10 @@ Lois de probabilité (réglages ci-dessous, à valider par le groupe) et phénom
      fin 2025) progresse fortement ; Provence Banque Régionale chute de 80 % à partir d'avril 2025
      (flotte interne de vélos de fonction) ;
   P5 France / Allemagne : l'Allemagne démarre en janvier 2026 avec une montée en charge mois par mois,
-     des locations 1,5 fois plus longues et davantage de vélos cargo et de trottinettes électriques.
+     des locations 1,5 fois plus longues et davantage de vélos cargo et de trottinettes électriques ;
+  P6 grandes vacances : en France, creux en août (et juillet plus calme), puis gros pic à la rentrée de
+     septembre ; en Allemagne, pas de creux national : chaque Land a ses vacances d'été (environ 6 semaines,
+     dates de la KMK pour 2026), pendant lesquelles ses employés louent beaucoup moins (x 0,35).
 """
 import bisect, collections, csv, datetime as dt, itertools, math, random, re
 from pathlib import Path
@@ -49,6 +52,15 @@ YEAR_F = {2023: 1.0, 2024: 1.05, 2025: 1.1, 2026: 1.15}                   # croi
 MONTH_W = {1: .5, 2: .55, 3: .85, 4: 1.25, 5: 1.6, 6: 1.7, 7: 1.4, 8: .9, 9: 1.45, 10: 1.0, 11: .6, 12: .45}
 DOW_W = [1, 1, 1, 1, 1, .55, .3]                                          # lundi ... dimanche
 MOBILITE = 1.7                                                            # semaine européenne de la mobilité
+MONTH_W_DE = {**MONTH_W, 7: 1.6, 8: 1.6}            # P6 : Allemagne, pas de creux national en été (vacances par Land)
+VACANCES_DE = 0.35                               # P6 : demande des employés d'un Land pendant ses vacances d'été
+SOMMERFERIEN = {   # P6 : vacances d'été 2026 par Land (règle à long terme de la KMK), code du Land -> (début, fin)
+    'DE01': (D(2026, 7, 4), D(2026, 8, 15)), 'DE02': (D(2026, 7, 9), D(2026, 8, 19)), 'DE03': (D(2026, 7, 2), D(2026, 8, 12)),
+    'DE04': (D(2026, 7, 2), D(2026, 8, 12)), 'DE05': (D(2026, 7, 20), D(2026, 9, 1)), 'DE06': (D(2026, 6, 29), D(2026, 8, 7)),
+    'DE07': (D(2026, 6, 29), D(2026, 8, 7)), 'DE08': (D(2026, 7, 30), D(2026, 9, 12)), 'DE09': (D(2026, 8, 3), D(2026, 9, 14)),
+    'DE10': (D(2026, 6, 29), D(2026, 8, 7)), 'DE11': (D(2026, 7, 9), D(2026, 8, 22)), 'DE12': (D(2026, 7, 9), D(2026, 8, 22)),
+    'DE13': (D(2026, 7, 13), D(2026, 8, 22)), 'DE14': (D(2026, 7, 4), D(2026, 8, 14)), 'DE15': (D(2026, 7, 4), D(2026, 8, 14)),
+    'DE16': (D(2026, 7, 4), D(2026, 8, 14))}
 CAT_W = {'TC-01': 10, 'TC-02': 14, 'TC-03': 5, 'TM-01': 12, 'TM-02': 5, 'TM-03': 8, 'TM-04': 3, 'TL-01': 6,
          'TL-02': 3, 'TI-01': 7, 'TI-02': 9, 'TI-03': 2}                  # répartition des profils (projet 1)
 CLS_ZONE = {'dense': {'TC': 1.4, 'TM': 1.0, 'TL': 0.5, 'TI': 1.4},       # ville dense : trajets courts, intermodal
@@ -489,8 +501,13 @@ def poisson(lam):
         p *= random.random()
         if p < seuil: return k
         k += 1
-def facteur(e, d):                         # P4 : Provence Banque Régionale passe à ses propres vélos en avril 2025
-    return .2 if EMP[e]['soc'] == PROV and d >= D(2025, 4, 1) else 1.0
+def facteur(e, d):                         # d = lundi de la semaine (poids recalculés chaque lundi)
+    f = .2 if EMP[e]['soc'] == PROV and d >= D(2025, 4, 1) else 1.0     # P4 : Provence Banque Régionale, vélos internes
+    v = EMP[e]
+    if v['pays'] == 'DE' and v['reg'] in SOMMERFERIEN:                 # P6 : semaine dont le jeudi tombe dans les vacances
+        deb, fin = SOMMERFERIEN[v['reg']]
+        if deb <= d + dt.timedelta(3) <= fin: f *= VACANCES_DE
+    return f
 
 RES_PK = {(r['CodeE'], r['CodeP'], r['DateLPrev']) for r in R['RESERVER']}
 EMPS = {pays: sorted(e for e, v in EMP.items() if v['pays'] == pays) for pays in ('FR', 'DE')}
@@ -504,7 +521,7 @@ while d <= LAST:
     for pays in ('FR', 'DE'):
         act, cum = actifs[pays]
         if (pays == 'DE' and d < DE_START) or not act: continue
-        lam = (RATE[pays] * YEAR_F[d.year] * MONTH_W[d.month] * DOW_W[d.weekday()] * cum[-1]
+        lam = (RATE[pays] * YEAR_F[d.year] * (MONTH_W_DE if pays == 'DE' else MONTH_W)[d.month] * DOW_W[d.weekday()] * cum[-1]
                * (MOBILITE if d.month == 9 and 16 <= d.day <= 22 else 1))
         for _ in range(poisson(lam)):
             e = act[bisect.bisect_right(cum, random.random() * cum[-1])]
@@ -641,83 +658,11 @@ L_EX = [[r['CodeEX'], r['NumSerieEX'], r['DateMiseServiceEX'], r['DateReformeEX'
          AG[r['CodeAG']]['VilleAG'], AG[r['CodeAG']]['CodePays'], r['CodeP']] for r in R['EXEMPLAIRE']]
 H_LOC = ['CodeEmploye', 'CodeExemplaire', 'DateLocation', 'DureeLocation', 'PrixJourTTC', 'TauxReduction']
 L_LOC = [ligne_location(r) for r in R['LOUER']]
-H_RES = ['CodeEmploye', 'CodeProduit', 'DateLocationPrevue', 'DateReservation', 'NbExemplaires', 'DureePrevue']
-L_RES = [[r['CodeE'], r['CodeP'], r['DateLPrev'], r['DateResa'], r['Nb_Ex_Prev'], r['Duree_Prev']] for r in R['RESERVER']]
-
-# Données manquantes et erronées, comme dans de vraies sources (environ 2 % des lignes) : le chargement
-# (03_chargement_dw.sql) doit les détecter, puis les compléter, les corriger ou les rejeter.
-rng = random.Random(4242)                 # tirages à part : les anomalies ne modifient pas les données propres
-ANOM = []
-def note(fichier, anomalie, nb, traitement): ANOM.append([fichier, anomalie, nb, traitement])
-taille = collections.Counter(l[6] for l in L_EMP)
-cand = [i for i, l in enumerate(L_EMP) if taille[l[6]] >= 6]
-rng.shuffle(cand)
-for i in cand[:40]: L_EMP[i][3:6] = [None] * 3
-note('employe.csv', 'profil de trajet manquant', 40, 'complétée (profil « non renseigné »)')
-var, n = collections.Counter(), 0
-for i in cand[40:]:
-    l = L_EMP[i]
-    v = rng.choice([l[7].upper(), l[7].lower(), ' ' + l[7], l[7] + '  '])
-    if v == l[7] or var[l[6]] >= taille[l[6]] // 5: continue
-    l[7] = v; var[l[6]] += 1; n += 1
-    if n == 120: break
-note('employe.csv', 'libellé de service mal écrit (casse, espaces)', n, 'corrigée (libellé majoritaire du service)')
-sans_dom = {c for c, s_ in SOC.items() if s_['nom'] in ('Loire Logistique Express', 'Finistère Cybersécurité')}
-n = 0
-for l in L_EMP:
-    if l[8] in sans_dom: k = H_EMP.index('CodeDomaine'); l[k:k + 4] = [None] * 4; n += 1
-note('employe.csv', 'domaine de la société manquant', n, 'complétée (domaine « non renseigné »)')
-for l in rng.sample(L_EMP, 15): L_EMP.append(l[:])
-note('employe.csv', 'ligne en double', 15, 'doublon supprimé')
-for l in rng.sample([l for l in L_PRO if not PROD[l[0]]['p1']], 2): l[2] = None
-note('produit.csv', 'marque manquante', 2, 'complétée (marque « non renseignée »)')
-for l in rng.sample([l for l in L_EX if l[3] is None], 5): l[3] = addd(l[2], -rng.randint(10, 200))
-note('exemplaire.csv', 'date de réforme antérieure à la mise en service', 5, 'corrigée (date supprimée)')
-idx = rng.sample([i for i, l in enumerate(L_LOC) if not (l[2].month == 2 and l[2].day == 29)], 1175)
-def prend(k):
-    global idx
-    pris, idx = idx[:k], idx[k:]
-    return pris
-for i in prend(60): L_LOC[i][3] = rng.choice([0, -1, -2, -5])
-note('location.csv', 'durée nulle ou négative', 60, 'rejetée')
-for i in prend(25): L_LOC[i][3] = 999
-note('location.csv', 'durée aberrante (999 jours)', 25, 'rejetée')
-for i in prend(20): L_LOC[i][2] = L_LOC[i][2].replace(year=2027)
-note('location.csv', 'date future', 20, 'rejetée')
-for k, i in enumerate(prend(20)): L_LOC[i][0] = 99001 + k
-note('location.csv', 'employé inconnu', 20, 'rejetée')
-for i in prend(300): L_LOC[i][4] = None
-note('location.csv', 'prix journalier manquant', 300, 'complétée (prix du même produit, même pays, même mois)')
-for i in prend(200): L_LOC[i][5] = None
-note('location.csv', 'taux de réduction manquant', 200, 'complétée (taux du même employé, même gamme, même année)')
-for i in prend(150): L_LOC[i][5] = round(L_LOC[i][5] * 100, 1)
-note('location.csv', 'taux de réduction saisi en pourcentage (15 au lieu de 0,15)', 150, 'corrigée (divisé par 100)')
-n, pris = 0, {(l[0], l[1], l[2]) for l in L_LOC}
-for i in idx:                              # fausses locations qui chevauchent une vraie location du même exemplaire
-    l = L_LOC[i]; x = EX[l[1]]; d2 = addd(l[2], 1); du2 = rng.randint(1, 3); e2 = rng.choice(EMPS[x['pays']])
-    if (l[3] < 3 or EMP[e2]['insc'] > d2 or e2 == l[0] or (e2, l[1], d2) in pris or addd(d2, du2) > LAST
-            or (x['ref'] and addd(d2, du2) > x['ref'])): continue
-    L_LOC.append([e2, l[1], d2, du2, l[4], l[5]]); pris.add((e2, l[1], d2)); n += 1
-    if n == 30: break
-note('location.csv', 'exemplaire loué deux fois en même temps', n, 'rejetée (on garde la location commencée la première)')
-for l in rng.sample(L_LOC[:len(R['LOUER'])], 250): L_LOC.append(l[:])
-note('location.csv', 'ligne en double', 250, 'doublon supprimé')
-idx = rng.sample(range(len(L_RES)), 135)
-for i in idx[:80]: L_RES[i][4] = None
-note('reservation.csv', "nombre d'exemplaires manquant", 80, 'complétée (1 exemplaire)')
-for i in idx[80:120]: L_RES[i][3] = addd(L_RES[i][2], rng.randint(1, 10))
-note('reservation.csv', 'date de réservation après la location prévue', 40, 'rejetée')
-for i in idx[120:]: L_RES[i][1] = 999
-note('reservation.csv', 'produit inconnu', 15, 'rejetée')
-for l in rng.sample(L_RES[:len(R['RESERVER'])], 100): L_RES.append(l[:])
-note('reservation.csv', 'ligne en double', 100, 'doublon supprimé')
 
 ecrire(ICI / 'csv' / 'employe.csv', H_EMP, L_EMP)
 ecrire(ICI / 'csv' / 'produit.csv', H_PRO, L_PRO)
 ecrire(ICI / 'csv' / 'exemplaire.csv', H_EX, L_EX)
 ecrire(ICI / 'csv' / 'location.csv', H_LOC, L_LOC)
-ecrire(ICI / 'csv' / 'reservation.csv', H_RES, L_RES)
-ecrire(ICI / 'referentiels' / 'anomalies_injectees.csv', ['Fichier', 'Anomalie', 'NbLignes', 'TraitementAttendu'], ANOM)
 
 # Version du chargement sans BULK INSERT, pour un serveur distant (etu-mssql3) qui ne voit pas les fichiers du PC :
 # même script que 03_chargement_dw.sql, mais les données des CSV y sont écrites en INSERT (1 000 lignes par INSERT).
@@ -735,7 +680,7 @@ out = ["-- MobiPass - Projet 2 : chargement de l'entrepôt dw, VERSION SANS BULK
        "-- À lancer après 01_creation_dw.sql et 02_dimension_temps.sql, dans la même base (liste déroulante de SSMS).", "",
        modele[modele.index('IF DB_NAME() IN'):debut].rstrip(),
        re.sub(r"DECLARE @dossier[^\n]*\n", "", modele[debut:fin]).rstrip(), "GO"]
-for table, lignes in (('#employe', L_EMP), ('#produit', L_PRO), ('#exemplaire', L_EX), ('#location', L_LOC), ('#reservation', L_RES)):
+for table, lignes in (('#employe', L_EMP), ('#produit', L_PRO), ('#exemplaire', L_EX), ('#location', L_LOC)):
     out.append(f"-- {table[1:]}.csv : {len(lignes)} lignes")
     for k in range(0, len(lignes), 1000):
         out.append(f"INSERT INTO {table} VALUES\n" + ",\n".join("(" + ", ".join(sql_val(v) for v in l) + ")" for l in lignes[k:k + 1000]) + ";")
@@ -781,9 +726,9 @@ loc = collections.Counter((r['DateL'].year, EMP[r['CodeE']]['pays']) for r in R[
 print("locations par année :", {a: (loc[(a, 'FR')], loc[(a, 'DE')]) for a in range(2023, 2027)}, "(FR, DE)")
 res = [(r, (r['CodeE'], r['CodeP'], r['DateLPrev']) not in LOUE) for r in R['RESERVER']]
 nh = [r for r, n in res if n]
-print(f"P1 réservations {len(res)}, non honorées {len(nh)} ({len(nh) / len(res):.1%})")
+print(f"P1 demandes refusées faute d'exemplaire libre (réservations non honorées de la simulation, absentes des CSV) : {len(nh)}")
 m = collections.Counter(r['DateLPrev'].month for r in nh)
-print("   non honorées par mois :", dict(sorted(m.items())))
+print("   refus par mois :", dict(sorted(m.items())))
 s = collections.Counter((r['DateLPrev'].isocalendar()[0], r['DateLPrev'].isocalendar()[1]) for r in nh)
 print("   semaines ISO les plus touchées :", s.most_common(6))
 a = collections.Counter((EMP[r['CodeE']]['ag'], PROD[r['CodeP']]['gamme']) for r in nh)
@@ -805,3 +750,7 @@ for pays in ('FR', 'DE'):
     print(f"P5 {pays} 2026 : {len(l)} locations, durée moyenne {sum(r['Duree_Loc'] for r in l) / len(l):.1f} j, vélos cargo {cargo / len(l):.1%}")
 de = collections.Counter(r['DateL'].month for r in R['LOUER'] if EMP[r['CodeE']]['pays'] == 'DE')
 print("   Allemagne, locations par mois de 2026 :", dict(sorted(de.items())))
+sem = collections.Counter((EMP[r['CodeE']]['reg'], r['DateL'].isocalendar()[1]) for r in R['LOUER'] if EMP[r['CodeE']]['pays'] == 'DE')
+for land, nom in (('DE05', 'Nordrhein-Westfalen'), ('DE14', 'Sachsen'), ('DE09', 'Bayern')):
+    print(f"P6 {nom} ({SOMMERFERIEN[land][0]:%d/%m} -> {SOMMERFERIEN[land][1]:%d/%m}), locations par semaine ISO 24 à 40 :",
+          [sem[(land, s_)] for s_ in range(24, 41)])

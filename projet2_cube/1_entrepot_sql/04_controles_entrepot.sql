@@ -4,7 +4,6 @@
 -- 2. Volumes minimaux du sujet.
 -- 3. Totaux de référence (global, par année, par mois) à retrouver dans le cube : 04_controles_cube.mdx
 --    renvoie les mêmes totaux en MDX (étape 5 du sujet : vérification des totaux entre l'entrepôt et le cube).
--- 4. Résumé du journal de qualité du chargement.
 -- À lancer dans la base de l'entrepôt (liste déroulante de SSMS). Ne modifie rien.
 
 IF DB_NAME() IN (N'master', N'tempdb', N'model', N'msdb')
@@ -42,18 +41,12 @@ FROM (
              WHERE x.CleProduit <> f.CleProduit)
     UNION ALL SELECT 9, N'Exemplaire réformé avant sa mise en service',
            (SELECT COUNT(*) FROM dw.DIM_EXEMPLAIRE WHERE DateReforme <= DateMiseService)
-    UNION ALL SELECT 10, N'Réservation : durée ou nombre d''exemplaires nul, délai négatif',
-           (SELECT COUNT(*) FROM dw.FAIT_RESERVATION WHERE DureePrevue <= 0 OR NbExemplaires <= 0 OR DelaiReservation < 0)
-    UNION ALL SELECT 11, N'Réservation marquée honorée sans location correspondante',
-           (SELECT COUNT(*) FROM dw.FAIT_RESERVATION r WHERE r.NonHonoree = 0
-              AND NOT EXISTS (SELECT 1 FROM dw.FAIT_LOCATION f WHERE f.CleEmploye = r.CleEmploye
-                                AND f.CleProduit = r.CleProduit AND f.CleTemps = r.CleTemps AND f.DebutLocation = 1))
-    UNION ALL SELECT 12, N'Taux de TVA hors ]0 ; 1]',
+    UNION ALL SELECT 10, N'Taux de TVA hors ]0 ; 1]',
            (SELECT COUNT(*) FROM dw.DIM_EMPLOYE WHERE TauxTVA <= 0 OR TauxTVA > 1)
-    UNION ALL SELECT 13, N'Semaine ISO mal rattachée (année ISO différente de l''année du jeudi)',
+    UNION ALL SELECT 11, N'Semaine ISO mal rattachée (année ISO différente de l''année du jeudi)',
            (SELECT COUNT(*) FROM dw.DIM_TEMPS
              WHERE AnneeISO <> YEAR(DATEADD(DAY, 4 - NumJourSemaine, DateJour)))
-    UNION ALL SELECT 14, N'Jour de location sans le jour précédent (location découpée avec un trou)',
+    UNION ALL SELECT 12, N'Jour de location sans le jour précédent (location découpée avec un trou)',
            (SELECT COUNT(*) FROM dw.FAIT_LOCATION f JOIN dw.DIM_TEMPS t ON t.CleTemps = f.CleTemps
              WHERE f.DebutLocation = 0
                AND NOT EXISTS (SELECT 1 FROM dw.FAIT_LOCATION p JOIN dw.DIM_TEMPS tp ON tp.CleTemps = p.CleTemps
@@ -81,9 +74,7 @@ ORDER BY o;
 SELECT (SELECT SUM(DebutLocation) FROM dw.FAIT_LOCATION) AS NombreDeLocations,
        (SELECT SUM(DureeLocation) FROM dw.FAIT_LOCATION) AS Duree,
        (SELECT SUM(MontantPublic) FROM dw.FAIT_LOCATION) AS MontantPublic,
-       (SELECT SUM(MontantPaye) FROM dw.FAIT_LOCATION)   AS MontantPaye,
-       (SELECT COUNT(*) FROM dw.FAIT_RESERVATION)        AS NombreDeReservations,
-       (SELECT SUM(NonHonoree) FROM dw.FAIT_RESERVATION) AS ReservationsNonHonorees;
+       (SELECT SUM(MontantPaye) FROM dw.FAIT_LOCATION)   AS MontantPaye;
 
 -- 3b. par année (locations comptées l'année de leur début, jours et montants l'année du jour loué)
 SELECT t.Annee, SUM(f.DebutLocation) AS NombreDeLocations, SUM(f.DureeLocation) AS Duree,
@@ -104,11 +95,6 @@ FROM dw.FAIT_LOCATION f JOIN dw.DIM_PRODUIT p ON p.CleProduit = f.CleProduit
 GROUP BY p.Secteur
 ORDER BY p.Secteur;
 
--- ============================================================ 4. journal de qualité du chargement
-SELECT Fichier, Anomalie, Traitement, COUNT(*) AS NbLignes
-FROM dw.JOURNAL_QUALITE
-GROUP BY Fichier, Anomalie, Traitement
-ORDER BY Fichier, Traitement, Anomalie;
 GO
 SET NOEXEC OFF;
 GO
