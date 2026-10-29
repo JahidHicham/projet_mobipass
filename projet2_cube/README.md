@@ -8,7 +8,7 @@ Ce dossier est l'archive à rendre. Un sous-dossier par livrable du sujet (parti
 | `2_projet_ssas/` | Projet SSAS | projet Visual Studio « Projet multidimensionnel Analysis Services » du cube |
 | `3_donnees/` | Données et génération | générateur Python, fichiers sources CSV (`csv/`), référentiels à relire (`referentiels/`), journal des prompts |
 | `4_verite_terrain.md` | Fichier « vérité terrain » | phénomènes injectés dans les données (et où les voir dans le cube) |
-| `5_mdx/` | Requêtes MDX + rapport d'analyse | séquences S1, S2, S3, requêtes de recette a/b/c, un PDF par séquence |
+| `5_mdx/` | Requêtes MDX + rapport d'analyse | requêtes de Sami Carrere, testées sur le cube : `recette_abc.mdx` (recette a, b, c), `S1_saturation.mdx`, `S2_profils.mdx`, `S3_Allemagne.mdx` (lancement en Allemagne, phénomène P7) ; un PDF par séquence |
 | `choix_conception.md` | (support de soutenance) | chaque choix de conception, sa justification et l'écart avec le projet 1 |
 
 ## Reconstruire l'entrepôt
@@ -21,7 +21,7 @@ Ce dossier est l'archive à rendre. Un sous-dossier par livrable du sujet (parti
 | 0 | `1_entrepot_sql/00_creation_base.sql` | base `MobiPass` créée (sur votre PC seulement) |
 | 1 | `1_entrepot_sql/01_creation_dw.sql` | 5 tables, 5 clés étrangères, 1 trigger |
 | 2 | `1_entrepot_sql/02_dimension_temps.sql` | 1 461 jours (2023 à 2026) |
-| 3 | `1_entrepot_sql/03_chargement_dw.sql` (sur votre PC) **ou** `03_chargement_dw_fac.sql` (à la fac) | bilans : 62 649 locations (214 035 lignes, une par jour loué), écart 0 entre lignes lues et chargées |
+| 3 | `1_entrepot_sql/03_chargement_dw.sql` (sur votre PC) **ou** `03_chargement_dw_fac.sql` (à la fac) | bilans : 67 595 locations (222 433 lignes, une par jour loué), écart 0 entre lignes lues et chargées |
 | 4 | `1_entrepot_sql/04_controles_entrepot.sql` | 12 règles à 0 anomalie, volumes OK, totaux de référence (global, année, pays, secteur) |
 | 5 | `1_entrepot_sql/04_controles_cube.mdx` (SSMS, Analysis Services, après traitement du cube) | les mêmes totaux, calculés sur le cube : identiques à ceux de l'étape 4 |
 

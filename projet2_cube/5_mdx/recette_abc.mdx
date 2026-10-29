@@ -1,0 +1,111 @@
+﻿/* =====================================================================
+   MobiPass - Cube "Locations" - REQUETES MDX (noms du projet SSAS MobiPass_NABHIS)
+   Cube centre sur les LOCATIONS uniquement : un seul fait, au grain du JOUR LOUE
+   (une location de 5 jours = 5 lignes ; le fait Reservation est retire du cube).
+   Requetes ecrites par Sami Carrere ; testees sur le cube deploye le 29/10/2026 (resultats indiques
+   sous les requetes : donnees du projet, phenomenes P1 a P7 de 4_verite_terrain.md).
+
+   CUBE        : [Locations]
+   MESURES     : [Durée] (jours loues), [Montant public], [Montant payé] (euros TTC, par jour),
+                 [Nombre de locations] (somme de DebutLocation : 1 le premier jour de la location)
+   CALCULEES (membres_calcules.mdx) :
+                 S2 : [Montant remise], [Taux de remise effectif], [Durée moyenne], [Montant payé moyen]
+                 S1 : [Exemplaires loués], [Taux d'occupation], [Jours de rupture], [Taux de rupture]
+                      (+ [Jours de la période], [Parc actif du mois], [Jours-produits proposés], masquées)
+   DIMENSIONS  : [Temps]      H_MOIS (Année > Mois > Jour)   H_SEM (Année ISO > Semaine > Jour)
+                              + attributs : [Saison], [Trimestre], [Jour de la semaine], [Jour]
+                 [Employé]    H_France (Pays > Région > Département > Ville > Société > Service > Employé)
+                              H_Allemagne (Pays > Land > Kreis > Gemeinde > Société > Service > Employé)
+                              H_District, H_Type_Kreis, H_Type_Land
+                              H_Categorie (Super Catégorie > Catégorie > Employé)
+                              H_Type_Societe (Type Société > Société > Service > Employé)
+                              H_Domaine (Division > Domaine > Société > Service > Employé)
+                 [Exemplaire] H_GAMME (Secteur > Gamme > Produit > Exemplaire)
+                              H_MAR, H_GENERATION, H_Agence (Pays Agence > Agence > Exemplaire)
+
+   CLES DES MEMBRES (d'apres le script de la dimension Temps et le DW)
+     Année / Année ISO : 2025            Mois : 202504 (année x 100 + mois)
+     Semaine : 202538 (année ISO x 100 + semaine)       Saison : printemps | été | automne | hiver
+     Pays : FR | DE      Super Catégorie : libellé complet (ex. Trajet long (plus de 15 km))
+     Agence : CodeAgence (ex. AG-PAR, AG-LYO)  [a verifier dans SSAS : cle = CodeAgence]
+   NOTES (a verifier dans SSAS avant de figer)
+   (1) Noms de niveaux / hierarchies : copies des fichiers .dim ; si un nom a change dans
+       Visual Studio, adapter. Un nom avec accent ou espace s'ecrit entre crochets.
+   (2) Les membres "Sans objet" : pour un employe allemand, les niveaux francais (Région...)
+       valent "Sans objet", et inversement. On passe donc par Descendants([Pays].&[FR], ...)
+       pour ne pas faire apparaitre ce membre parasite.
+   (3) DISPONIBILITE (S1) : le cube n'a pas de fait de demande refusee. Un produit est INDISPONIBLE
+       un jour, dans une agence, quand tous ses exemplaires sont loues. [Jours de rupture] compte ces
+       (jour, agence, produit) ; [Taux de rupture] = jours de rupture / jours-produits proposes.
+       [Taux d'occupation] = jours loues / (exemplaires loues x jours de la periode), a lire au mois
+       ou a la saison. Ces mesures sont deja dans le cube : ne PAS les redefinir par WITH MEMBER.
+       Les jours de la periode vont du premier au dernier jour loue (13/10/2026 au plus tard).
+       Le premier calcul de [Jours de rupture] prend environ une minute (cache) : garder des axes
+       petits (annee, mois, semaine, secteur, gamme, agence), jamais le niveau Jour ni Employe.
+   (4) [Durée moyenne] et [Montant payé moyen] = jours (ou euros) de TOUS les jours loues / locations
+       comptees a leur seul jour de debut. Exacts par annee, societe, produit, profil, pays... ; biaises
+       par mois, semaine ou jour (une location a cheval sur deux mois compte ses jours dans les deux
+       mois, mais la location dans un seul). Au mois, preferer [Durée] et [Nombre de locations].
+   (5) Une hierarchie ne peut etre que sur un axe ; une dimension dans le WHERE (meme
+       attribut) ne peut pas etre sur un axe. Un ensemble ne contient que les membres
+       d'une seule hierarchie.
+   ===================================================================== */
+
+/* =====================================================================
+   RECETTE
+   ===================================================================== */
+
+-- a) Montants reellement payes par mois et par societe
+SELECT
+  NON EMPTY [Temps].[H_MOIS].[Mois].Members                    ON COLUMNS,
+  NON EMPTY [Employé].[H_Type_Societe].[Société].Members       ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Montant payé]);
+
+-- b) Montants reellement payes et durees par semaine et par salarie (3 annees completes)
+--    (3 000 salaries x 156 semaines : le NON EMPTY est indispensable)
+
+SELECT
+  {[Measures].[Montant payé], [Measures].[Durée]} ON COLUMNS,
+  NonEmpty(
+    CROSSJOIN(
+      Descendants({[Temps].[H_SEM].[Année ISO].&[2023],
+                   [Temps].[H_SEM].[Année ISO].&[2024],
+                   [Temps].[H_SEM].[Année ISO].&[2025]},
+                  [Temps].[H_SEM].[Semaine]),
+      [Employé].[H_Type_Societe].[Employé].Members),
+    [Measures].[Montant payé])                     ON ROWS
+FROM [Locations];
+
+
+-- Variante (meme resultat, ecriture plus courte avec NON EMPTY sur l'axe)
+SELECT
+  {[Measures].[Montant payé], [Measures].[Durée]}              ON COLUMNS,
+  NON EMPTY
+    Descendants({[Temps].[H_SEM].[Année ISO].&[2023],
+                 [Temps].[H_SEM].[Année ISO].&[2024],
+                 [Temps].[H_SEM].[Année ISO].&[2025]},
+                [Temps].[H_SEM].[Semaine])
+    * [Employé].[H_Type_Societe].[Employé].Members             ON ROWS
+FROM [Locations];
+
+-- c) Durees mensuelles par region (France) puis par Land (Allemagne)
+--    + graphique : tableau croise dynamique Excel connecte au cube
+
+-- FRANCE
+SELECT
+  NON EMPTY [Temps].[H_MOIS].[Mois].Members                    ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_France].[Pays].&[FR],
+                        [Employé].[H_France].[Région])         ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Durée]);
+
+
+-- ALLEMAGNE
+SELECT
+  NON EMPTY [Temps].[H_MOIS].[Mois].Members                    ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_Allemagne].[Pays].&[DE],
+                        [Employé].[H_Allemagne].[Land])        ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Durée]);
+

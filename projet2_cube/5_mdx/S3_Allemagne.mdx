@@ -1,0 +1,236 @@
+﻿/* =====================================================================
+   MobiPass - Cube "Locations" - SEQUENCE S3 : LANCEMENT EN ALLEMAGNE
+   Question : l'offre allemande (ouverte en janvier 2026) se porte-t-elle bien ?
+              Faut-il continuer sur ce chemin, et quoi ameliorer ?
+   Phenomenes retrouves : P5 (France / Allemagne), P6 (vacances par Land) et P7 (villes-Etats, Baviere),
+              voir 4_verite_terrain.md.
+
+   Auteur des requetes et du phenomene P7 : Sami Carrere.
+   DONNEES : celles du projet (phenomene P7 integre au generateur le 29/10/2026). Testees sur le cube
+   deploye le 29/10 : les valeurs attendues ci-dessous sont celles obtenues.
+
+   PERIODE : janvier a septembre 2026. Octobre est incomplet (donnees arretees au 13/10) : le garder
+   ferait croire a une chute.
+
+   NOMS UTILISES (fichiers .dim du projet SSAS)
+     [Employé].[Pays].&[FR] / &[DE]              cle CodePays
+     [Employé].[Land].&[DE09]                    cle CodeLand (DE02 Hamburg, DE04 Bremen, DE11 Berlin, DE09 Bayern)
+     [Employé].[Type Land].&[Stadtstaat]         cle TypeLand : Stadtstaat | Flächenland | Sans objet (France)
+     [Employé].[H_France].[Région].&[R11]        cle CodeRegion (R11 Ile-de-France, R84 Auvergne-Rhone-Alpes)
+     [Employé].[Super Catégorie].&[Trajet intermodal]
+     [Exemplaire].[Agence].&[AG-MUC]             cle CodeAgence
+     [Exemplaire].[Gamme].[VTT électriques]      par le nom (la cle est le code de la gamme)
+     [Exemplaire].[H_Agence].[Pays Agence].&[DE]
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   S3.1 VUE D'ENSEMBLE : la montee en charge allemande, mois par mois
+   Le nombre brut de locations melange l'arrivee des nouveaux employes et la saisonnalite.
+   Le rapport Allemagne / France annule la saisonnalite commune aux deux pays : s'il monte,
+   la progression allemande est reelle.
+   Attendu : DE 44 (janv.) -> 1 847 (mai) -> 2 015 (sept.) ; rapport DE / FR 6 % -> 77 % des avril,
+   puis stable. Juillet (60 %) et aout (93 %) : vacances decalees, voir S3.3.
+   --------------------------------------------------------------------- */
+WITH
+  MEMBER [Measures].[Locations France] AS
+    ([Measures].[Nombre de locations], [Employé].[Pays].&[FR])
+  MEMBER [Measures].[Locations Allemagne] AS
+    ([Measures].[Nombre de locations], [Employé].[Pays].&[DE])
+  MEMBER [Measures].[Rapport DE / FR] AS
+    IIF([Measures].[Locations France] = 0, NULL,
+        [Measures].[Locations Allemagne] / [Measures].[Locations France]),
+    FORMAT_STRING = 'Percent'
+  MEMBER [Measures].[Évolution DE sur un mois] AS
+    IIF(([Measures].[Locations Allemagne], [Temps].[H_MOIS].CurrentMember.PrevMember) = 0, NULL,
+        [Measures].[Locations Allemagne]
+          / ([Measures].[Locations Allemagne], [Temps].[H_MOIS].CurrentMember.PrevMember) - 1),
+    FORMAT_STRING = 'Percent'
+SELECT
+  {[Measures].[Locations France], [Measures].[Locations Allemagne],
+   [Measures].[Rapport DE / FR], [Measures].[Évolution DE sur un mois]}          ON COLUMNS,
+  {[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]}        ON ROWS
+FROM [Locations];
+
+
+/* ---------------------------------------------------------------------
+   S3.2 NORMALISER : employes actifs et usage par employe actif
+   Employe actif = employe qui commence au moins une location dans la periode affichee.
+   On separe l'adoption (plus d'employes actifs) de l'usage (plus de locations par employe).
+   Attendu : l'Allemagne loue plus par employe actif que la France (3,2 a 3,5 par mois d'avril a juin,
+   contre 1,9 a 2,1 en France).
+   --------------------------------------------------------------------- */
+WITH
+  MEMBER [Measures].[Employés actifs] AS
+    COUNT(FILTER(NONEMPTY(EXISTING [Employé].[Employé].[Employé].Members, [Measures].[Nombre de locations]),
+                 [Measures].[Nombre de locations] > 0))
+  MEMBER [Measures].[Locations par employé actif] AS
+    IIF([Measures].[Employés actifs] = 0, NULL,
+        [Measures].[Nombre de locations] / [Measures].[Employés actifs]),
+    FORMAT_STRING = '#,##0.00'
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Employés actifs],
+   [Measures].[Locations par employé actif]}                                     ON COLUMNS,
+  {[Employé].[Pays].&[FR], [Employé].[Pays].&[DE]}
+    * {[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]}    ON ROWS
+FROM [Locations];
+
+
+/* ---------------------------------------------------------------------
+   S3.3 DRILL-DOWN par Land : quels Länder tirent l'Allemagne, lesquels decrochent ?
+   Attendu (locations par employe actif) :
+     - Berlin et Hamburg en tete (environ 4 par mois de mai a juin) ;
+     - Bayern plafonne des avril (2,9) puis baisse (2,5 en mai, 2,3 en juillet) alors que les
+       autres Länder progressent : c'est le decrochage bavarois (P7b) ;
+     - creux de juillet-aout differents selon le Land : vacances scolaires decalees (P6),
+       ce n'est pas un decrochage (voir la variante par semaine ci-dessous).
+   --------------------------------------------------------------------- */
+WITH
+  MEMBER [Measures].[Employés actifs] AS
+    COUNT(FILTER(NONEMPTY(EXISTING [Employé].[Employé].[Employé].Members, [Measures].[Nombre de locations]),
+                 [Measures].[Nombre de locations] > 0))
+  MEMBER [Measures].[Locations par employé actif] AS
+    IIF([Measures].[Employés actifs] = 0, NULL,
+        [Measures].[Nombre de locations] / [Measures].[Employés actifs]),
+    FORMAT_STRING = '#,##0.0'
+SELECT
+  {[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]}        ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_Allemagne].[Pays].&[DE],
+                        [Employé].[H_Allemagne].[Land])                          ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Locations par employé actif]);
+
+-- Variante (P6) : locations par semaine ISO, pour lire le creux des vacances de chaque Land
+-- Attendu : NRW creux semaines 30 a 35, Sachsen 28 a 33, Bayern 32 a 37.
+SELECT
+  {[Temps].[H_SEM].[Semaine].&[202624] : [Temps].[H_SEM].[Semaine].&[202640]}    ON COLUMNS,
+  {[Employé].[Land].&[DE05], [Employé].[Land].&[DE14], [Employé].[Land].&[DE09]} ON ROWS
+FROM [Locations]
+WHERE ([Measures].[Nombre de locations]);
+
+
+/* ---------------------------------------------------------------------
+   S3.4 ROLL-UP par type de Land, compare a la France : y a-t-il des similarites entre les marchés ?
+   Attendu (janvier a septembre 2026) :
+                        duree moy.  loc./employe actif  intermodal  velos pliants  velos cargo
+     Stadtstaat           2,7 j          15,6             39 %          16 %           5,5 %
+     Flächenland          3,9 j          10,2             38 %          12 %          11,3 %
+     Sans objet (France)  3,3 j           7,2             32 %          13 %           5,8 %
+   Les villes-Etats louent comme la France (durees courtes, peu de velos cargo) mais plus souvent :
+   le modele urbain francais fonctionne en Allemagne (P7a). Les Länder de territoire ont le profil
+   propre a l'Allemagne : locations longues et beaucoup de velos cargo (P5).
+   --------------------------------------------------------------------- */
+WITH
+  MEMBER [Measures].[Employés actifs] AS
+    COUNT(FILTER(NONEMPTY(EXISTING [Employé].[Employé].[Employé].Members, [Measures].[Nombre de locations]),
+                 [Measures].[Nombre de locations] > 0))
+  MEMBER [Measures].[Locations par employé actif] AS
+    IIF([Measures].[Employés actifs] = 0, NULL,
+        [Measures].[Nombre de locations] / [Measures].[Employés actifs]),
+    FORMAT_STRING = '#,##0.0'
+  MEMBER [Measures].[Part intermodal] AS
+    IIF([Measures].[Nombre de locations] = 0, NULL,
+        ([Measures].[Nombre de locations], [Employé].[Super Catégorie].&[Trajet intermodal])
+          / [Measures].[Nombre de locations]),
+    FORMAT_STRING = 'Percent'
+  MEMBER [Measures].[Part vélos pliants] AS
+    IIF([Measures].[Nombre de locations] = 0, NULL,
+        ([Measures].[Nombre de locations], [Exemplaire].[Gamme].[Vélos pliants])
+          / [Measures].[Nombre de locations]),
+    FORMAT_STRING = 'Percent'
+  MEMBER [Measures].[Part vélos cargo] AS
+    IIF([Measures].[Nombre de locations] = 0, NULL,
+        ([Measures].[Nombre de locations], [Exemplaire].[Gamme].[Vélos cargo])
+          / [Measures].[Nombre de locations]),
+    FORMAT_STRING = 'Percent'
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Durée moyenne], [Measures].[Locations par employé actif],
+   [Measures].[Part intermodal], [Measures].[Part vélos pliants], [Measures].[Part vélos cargo]}  ON COLUMNS,
+  [Employé].[Type Land].[Type Land].Members                                                      ON ROWS
+FROM [Locations]
+WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
+
+-- Reference francaise : memes mesures (memes WITH MEMBER que ci-dessus), lignes remplacees par
+-- l'Ile-de-France et la France entiere.
+-- Attendu : Ile-de-France 3,0 j, 7,0 locations par employe actif, 31 % intermodal, 13 % velos pliants, 5,9 % cargo.
+--   {[Employé].[H_France].[Région].&[R11], [Employé].[H_France].[Pays].&[FR]}   ON ROWS
+
+
+/* ---------------------------------------------------------------------
+   S3.5 DIAGNOSTIC : ou l'offre allemande ne suit-elle pas la demande ?
+   Taux de rupture (S1) par agence allemande et par gamme, 10 premiers couples.
+   Attendu : Munich x VTT electriques en tete (71 % des jours, contre 15 % pour Lyon x VTT
+   electriques), loin devant les suivants (environ 55-60 %).
+   La requete est lourde (jours de rupture) : la premiere execution prend environ une minute.
+   --------------------------------------------------------------------- */
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Jours de rupture],
+   [Measures].[Taux de rupture]}                                                 ON COLUMNS,
+  TopCount(
+    Filter(Descendants([Exemplaire].[H_Agence].[Pays Agence].&[DE], [Exemplaire].[H_Agence].[Agence])
+             * [Exemplaire].[Gamme].[Gamme].Members,
+           [Measures].[Nombre de locations] >= 30),                              -- ecarte les gammes trop peu louees
+    10, [Measures].[Taux de rupture])                                            ON ROWS
+FROM [Locations]
+WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
+
+-- S3.5 bis : la demande bavaroise ressemble a celle d'Auvergne-Rhone-Alpes (P2), mais elle n'est pas servie.
+-- Part des VTT electriques dans les locations. Attendu : Auvergne-Rhone-Alpes 18,9 %, Bayern 8,7 %,
+-- autres Länder environ 5 %. Les Bavarois demandent 4 fois plus de VTT electriques que les autres
+-- Allemands, comme les Rhonalpins en France, mais faute d'exemplaires a Munich, leur part reste faible.
+WITH
+  MEMBER [Measures].[Part VTT électriques] AS
+    IIF([Measures].[Nombre de locations] = 0, NULL,
+        ([Measures].[Nombre de locations], [Exemplaire].[Gamme].[VTT électriques])
+          / [Measures].[Nombre de locations]),
+    FORMAT_STRING = 'Percent'
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Part VTT électriques]}          ON COLUMNS,
+  NON EMPTY Descendants([Employé].[H_Allemagne].[Pays].&[DE],
+                        [Employé].[H_Allemagne].[Land])                          ON ROWS
+FROM [Locations]
+WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
+-- et pour la France : lignes {[Employé].[H_France].[Région].&[R84], [Employé].[H_France].[Pays].&[FR]}
+
+
+/* ---------------------------------------------------------------------
+   S3.6 LIEN CAUSE -> EFFET : la rupture des VTT a Munich precede le decrochage bavarois
+   Par mois : taux de rupture des VTT electriques a Munich, usage par employe actif en Bavière
+   et dans les autres Länder de territoire.
+   Attendu : rupture VTT Munich 63 % en mars, 77 % en avril, 85-90 % en mai-juin ; usage bavarois
+   2,9 en avril puis 2,5 en mai et 2,3 en juillet, pendant que les Länder de territoire passent de
+   3,07 (avril) a 3,17 (mai). En aout-septembre, l'ecart vient aussi des vacances bavaroises (P6).
+   --------------------------------------------------------------------- */
+WITH
+  MEMBER [Measures].[Employés actifs] AS
+    COUNT(FILTER(NONEMPTY(EXISTING [Employé].[Employé].[Employé].Members, [Measures].[Nombre de locations]),
+                 [Measures].[Nombre de locations] > 0))
+  MEMBER [Measures].[Locations par employé actif] AS
+    IIF([Measures].[Employés actifs] = 0, NULL,
+        [Measures].[Nombre de locations] / [Measures].[Employés actifs]),
+    FORMAT_STRING = '#,##0.00'
+  MEMBER [Measures].[Rupture VTT Munich] AS
+    ([Measures].[Taux de rupture], [Exemplaire].[Agence].&[AG-MUC], [Exemplaire].[Gamme].[VTT électriques]),
+    FORMAT_STRING = 'Percent'
+  MEMBER [Measures].[Usage Bayern] AS
+    ([Measures].[Locations par employé actif], [Employé].[Land].&[DE09]),
+    FORMAT_STRING = '#,##0.00'
+  MEMBER [Measures].[Usage Länder de territoire] AS
+    ([Measures].[Locations par employé actif], [Employé].[Type Land].&[Flächenland]),   -- Bayern compris
+    FORMAT_STRING = '#,##0.00'
+SELECT
+  {[Measures].[Rupture VTT Munich], [Measures].[Usage Bayern],
+   [Measures].[Usage Länder de territoire]}                                      ON COLUMNS,
+  {[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]}        ON ROWS
+FROM [Locations];
+
+
+/* ---------------------------------------------------------------------
+   S3.7 CONCLUSION ET RECOMMANDATION (pour le rapport)
+   - Continuer : en neuf mois, l'Allemagne atteint les trois quarts de l'activite francaise et ses
+     employes louent plus que les employes francais. Les creux d'ete viennent des vacances par Land.
+   - S'appuyer sur ce qui marche en France : les villes-Etats (Berlin, Hambourg, Breme) louent comme
+     les grandes villes francaises, en plus intensif. Prochaines ouvertures : les grandes villes.
+   - Ameliorer : a Munich, renforcer le parc de VTT electriques comme a Lyon (objectif : taux de
+     rupture de 15 %, celui de Lyon), sinon la Baviere continuera de decrocher.
+   --------------------------------------------------------------------- */

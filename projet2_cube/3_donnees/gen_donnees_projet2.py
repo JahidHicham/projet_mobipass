@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 """MobiPass - Projet 2 : génération des données du cube « Locations » (CSV pour BULK INSERT)
 
+Phénomène P7 proposé par Sami (séquence S3 « Lancement en Allemagne ») :
+  P7a les villes-États (Berlin, Hambourg, Brême) se comportent comme les grandes villes françaises : usage plus
+      intensif, locations courtes (pas de durée x 1,5), beaucoup de vélos pliants et de trajets intermodaux ;
+      deux sociétés ajoutées (Berlin, Hambourg) ;
+  P7b la Bavière décroche : les VTT électriques y sont 4 fois plus demandés (comme en Auvergne-Rhône-Alpes, P2),
+      mais l'agence de Munich en a trop peu ; chaque refus décourage l'employé, qui loue ensuite moins.
+      Une société ajoutée (Munich).
+
 Reprend telles quelles les données du projet 1 (sql/ed/03_insertion_ED.sql) et les complète jusqu'aux
 volumes minimaux du sujet du projet 2 : au moins 40 sociétés sur 5 régions, 3 000 employés, 60 produits
 sur 3 secteurs, 400 exemplaires et 60 000 locations sur 3 années complètes (2023 à 2025 ; 2026 s'arrête
@@ -30,15 +38,24 @@ Lois de probabilité (réglages ci-dessous, à valider par le groupe) et phénom
      des locations 1,5 fois plus longues et davantage de vélos cargo et de trottinettes électriques ;
   P6 grandes vacances : en France, creux en août (et juillet plus calme), puis gros pic à la rentrée de
      septembre ; en Allemagne, pas de creux national : chaque Land a ses vacances d'été (environ 6 semaines,
-     dates de la KMK pour 2026), pendant lesquelles ses employés louent beaucoup moins (x 0,35).
+     dates de la KMK pour 2026), pendant lesquelles ses employés louent beaucoup moins (x 0,35) ;
+  P7 villes-États et Bavière (ci-dessus).
 """
-import bisect, collections, csv, datetime as dt, itertools, math, random, re
+import bisect
+import collections
+import csv
+import datetime as dt
+import itertools
+import math
+import random
+import re
 from pathlib import Path
 
 random.seed(2027)
 D = dt.date
 ICI = Path(__file__).resolve().parent
 SQL_P1 = ICI.parents[1] / 'sql' / 'ed' / '03_insertion_ED.sql'
+CUBE = ICI.parent                          # dossier projet2_cube
 
 TODAY = D(2026, 10, 14)          # date de génération du projet 1 : toutes les dates d'activité sont avant
 LAST = TODAY - dt.timedelta(1)
@@ -87,9 +104,14 @@ GAMME_CLS = {'TC': {'Trottinettes électriques': 1.5, 'Trottinettes mécaniques'
                     'VTT électriques': .3, 'Vélos de route & gravel': .5}}
 GAMME_ARA = {'VTT électriques': 4.0}                                      # P2
 GAMME_DE = {'Vélos cargo': 2.5, 'Trottinettes électriques': 1.8}          # P5
-PARC = {'FR': 600, 'DE': 240}                                             # taille visée du parc par pays
+PARC = {'FR': 600, 'DE': 320}             # taille visée du parc par pays (DE : 240 -> 320, demande accrue par P7)
 CAP = {('AG-PAR', 'Vélos électriques urbains'): .55, ('AG-PAR', 'Vélos cargo'): .6,
-       ('AG-LYO', 'Vélos électriques urbains'): .6}                       # P1 : parc sous-dimensionné
+       ('AG-LYO', 'Vélos électriques urbains'): .6,                       # P1 : parc sous-dimensionné
+       ('AG-MUC', 'VTT électriques'): .2}                                 # P7b : trop peu de VTT électriques à Munich
+STADTSTAAT = {'DE02', 'DE04', 'DE11'}     # P7a : Hamburg, Bremen, Berlin : comportement français (ni durée x 1,5
+INTENSITE_STADT = 1.3                     #       ni GAMME_DE), usage plus intensif que dans les autres Länder
+GAMME_BY = {'VTT électriques': 4.0}                                       # P7b : comme GAMME_ARA (P2)
+DECOURAGEMENT, DECOURAGEMENT_MIN = 0.5, 0.1   # P7b : demande d'un employé bavarois après chaque refus (plancher)
 P_RESA = 0.35                                                             # part des locations réservées à l'avance
 DELAIS = [0, 1, 1, 2, 3, 3, 5, 7, 7, 10, 14, 21]                          # jours entre réservation et location
 
@@ -227,8 +249,8 @@ FR26 = {r['CodeP']: r for r in R['TARIFER'] if r['CodePays'] == 'FR' and r['Date
 PROD = {}                                  # prix de base HT (loc/jour, vente) : ceux du projet 1 se déduisent du tarif FR 2026
 for r in R['PRODUIT']:
     t = FR26[r['CodeP']]
-    PROD[r['CodeP']] = dict(gamme=GNOM[r['CodeG']], gen=r['CodeGEN'], p1=True,
-                            loc=t['Prix_loc_jour'] / 1.2 if t['Prix_loc_jour'] else None, vente=t['Prix_vente'] / 1.2)
+    PROD[r['CodeP']] = {'gamme': GNOM[r['CodeG']], 'gen': r['CodeGEN'], 'p1': True,
+                            'loc': t['Prix_loc_jour'] / 1.2 if t['Prix_loc_jour'] else None, 'vente': t['Prix_vente'] / 1.2}
 cp = max(PROD)
 for nm, mq, g, gn, pk, au, loc, ven in [  # nom, marque, gamme, génération, poids, autonomie, loc/jour HT, vente HT
         ('Gazelle Ultimate C380', 'Gazelle', 'Vélos électriques urbains', 'GEN15', 24.0, 120, 15.0, 3300),
@@ -269,7 +291,7 @@ for nm, mq, g, gn, pk, au, loc, ven in [  # nom, marque, gamme, génération, po
         ('NIU MQi GT', 'NIU', 'Scooters électriques', 'GEN39', 80.0, 70, 14.0, 2500),
         ('Silence S01', 'Silence', 'Scooters électriques', 'GEN40', 113.0, 133, 20.0, 5800)]:
     cp += 1
-    PROD[cp] = dict(gamme=g, gen=gn, p1=False, loc=loc, vente=ven)
+    PROD[cp] = {'gamme': g, 'gen': gn, 'p1': False, 'loc': loc, 'vente': ven}
     ins('PRODUIT', CodeP=cp, NomP=nm, MarqueP=mq, DescriptifP=f"{nm} ({g})", PoidsKg=pk, AutonomieKm=au, CodeGEN=gn, CodeG=GCODE[g])
 
 # Tarifs (FR en TTC, DE en HT) : 2023 ajouté pour tous les produits, toutes les années pour les nouveaux
@@ -315,13 +337,13 @@ HOME = {'R11': 'AG-PAR', 'R84': 'AG-LYO', 'R76': 'AG-TLS', 'R75': 'AG-BOR', 'R93
 
 # Sociétés du projet 1 et sociétés ajoutées (noms fictifs ; localisation, domaine et taille réalistes)
 TYPES = {r['CodeTy']: r['LibelleTypeSoc'] for r in R['TYPE_SOCIETE']}
-SOC = {r['CodeSOC']: dict(row=r, nom=r['NomSOC'], zg=r['CodeZG'], pays=ZG[r['CodeZG']]['CodePays'], p1=True, adh=None)
+SOC = {r['CodeSOC']: {'row': r, 'nom': r['NomSOC'], 'zg': r['CodeZG'], 'pays': ZG[r['CodeZG']]['CodePays'], 'p1': True, 'adh': None}
        for r in R['SOCIETE']}
-SERV = {r['CodeSE']: dict(soc=r['CodeSOC'], nom=r['NomSE']) for r in R['SERVICE']}
+SERV = {r['CodeSE']: {'soc': r['CodeSOC'], 'nom': r['NomSE']} for r in R['SERVICE']}
 INSC = {}
 for r in R['ETRE_AFFECTE']: INSC[r['CodeE']] = min(INSC.get(r['CodeE'], r['DateDebutAffect']), r['DateDebutAffect'])
-EMP = {r['CodeE']: dict(nom=r['NomE'], pre=r['PrenomE'], se=r['CodeSE'], soc=SERV[r['CodeSE']]['soc'], cat=r['CodeCAT'],
-                        insc=INSC[r['CodeE']], p1=True) for r in R['EMPLOYE']}
+EMP = {r['CodeE']: {'nom': r['NomE'], 'pre': r['PrenomE'], 'se': r['CodeSE'], 'soc': SERV[r['CodeSE']]['soc'], 'cat': r['CodeCAT'],
+                        'insc': INSC[r['CodeE']], 'p1': True} for r in R['EMPLOYE']}
 
 SOC_NEW = [  # nom, pays, commune (INSEE / AGS), catégorie juridique, type, NAF (FR), nb employés bénéficiaires, adhésion
     ('Alpes Semi-conducteurs', 'FR', '38185', '5599', 'GE', '26.11Z', 220, D(2022, 10, 3)),
@@ -351,14 +373,18 @@ SOC_NEW = [  # nom, pays, commune (INSEE / AGS), catégorie juridique, type, NAF
     ('Kurpfalz Software GmbH & Co. KG', 'DE', '08222000', 'D203', 'PME', None, 60, D(2026, 4, 6)),
     ('Fugger Handelshaus KG', 'DE', '09761000', 'D201', 'PME', None, 45, D(2026, 3, 16)),
     ('Weser Hafen Logistik GmbH', 'DE', '04011000', 'D101', 'ETI', None, 60, D(2026, 1, 19)),
-    ('Leine Consulting UG', 'DE', '03241001', 'D102', 'MICRO', None, 20, D(2026, 5, 4))]
+    ('Leine Consulting UG', 'DE', '03241001', 'D102', 'MICRO', None, 20, D(2026, 5, 4)),
+    ('Spree Digital Studios GmbH', 'DE', '11000000', 'D101', 'ETI', None, 120, D(2026, 1, 12)),   # P7a
+    ('Alster Medienhaus GmbH', 'DE', '02000000', 'D101', 'ETI', None, 90, D(2026, 2, 2)),         # P7a
+    ('Isarwerk Technologie AG', 'DE', '09162000', 'D103', 'GE', None, 110, D(2026, 1, 19))]       # P7b
 DOMAINE_SOC_DE = {  # équivalent NACE (sous-classe NAF) du code WZ 2008 de chaque société allemande
     'Spreeware GmbH': '62.01Z', 'Isar Logistik GmbH & Co. KG': '52.10B', 'Garchinger Forschungs AG': '72.19Z',
     'Domstadt Consulting UG': '70.22Z', 'Mainfinanz AG': '64.19Z', 'Neckar Engineering GmbH': '71.12B',
     'Rheinmedia OHG': '73.11Z', 'Elbe Hafen Service KG': '52.24A', 'Leipziger Paket-Logistik GmbH': '52.10B',
     'Elbtal Halbleiter AG': '26.11Z', 'Ruhrtal Energiedienste GmbH': '35.11Z', 'Westfalen Versicherung AG': '65.12Z',
     'Bonner Forschungsinstitut GmbH': '72.19Z', 'Kurpfalz Software GmbH & Co. KG': '62.01Z',
-    'Fugger Handelshaus KG': '46.90Z', 'Weser Hafen Logistik GmbH': '52.24A', 'Leine Consulting UG': '70.22Z'}
+    'Fugger Handelshaus KG': '46.90Z', 'Weser Hafen Logistik GmbH': '52.24A', 'Leine Consulting UG': '70.22Z',
+    'Spree Digital Studios GmbH': '58.29C', 'Alster Medienhaus GmbH': '73.11Z', 'Isarwerk Technologie AG': '26.11Z'}
 PERI = {'31069', '09184119', '91377', '44162', '33281', '31254', '69081', '13001', '59009'}   # communes périurbaines
 SERV_FR = ['Direction', 'Ressources humaines', 'Informatique', 'Comptabilité', 'Commercial', 'Production', 'Logistique']
 SERV_DE = ['Geschäftsführung', 'Personal', 'IT', 'Buchhaltung', 'Vertrieb', 'Produktion', 'Logistik']
@@ -392,12 +418,12 @@ for nm, pays, zg, cj, ty, naf, ne, adh in SOC_NEW:
         code = luhn_complete(f"{random.randint(30000000, 99999999)}") if pays == 'FR' else f"DE{random.randint(100000000, 999999999)}"
     zgc = zg if pays == 'FR' else 'DE' + zg
     row = ins('SOCIETE', CodeSOC=code, NomSOC=nm, CodeTy=ty, CodeZG=zgc, CodeCJ=cj, CodeDO=naf)
-    SOC[code] = dict(row=row, nom=nm, zg=zgc, pays=pays, p1=False, adh=adh)
+    SOC[code] = {'row': row, 'nom': nm, 'zg': zgc, 'pays': pays, 'p1': False, 'adh': adh}
     nbs = 3 if ne < 10 else 4 if ne < 20 else 6 if ne < 100 else 7
     svs = []
     for j in sorted([0, 1, 2] + random.sample(range(3, 7), nbs - 3)):
         cse += 1; svs.append(cse)
-        SERV[cse] = dict(soc=code, nom=(SERV_FR if pays == 'FR' else SERV_DE)[j])
+        SERV[cse] = {'soc': code, 'nom': (SERV_FR if pays == 'FR' else SERV_DE)[j]}
         ins('SERVICE', CodeSE=cse, NomSE=SERV[cse]['nom'], CodeSOC=code)
     zt = 'peri' if zg in PERI else 'dense'
     for _ in range(ne):
@@ -409,9 +435,9 @@ for nm, pays, zg, cj, ty, naf, ne, adh in SOC_NEW:
         else:
             insc = rdate(adh, addd(adh, 90)) if random.random() < .85 else rdate(addd(adh, 90), D(2026, 8, 31))
         fr = pays == 'FR'
-        EMP[ce] = dict(nom=random.choice(NOM_FR if fr else NOM_DE), pre=random.choice(PRE_FR if fr else PRE_DE),
-                       se=random.choice(svs), soc=code, insc=insc, p1=False,
-                       cat=random.choices(list(CAT_W), [w * CLS_ZONE[zt][c[:2]] for c, w in CAT_W.items()])[0])
+        EMP[ce] = {'nom': random.choice(NOM_FR if fr else NOM_DE), 'pre': random.choice(PRE_FR if fr else PRE_DE),
+                       'se': random.choice(svs), 'soc': code, 'insc': insc, 'p1': False,
+                       'cat': random.choices(list(CAT_W), [w * CLS_ZONE[zt][c[:2]] for c, w in CAT_W.items()])[0]}
 for s in SOC.values():
     if s['pays'] == 'DE': s['row']['CodeDO'] = DOMAINE_SOC_DE[s['nom']] if DOMAINE_DE else None
 
@@ -422,12 +448,17 @@ for v in EMP.values():
     v['pays'], v['reg'], v['cls'] = s['pays'], sommet(s['zg']), v['cat'][:2]
     v['ag'] = HOME[v['reg']]
     v['w'] = (6 if random.random() < .25 else 1) * (.3 if random.random() < .3 else 1)
+    stadt = v['reg'] in STADTSTAAT
+    if stadt: v['w'] *= INTENSITE_STADT                                                    # P7a
+    v['duree'] = DUREE_DE if v['pays'] == 'DE' and not stadt else 1                        # P5, sauf villes-États (P7a)
+    v['decour'] = 1.0                                                                      # P7b
     v['gw'] = {g: b * GAMME_CLS[v['cls']].get(g, 1) * (GAMME_ARA.get(g, 1) if v['reg'] == 'R84' else 1)
-                  * (GAMME_DE.get(g, 1) if v['pays'] == 'DE' else 1) for g, b in POP.items()}
+                  * (GAMME_DE.get(g, 1) if v['pays'] == 'DE' and not stadt else 1)
+                  * (GAMME_BY.get(g, 1) if v['reg'] == 'DE09' else 1) for g, b in POP.items()}
 
 # ================================================================== 3. parc d'exemplaires
-EX = {r['CodeEX']: dict(p=r['CodeP'], ag=r['CodeAG'], pays=AG[r['CodeAG']]['CodePays'], ms=r['DateMiseServiceEX'],
-                        ref=r['DateReformeEX'], starts=[], ends=[]) for r in R['EXEMPLAIRE']}
+EX = {r['CodeEX']: {'p': r['CodeP'], 'ag': r['CodeAG'], 'pays': AG[r['CodeAG']]['CodePays'], 'ms': r['DateMiseServiceEX'],
+                        'ref': r['DateReformeEX'], 'starts': [], 'ends': []} for r in R['EXEMPLAIRE']}
 for r in sorted(R['LOUER'], key=lambda r: r['DateL']):   # occupations des locations du projet 1
     EX[r['CodeEX']]['starts'].append(r['DateL']); EX[r['CodeEX']]['ends'].append(addd(r['DateL'], r['Duree_Loc']))
 LOUABLES = sorted(p for p, pr in PROD.items() if pr['loc'])
@@ -439,7 +470,7 @@ DEBUT = {'FR': START, 'DE': DE_START}
 dem, tot = collections.defaultdict(float), collections.Counter()
 for v in EMP.values():
     d0 = DEBUT[v['pays']]
-    k = (v['w'] * FREQ[v['cls']] * DMOY[v['cls']] * (DUREE_DE if v['pays'] == 'DE' else 1)
+    k = (v['w'] * FREQ[v['cls']] * DMOY[v['cls']] * v['duree']
          * max(0, days(max(v['insc'], d0), LAST)) / days(d0, LAST) / sum(v['gw'].values()))
     for g, x in v['gw'].items():
         dem[(v['ag'], g)] += k * x; tot[v['pays']] += k * x
@@ -462,7 +493,7 @@ def nouvel_exemplaire(ag, p):
     else:
         ms = max(rdate(D(2025, 12, 1), D(2026, 3, 31)), sortie)
     cex += 1
-    EX[cex] = dict(p=p, ag=ag, pays=pays, ms=ms, ref=ref, starts=[], ends=[])
+    EX[cex] = {'p': p, 'ag': ag, 'pays': pays, 'ms': ms, 'ref': ref, 'starts': [], 'ends': []}
     ins('EXEMPLAIRE', CodeEX=cex, NumSerieEX=f"MP-{pays}-{ms.year}-{cex:05d}", DateMiseServiceEX=ms, DateReformeEX=ref, CodeAG=ag, CodeP=p)
 for (ag, g), q in sorted(dem.items()):
     pays = AG[ag]['CodePays']
@@ -507,7 +538,7 @@ def facteur(e, d):                         # d = lundi de la semaine (poids reca
     if v['pays'] == 'DE' and v['reg'] in SOMMERFERIEN:                 # P6 : semaine dont le jeudi tombe dans les vacances
         deb, fin = SOMMERFERIEN[v['reg']]
         if deb <= d + dt.timedelta(3) <= fin: f *= VACANCES_DE
-    return f
+    return f * v['decour']                                             # P7b : employé découragé par les refus
 
 RES_PK = {(r['CodeE'], r['CodeP'], r['DateLPrev']) for r in R['RESERVER']}
 EMPS = {pays: sorted(e for e, v in EMP.items() if v['pays'] == pays) for pays in ('FR', 'DE')}
@@ -529,7 +560,7 @@ while d <= LAST:
             g = v['gs'][bisect.bisect_right(v['gcum'], random.random() * v['gcum'][-1])]
             p = random.choice(PRODS_AG[(v['ag'], g)])
             du = random.choice(DUR[v['cls']])
-            if pays == 'DE': du = min(30, max(1, round(du * DUREE_DE)))
+            if v['duree'] != 1: du = min(30, max(1, round(du * v['duree'])))
             fin = addd(d, du)
             if fin > LAST: continue
             nb_dem += 1
@@ -543,8 +574,10 @@ while d <= LAST:
                 px = EX[x]['p']
                 if random.random() < P_RESA and (e, px, d) not in RES_PK:
                     RES_PK.add((e, px, d)); ins('RESERVER', CodeE=e, CodeP=px, DateLPrev=d, Nb_Ex_Prev=1, DateResa=dr, Duree_Prev=du)
-            elif (e, p, d) not in RES_PK:          # aucun exemplaire libre : réservation non honorée
-                RES_PK.add((e, p, d)); ins('RESERVER', CodeE=e, CodeP=p, DateLPrev=d, Nb_Ex_Prev=1, DateResa=dr, Duree_Prev=du)
+            else:
+                if v['reg'] == 'DE09': v['decour'] = max(DECOURAGEMENT_MIN, v['decour'] * DECOURAGEMENT)   # P7b
+                if (e, p, d) not in RES_PK:        # aucun exemplaire libre : réservation non honorée
+                    RES_PK.add((e, p, d)); ins('RESERVER', CodeE=e, CodeP=p, DateLPrev=d, Nb_Ex_Prev=1, DateResa=dr, Duree_Prev=du)
     d = addd(d, 1)
 LOUE = {(r['CodeE'], EX[r['CodeEX']]['p'], r['DateL']) for r in R['LOUER']}
 
@@ -568,7 +601,7 @@ for r in R['LOUER']:
     chk(pj is not None and taux is not None and 0 < taux <= 1, f"tarif ou réduction manquant {r}")
 for x, l in occ.items():
     l.sort()
-    chk(all(a[1] <= b[0] for a, b in zip(l, l[1:])), f"chevauchement sur l'exemplaire {x}")
+    chk(all(a[1] <= b[0] for a, b in itertools.pairwise(l)), f"chevauchement sur l'exemplaire {x}")
 for r in R['RESERVER']:
     chk(r['DateResa'] <= r['DateLPrev'] < TODAY and r['Duree_Prev'] > 0 and r['Nb_Ex_Prev'] > 0, f"réservation {r}")
     chk(EMP[r['CodeE']]['insc'] <= r['DateResa'] and PROD[r['CodeP']]['loc'], f"réservation d'un employé inactif ou d'un produit non louable {r}")
@@ -576,7 +609,7 @@ for x, v in EX.items():
     chk(v['ms'] >= GENS[PROD[v['p']]['gen']]['DateSortieGEN'] and (v['ref'] is None or v['ref'] > v['ms']), f"dates de l'exemplaire {x}")
 for (pays, p), l in TARIF.items():
     s = sorted(l, key=lambda t: t[0])
-    chk(all(a[1] is not None and a[1] < b[0] for a, b in zip(s, s[1:])), f"tarifs qui se chevauchent {pays} {p}")
+    chk(all(a[1] is not None and a[1] < b[0] for a, b in itertools.pairwise(s)), f"tarifs qui se chevauchent {pays} {p}")
 for r in R['TARIFER']:
     chk(r['Prix_vente'] > 0 and (r['Prix_loc_jour'] is None or 0 < r['Prix_loc_jour'] < r['Prix_vente']), f"prix {r}")
 chk(all(0 < r['PctReduc_Loc'] <= 1 and 0 < r['PctReduc_Achat'] <= 1 for r in R['REDUCTION']), "réduction hors ]0 ; 1]")
@@ -671,7 +704,7 @@ def sql_val(v):
     if isinstance(v, D): return f"'{v.isoformat()}'"
     if isinstance(v, (int, float)): return repr(v)
     return "N'" + str(v).replace("'", "''") + "'"
-modele = (ICI.parent / '1_entrepot_sql' / '03_chargement_dw.sql').read_text(encoding='utf-8-sig').replace('\r\n', '\n')
+modele = (CUBE / '1_entrepot_sql' / '03_chargement_dw.sql').read_text(encoding='utf-8-sig').replace('\r\n', '\n')
 debut, fin = modele.index('SET NOCOUNT ON;'), modele.index('DECLARE @sql NVARCHAR(MAX), @options')
 out = ["-- MobiPass - Projet 2 : chargement de l'entrepôt dw, VERSION SANS BULK INSERT (serveur distant, ex. etu-mssql3)",
        "-- Fichier produit par 3_donnees/gen_donnees_projet2.py à partir de 03_chargement_dw.sql : ne pas le modifier à la main.",
@@ -687,9 +720,9 @@ for table, lignes in (('#employe', L_EMP), ('#produit', L_PRO), ('#exemplaire', 
         if k // 1000 % 10 == 9: out.append("GO")
     out.append("GO")
 out += ["SET NOCOUNT ON;", modele[modele.index('CREATE INDEX ix_location'):]]
-FAC = ICI.parent / '1_entrepot_sql' / '03_chargement_dw_fac.sql'
+FAC = CUBE / '1_entrepot_sql' / '03_chargement_dw_fac.sql'
 with open(FAC, 'w', encoding='utf-8-sig', newline='\r\n') as f: f.write("\n".join(out))
-print(f"écrit : {FAC.relative_to(ICI.parent)} ({FAC.stat().st_size / 1048576:.1f} Mo)")
+print(f"écrit : {FAC.relative_to(CUBE)} ({FAC.stat().st_size / 1048576:.1f} Mo)")
 
 # référentiels à relire (origine : projet 1 ou ajout du projet 2)
 nbe, nbx = collections.Counter(v['soc'] for v in EMP.values()), collections.Counter(x['ag'] for x in EX.values())
@@ -718,9 +751,9 @@ ecrire(ICI / 'referentiels' / 'profils_trajet.csv', ['CodeProfil', 'Profil', 'Cl
        [[c, r['NomCAT'], r['SuperCAT'], round(DMOY[c[:2]], 1), FREQ[c[:2]]] for c, r in CATS.items()])
 
 # ================================================================== 7. indicateurs des phénomènes (pour la vérité terrain)
-print(f"\nvolumes (minimum du sujet) :")
+print("\nvolumes (minimum du sujet) :")
 for nom, nb, mini in VOL: print(f"  {nom:45s}{nb:7d}  ({mini})")
-print(f"  ajouts au projet 1 : " + ", ".join(f"{t} +{len(R[t]) - n}" for t, n in P1_NB.items()))
+print("  ajouts au projet 1 : " + ", ".join(f"{t} +{len(R[t]) - n}" for t, n in P1_NB.items()))
 print(f"demandes simulées {nb_dem}, servies {nb_ok} ({nb_ok / nb_dem:.1%})")
 loc = collections.Counter((r['DateL'].year, EMP[r['CodeE']]['pays']) for r in R['LOUER'])
 print("locations par année :", {a: (loc[(a, 'FR')], loc[(a, 'DE')]) for a in range(2023, 2027)}, "(FR, DE)")
@@ -754,3 +787,55 @@ sem = collections.Counter((EMP[r['CodeE']]['reg'], r['DateL'].isocalendar()[1]) 
 for land, nom in (('DE05', 'Nordrhein-Westfalen'), ('DE14', 'Sachsen'), ('DE09', 'Bayern')):
     print(f"P6 {nom} ({SOMMERFERIEN[land][0]:%d/%m} -> {SOMMERFERIEN[land][1]:%d/%m}), locations par semaine ISO 24 à 40 :",
           [sem[(land, s_)] for s_ in range(24, 41)])
+
+# P7 : indicateurs calculés comme dans le cube (2026, de janvier à septembre : octobre est incomplet)
+MOIS = range(1, 10)
+def groupe(e):
+    v = EMP[e]
+    if v['pays'] == 'FR': return 'France'
+    return 'villes-États' if v['reg'] in STADTSTAAT else 'Bayern' if v['reg'] == 'DE09' else 'autres Flächenländer'
+GROUPES = ['France', 'villes-États', 'autres Flächenländer', 'Bayern']
+L26 = [r for r in R['LOUER'] if r['DateL'].year == 2026 and r['DateL'].month in MOIS]
+nl, act = collections.Counter(), collections.defaultdict(set)
+for r in L26:
+    k = (groupe(r['CodeE']), r['DateL'].month); nl[k] += 1; act[k].add(r['CodeE'])
+print("P7 locations par employé actif (employé qui commence au moins une location dans le mois), janvier à septembre 2026 :")
+for gr in GROUPES:
+    print(f"   {gr:22s}", [round(nl[(gr, m)] / len(act[(gr, m)]), 2) if act[(gr, m)] else None for m in MOIS])
+print("   employés actifs en Bavière par mois :", [len(act[('Bayern', m)]) for m in MOIS])
+print("   locations en Bavière par mois       :", [nl[('Bayern', m)] for m in MOIS])
+def profil(lignes):
+    n = len(lignes); emp = {r['CodeE'] for r in lignes}
+    g = collections.Counter(PROD[EX[r['CodeEX']]['p']]['gamme'] for r in lignes)
+    return (f"{n:6d} locations, durée moyenne {sum(r['Duree_Loc'] for r in lignes) / n:.1f} j, "
+            f"{n / len(emp):.1f} locations par employé actif, intermodal {sum(1 for r in lignes if EMP[r['CodeE']]['cls'] == 'TI') / n:.1%}, "
+            f"vélos pliants {g['Vélos pliants'] / n:.1%}, vélos cargo {g['Vélos cargo'] / n:.1%}, VTT électriques {g['VTT électriques'] / n:.1%}")
+print("P7a profil 2026 (janvier à septembre) :")
+print(f"   {'Île-de-France':22s}", profil([r for r in L26 if EMP[r['CodeE']]['reg'] == 'R11']))
+print(f"   {'Auvergne-Rhône-Alpes':22s}", profil([r for r in L26 if EMP[r['CodeE']]['reg'] == 'R84']))
+for gr in GROUPES: print(f"   {gr:22s}", profil([r for r in L26 if groupe(r['CodeE']) == gr]))
+# taux de rupture (définition du cube) : jours où tous les exemplaires actifs du mois d'un produit sont loués dans l'agence
+jour = collections.Counter()                 # (agence, produit, jour) -> exemplaires loués ce jour
+parc = collections.defaultdict(set)          # (agence, produit, année, mois) -> exemplaires loués dans le mois
+for r in R['LOUER']:
+    x = EX[r['CodeEX']]
+    for i in range(r['Duree_Loc']):
+        dd = addd(r['DateL'], i)
+        if dd.year == 2026 and dd.month in MOIS:
+            jour[(x['ag'], x['p'], dd)] += 1; parc[(x['ag'], x['p'], dd.month)].add(r['CodeEX'])
+rupt, prop = collections.Counter(), collections.Counter()
+for (ag, p, m), s_ in parc.items():
+    nbj = days(D(2026, m, 1), D(2026, m + 1, 1))
+    k = (ag, PROD[p]['gamme'], m); prop[k] += nbj
+    rupt[k] += sum(1 for i in range(nbj) if jour[(ag, p, D(2026, m, 1 + i))] >= len(s_))
+def taux(f):
+    a = sum(v for k, v in rupt.items() if f(k)); b = sum(v for k, v in prop.items() if f(k))
+    return f"{a / b:.0%}" if b else '-'
+print("P7b taux de rupture 2026 (janvier à septembre) par agence allemande :",
+      {ag: taux(lambda k, ag=ag: k[0] == ag) for ag in sorted({k[0] for k in prop}) if AG[ag]['CodePays'] == 'DE'})
+print("   Munich, par gamme :", {g: taux(lambda k, g=g: k[:2] == ('AG-MUC', g)) for g in sorted({k[1] for k in prop if k[0] == 'AG-MUC'})})
+print("   Munich, VTT électriques, par mois :", [taux(lambda k, m=m: k == ('AG-MUC', 'VTT électriques', m)) for m in MOIS])
+print("   Lyon, VTT électriques (référence française) :", taux(lambda k: k[:2] == ('AG-LYO', 'VTT électriques')))
+print("   demandes refusées en Bavière en 2026 :", sum(1 for r, n in res if n and EMP[r['CodeE']]['reg'] == 'DE09'),
+      "; employés bavarois découragés (demande divisée par 2 ou plus) :",
+      sum(1 for v in EMP.values() if v['reg'] == 'DE09' and v['decour'] <= .5), "sur", sum(1 for v in EMP.values() if v['reg'] == 'DE09'))

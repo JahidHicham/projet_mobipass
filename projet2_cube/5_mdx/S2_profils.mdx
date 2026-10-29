@@ -1,0 +1,65 @@
+﻿/* =====================================================================
+   MobiPass - Cube "Locations" - SEQUENCE S2 : PROFILS DES LOCATAIRES
+   Auteur des requetes : Sami Carrere.
+   Requetes inchangees (testees sur le cube le 29/10).
+   Notes communes (mesures, dimensions, cles des membres) : en-tete de recette_abc.mdx.
+   ===================================================================== */
+
+/* =====================================================================
+   S2 - PROFILS DES LOCATAIRES
+   Question : quels profils louent le plus, le plus longtemps, avec quelle remise ?
+   profil = Catégorie ; classe de trajet = Super Catégorie ; domaine = Domaine / Division NAF
+   (les mesures calculees sont celles du cube : plus de WITH MEMBER, sauf S2.6)
+   ===================================================================== */
+
+-- S2.1 Vue par classe de trajet
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Durée],
+   [Measures].[Durée moyenne], [Measures].[Taux de remise effectif]}   ON COLUMNS,
+  [Employé].[H_Categorie].[Super Catégorie].Members                    ON ROWS
+FROM [Locations];
+
+-- S2.2 DRILL-DOWN : profils (Catégorie) de la classe qui ressort
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Durée moyenne],
+   [Measures].[Taux de remise effectif]}                               ON COLUMNS,
+  Descendants([Employé].[H_Categorie].[Super Catégorie].&[Trajet long (plus de 15 km)],
+              [Employé].[H_Categorie].[Catégorie])                     ON ROWS
+FROM [Locations];
+
+-- S2.3 ROLL-UP par domaine d'activite (division NAF) pour la classe retenue
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Durée]}               ON COLUMNS,
+  NON EMPTY Order([Employé].[H_Domaine].[Division].Members,
+                  [Measures].[Durée], BDESC)                           ON ROWS
+FROM [Locations]
+WHERE ([Employé].[H_Categorie].[Super Catégorie].&[Trajet long (plus de 15 km)]);
+
+-- S2.4 Montant public / montant paye : classe de trajet x secteur (CROSSJOIN)
+SELECT
+  {[Measures].[Montant public], [Measures].[Montant payé],
+   [Measures].[Taux de remise effectif]}                               ON COLUMNS,
+  [Employé].[H_Categorie].[Super Catégorie].Members
+    * [Exemplaire].[H_GAMME].[Secteur].Members                         ON ROWS
+FROM [Locations];
+
+-- S2.5 FILTER : profils dont le taux de remise effectif depasse un seuil
+SELECT
+  {[Measures].[Montant public], [Measures].[Montant payé],
+   [Measures].[Taux de remise effectif]}                               ON COLUMNS,
+  Filter([Employé].[H_Categorie].[Catégorie].Members,
+         [Measures].[Taux de remise effectif] > 0.15)                  ON ROWS   -- seuil a ajuster d'apres S2.4
+FROM [Locations];
+
+-- S2.6 Part de chaque profil dans sa classe (pourcentage par rapport au parent)
+WITH
+  MEMBER [Measures].[Part de la classe] AS
+    IIF(([Measures].[Durée], [Employé].[H_Categorie].CurrentMember.Parent) = 0, NULL,
+        [Measures].[Durée] /
+        ([Measures].[Durée], [Employé].[H_Categorie].CurrentMember.Parent)),
+    FORMAT_STRING = '0.00%'
+SELECT
+  {[Measures].[Durée], [Measures].[Part de la classe]}                 ON COLUMNS,
+  Order([Employé].[H_Categorie].[Catégorie].Members,
+        [Measures].[Part de la classe], BDESC)                         ON ROWS
+FROM [Locations];

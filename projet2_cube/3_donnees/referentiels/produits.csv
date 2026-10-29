@@ -1,35 +1,35 @@
 ﻿CodeProduit,NomProduit,Marque,Gamme,Secteur,Fabricant,PaysFabricant,PrixLocJourHT,PrixVenteHT,Louable,NbExemplaires,Origine
-1,Moustache Lundi 27,Moustache,Vélos électriques urbains,Vélos,Moustache Bikes,France,14.0,2900.0,oui,32,projet 1
-2,Moustache Lundi 27.3,Moustache,Vélos électriques urbains,Vélos,Moustache Bikes,France,15.0,3150.0,oui,37,projet 1
-3,Elops 920 E,Btwin,Vélos électriques urbains,Vélos,Decathlon,France,9.0,1250.0,oui,28,projet 1
-4,Cube Kathmandu Hybrid,Cube,VTT électriques,Vélos,Cube Bikes,Allemagne,18.0,3300.0,oui,25,projet 1
-5,Moustache Samedi 29,Moustache,VTT électriques,Vélos,Moustache Bikes,France,20.0,4200.0,oui,23,projet 1
-6,Load 75,Riese & Müller,Vélos cargo,Vélos,Riese & Müller,Allemagne,25.0,6800.0,oui,15,projet 1
-7,Packster 70,Riese & Müller,Vélos cargo,Vélos,Riese & Müller,Allemagne,23.0,6100.0,oui,19,projet 1
-8,Brompton P Line,Brompton,Vélos pliants,Vélos,Brompton,Royaume-Uni,8.0,2900.0,oui,21,projet 1
-9,Tilt 500,Btwin,Vélos pliants,Vélos,Decathlon,France,4.0,330.0,oui,32,projet 1
-10,Triban RC 520,Btwin,Vélos de route & gravel,Vélos,Decathlon,France,7.0,950.0,oui,17,projet 1
-11,Cube Nuroad,Cube,Vélos de route & gravel,Vélos,Cube Bikes,Allemagne,9.0,1300.0,oui,17,projet 1
-12,Btwin Riverside 20,Btwin,Vélos enfants,Vélos,Decathlon,France,3.0,250.0,oui,10,projet 1
-13,Casque urbain 500,Btwin,Casques,Equipement du cycliste,Decathlon,France,1.0,35.0,oui,21,projet 1
-14,Abus Hyban 2.0,Abus,Casques,Equipement du cycliste,Abus,Allemagne,1.5,90.0,oui,18,projet 1
+1,Moustache Lundi 27,Moustache,Vélos électriques urbains,Vélos,Moustache Bikes,France,14.0,2900.0,oui,22,projet 1
+2,Moustache Lundi 27.3,Moustache,Vélos électriques urbains,Vélos,Moustache Bikes,France,15.0,3150.0,oui,41,projet 1
+3,Elops 920 E,Btwin,Vélos électriques urbains,Vélos,Decathlon,France,9.0,1250.0,oui,32,projet 1
+4,Cube Kathmandu Hybrid,Cube,VTT électriques,Vélos,Cube Bikes,Allemagne,18.0,3300.0,oui,24,projet 1
+5,Moustache Samedi 29,Moustache,VTT électriques,Vélos,Moustache Bikes,France,20.0,4200.0,oui,20,projet 1
+6,Load 75,Riese & Müller,Vélos cargo,Vélos,Riese & Müller,Allemagne,25.0,6800.0,oui,19,projet 1
+7,Packster 70,Riese & Müller,Vélos cargo,Vélos,Riese & Müller,Allemagne,23.0,6100.0,oui,17,projet 1
+8,Brompton P Line,Brompton,Vélos pliants,Vélos,Brompton,Royaume-Uni,8.0,2900.0,oui,23,projet 1
+9,Tilt 500,Btwin,Vélos pliants,Vélos,Decathlon,France,4.0,330.0,oui,33,projet 1
+10,Triban RC 520,Btwin,Vélos de route & gravel,Vélos,Decathlon,France,7.0,950.0,oui,18,projet 1
+11,Cube Nuroad,Cube,Vélos de route & gravel,Vélos,Cube Bikes,Allemagne,9.0,1300.0,oui,19,projet 1
+12,Btwin Riverside 20,Btwin,Vélos enfants,Vélos,Decathlon,France,3.0,250.0,oui,14,projet 1
+13,Casque urbain 500,Btwin,Casques,Equipement du cycliste,Decathlon,France,1.0,35.0,oui,20,projet 1
+14,Abus Hyban 2.0,Abus,Casques,Equipement du cycliste,Abus,Allemagne,1.5,90.0,oui,17,projet 1
 15,Poncho de pluie 900,Btwin,Vêtements de pluie,Equipement du cycliste,Decathlon,France,,40.0,non,0,projet 1
 16,Abus Granit X-Plus 540,Abus,Antivols,Equipement du cycliste,Abus,Allemagne,,110.0,non,0,projet 1
 17,Abus Bordo 6000,Abus,Antivols,Equipement du cycliste,Abus,Allemagne,,95.0,non,0,projet 1
 18,Kit éclairage USB,Btwin,Eclairage & signalisation,Equipement du cycliste,Decathlon,France,,25.0,non,0,projet 1
-19,Ortlieb Back-Roller Classic,Ortlieb,Sacoches & bagagerie,Equipement du cycliste,Ortlieb,Allemagne,2.0,140.0,oui,22,projet 1
-20,Thule Chariot Cross,Thule,Sièges enfants & remorques,Equipement du cycliste,Thule,Suède,6.0,1050.0,oui,10,projet 1
-21,Siège enfant Yepp Maxi,Thule,Sièges enfants & remorques,Equipement du cycliste,Thule,Suède,2.0,120.0,oui,12,projet 1
+19,Ortlieb Back-Roller Classic,Ortlieb,Sacoches & bagagerie,Equipement du cycliste,Ortlieb,Allemagne,2.0,140.0,oui,25,projet 1
+20,Thule Chariot Cross,Thule,Sièges enfants & remorques,Equipement du cycliste,Thule,Suède,6.0,1050.0,oui,11,projet 1
+21,Siège enfant Yepp Maxi,Thule,Sièges enfants & remorques,Equipement du cycliste,Thule,Suède,2.0,120.0,oui,9,projet 1
 22,Gants vélo hiver,Btwin,Gants & accessoires textiles,Equipement du cycliste,Decathlon,France,,25.0,non,0,projet 1
 23,Bosch Kiox 300,Bosch,Compteurs & GPS,Equipement du cycliste,Bosch eBike Systems,Allemagne,,190.0,non,0,projet 1
 24,Pompe à pied 500,Btwin,Pompes & outillage,Equipement du cycliste,Decathlon,France,,30.0,non,0,projet 1
-25,Xiaomi Electric Scooter 4 Pro,Xiaomi,Trottinettes électriques,Micromobilité,Xiaomi,Chine,6.0,700.0,oui,46,projet 1
-26,Ninebot Max G2,Segway-Ninebot,Trottinettes électriques,Micromobilité,Segway-Ninebot,Chine,7.0,850.0,oui,36,projet 1
-27,Oxelo Town 9,Oxelo,Trottinettes mécaniques,Micromobilité,Decathlon,France,2.0,150.0,oui,17,projet 1
-28,Ninebot One S2,Segway-Ninebot,Gyroroues,Micromobilité,Segway-Ninebot,Chine,6.0,600.0,oui,7,projet 1
-29,Ninebot S Hoverboard,Segway-Ninebot,Hoverboards & gyropodes,Micromobilité,Segway-Ninebot,Chine,5.0,450.0,oui,13,projet 1
-30,Skate électrique Urban,Oxelo,Skateboards électriques,Micromobilité,Decathlon,France,5.0,500.0,oui,5,projet 1
-31,Ninebot E-Scooter E110,Segway-Ninebot,Scooters électriques,Micromobilité,Segway-Ninebot,Chine,15.0,3200.0,oui,10,projet 1
+25,Xiaomi Electric Scooter 4 Pro,Xiaomi,Trottinettes électriques,Micromobilité,Xiaomi,Chine,6.0,700.0,oui,45,projet 1
+26,Ninebot Max G2,Segway-Ninebot,Trottinettes électriques,Micromobilité,Segway-Ninebot,Chine,7.0,850.0,oui,39,projet 1
+27,Oxelo Town 9,Oxelo,Trottinettes mécaniques,Micromobilité,Decathlon,France,2.0,150.0,oui,29,projet 1
+28,Ninebot One S2,Segway-Ninebot,Gyroroues,Micromobilité,Segway-Ninebot,Chine,6.0,600.0,oui,12,projet 1
+29,Ninebot S Hoverboard,Segway-Ninebot,Hoverboards & gyropodes,Micromobilité,Segway-Ninebot,Chine,5.0,450.0,oui,15,projet 1
+30,Skate électrique Urban,Oxelo,Skateboards électriques,Micromobilité,Decathlon,France,5.0,500.0,oui,7,projet 1
+31,Ninebot E-Scooter E110,Segway-Ninebot,Scooters électriques,Micromobilité,Segway-Ninebot,Chine,15.0,3200.0,oui,16,projet 1
 32,Rollers Fit 500,Oxelo,Rollers & patins,Micromobilité,Decathlon,France,,90.0,non,0,projet 1
 33,Batterie PowerTube 625,Bosch,Batteries & chargeurs,Micromobilité,Bosch eBike Systems,Allemagne,,700.0,non,0,projet 1
 34,Pneu urbain 700x40,Btwin,Pièces détachées,Micromobilité,Decathlon,France,,30.0,non,0,projet 1
@@ -38,41 +38,41 @@
 37,Marquage Bicycode,MobiPass,Marquage antivol,Services et entretien,MobiPass Services,France,,15.0,non,0,projet 1
 38,Stage remise en selle 2 h,MobiPass,Stage de remise en selle,Services et entretien,MobiPass Services,France,,45.0,non,0,projet 1
 39,Livraison et reprise à domicile,MobiPass,Livraison & reprise à domicile,Services et entretien,MobiPass Services,France,,25.0,non,0,projet 1
-40,Vélo cargo Btwin R500E,Btwin,Vélos cargo,Vélos,Decathlon,France,12.0,2700.0,oui,18,projet 1
-41,Gazelle Ultimate C380,Gazelle,Vélos électriques urbains,Vélos,Gazelle,Pays-Bas,15.0,3300,oui,7,projet 2
-42,VanMoof S5,VanMoof,Vélos électriques urbains,Vélos,VanMoof,Pays-Bas,13.0,2900,oui,12,projet 2
-43,Peugeot eLC01,Peugeot,Vélos électriques urbains,Vélos,Peugeot Cycles,France,10.0,1900,oui,6,projet 2
-44,Kalkhoff Image 5.B,Kalkhoff,Vélos électriques urbains,Vélos,Kalkhoff,Allemagne,13.0,3000,oui,10,projet 2
-45,O2feel Vog D8,O2feel,Vélos électriques urbains,Vélos,O2feel,France,9.0,1650,oui,10,projet 2
-46,Elops LD 500 E,Btwin,Vélos électriques urbains,Vélos,Decathlon,France,5.0,830,oui,14,projet 2
-47,Specialized Turbo Vado 4.0,Specialized,Vélos électriques urbains,Vélos,Specialized,États-Unis,17.0,3900,oui,4,projet 2
-48,Haibike AllMtn 3,Haibike,VTT électriques,Vélos,Haibike,Allemagne,19.0,4000,oui,9,projet 2
-49,Rockrider E-ST 900,Rockrider,VTT électriques,Vélos,Decathlon,France,12.0,2100,oui,13,projet 2
-50,Trek Powerfly 5,Trek,VTT électriques,Vélos,Trek,États-Unis,20.0,4300,oui,11,projet 2
-51,Orbea Wild H30,Orbea,VTT électriques,Vélos,Orbea,Espagne,21.0,4600,oui,12,projet 2
+40,Vélo cargo Btwin R500E,Btwin,Vélos cargo,Vélos,Decathlon,France,12.0,2700.0,oui,15,projet 1
+41,Gazelle Ultimate C380,Gazelle,Vélos électriques urbains,Vélos,Gazelle,Pays-Bas,15.0,3300,oui,8,projet 2
+42,VanMoof S5,VanMoof,Vélos électriques urbains,Vélos,VanMoof,Pays-Bas,13.0,2900,oui,14,projet 2
+43,Peugeot eLC01,Peugeot,Vélos électriques urbains,Vélos,Peugeot Cycles,France,10.0,1900,oui,11,projet 2
+44,Kalkhoff Image 5.B,Kalkhoff,Vélos électriques urbains,Vélos,Kalkhoff,Allemagne,13.0,3000,oui,16,projet 2
+45,O2feel Vog D8,O2feel,Vélos électriques urbains,Vélos,O2feel,France,9.0,1650,oui,12,projet 2
+46,Elops LD 500 E,Btwin,Vélos électriques urbains,Vélos,Decathlon,France,5.0,830,oui,9,projet 2
+47,Specialized Turbo Vado 4.0,Specialized,Vélos électriques urbains,Vélos,Specialized,États-Unis,17.0,3900,oui,11,projet 2
+48,Haibike AllMtn 3,Haibike,VTT électriques,Vélos,Haibike,Allemagne,19.0,4000,oui,10,projet 2
+49,Rockrider E-ST 900,Rockrider,VTT électriques,Vélos,Decathlon,France,12.0,2100,oui,9,projet 2
+50,Trek Powerfly 5,Trek,VTT électriques,Vélos,Trek,États-Unis,20.0,4300,oui,13,projet 2
+51,Orbea Wild H30,Orbea,VTT électriques,Vélos,Orbea,Espagne,21.0,4600,oui,16,projet 2
 52,Urban Arrow Family,Urban Arrow,Vélos cargo,Vélos,Urban Arrow,Pays-Bas,26.0,6200,oui,2,projet 2
-53,Tern GSD S10,Tern,Vélos cargo,Vélos,Tern,Taïwan,24.0,5400,oui,15,projet 2
-54,Arcade eCargo,Arcade,Vélos cargo,Vélos,Arcade Cycles,France,18.0,4500,oui,3,projet 2
-55,Riese & Müller Multicharger,Riese & Müller,Vélos cargo,Vélos,Riese & Müller,Allemagne,22.0,5600,oui,4,projet 2
-56,Tern Vektron Q9,Tern,Vélos pliants,Vélos,Tern,Taïwan,12.0,3100,oui,15,projet 2
-57,Brompton Electric C Line,Brompton,Vélos pliants,Vélos,Brompton,Royaume-Uni,11.0,3000,oui,9,projet 2
-58,Tilt 900,Btwin,Vélos pliants,Vélos,Decathlon,France,5.0,550,oui,20,projet 2
-59,Canyon Grail 6,Canyon,Vélos de route & gravel,Vélos,Canyon,Allemagne,11.0,1800,oui,11,projet 2
-60,Specialized Diverge E5,Specialized,Vélos de route & gravel,Vélos,Specialized,États-Unis,8.0,1250,oui,7,projet 2
-61,Lapierre Crosshill 3.0,Lapierre,Vélos de route & gravel,Vélos,Lapierre,France,8.0,1200,oui,6,projet 2
-62,Riverside 500 24 pouces,Btwin,Vélos enfants,Vélos,Decathlon,France,3.0,330,oui,14,projet 2
-63,Woom 4,Woom,Vélos enfants,Vélos,Woom,Autriche,4.0,480,oui,8,projet 2
-64,Lazer Codax KinetiCore,Lazer,Casques,Equipement du cycliste,Lazer,Belgique,1.0,40,oui,5,projet 2
-65,Uvex City 4,Uvex,Casques,Equipement du cycliste,Uvex,Allemagne,1.5,85,oui,15,projet 2
+53,Tern GSD S10,Tern,Vélos cargo,Vélos,Tern,Taïwan,24.0,5400,oui,6,projet 2
+54,Arcade eCargo,Arcade,Vélos cargo,Vélos,Arcade Cycles,France,18.0,4500,oui,8,projet 2
+55,Riese & Müller Multicharger,Riese & Müller,Vélos cargo,Vélos,Riese & Müller,Allemagne,22.0,5600,oui,7,projet 2
+56,Tern Vektron Q9,Tern,Vélos pliants,Vélos,Tern,Taïwan,12.0,3100,oui,19,projet 2
+57,Brompton Electric C Line,Brompton,Vélos pliants,Vélos,Brompton,Royaume-Uni,11.0,3000,oui,14,projet 2
+58,Tilt 900,Btwin,Vélos pliants,Vélos,Decathlon,France,5.0,550,oui,17,projet 2
+59,Canyon Grail 6,Canyon,Vélos de route & gravel,Vélos,Canyon,Allemagne,11.0,1800,oui,8,projet 2
+60,Specialized Diverge E5,Specialized,Vélos de route & gravel,Vélos,Specialized,États-Unis,8.0,1250,oui,6,projet 2
+61,Lapierre Crosshill 3.0,Lapierre,Vélos de route & gravel,Vélos,Lapierre,France,8.0,1200,oui,8,projet 2
+62,Riverside 500 24 pouces,Btwin,Vélos enfants,Vélos,Decathlon,France,3.0,330,oui,10,projet 2
+63,Woom 4,Woom,Vélos enfants,Vélos,Woom,Autriche,4.0,480,oui,10,projet 2
+64,Lazer Codax KinetiCore,Lazer,Casques,Equipement du cycliste,Lazer,Belgique,1.0,40,oui,16,projet 2
+65,Uvex City 4,Uvex,Casques,Equipement du cycliste,Uvex,Allemagne,1.5,85,oui,9,projet 2
 66,Vaude Aqua Back Plus,Vaude,Sacoches & bagagerie,Equipement du cycliste,Vaude,Allemagne,2.0,110,oui,10,projet 2
 67,Croozer Kid Plus for 2,Croozer,Sièges enfants & remorques,Equipement du cycliste,Croozer,Allemagne,6.5,900,oui,5,projet 2
-68,Burley D'Lite X,Burley,Sièges enfants & remorques,Equipement du cycliste,Burley,États-Unis,6.5,950,oui,8,projet 2
-69,Ninebot Max G30,Segway-Ninebot,Trottinettes électriques,Micromobilité,Segway-Ninebot,Chine,6.0,650,oui,15,projet 2
-70,Pure Advance+,Pure Electric,Trottinettes électriques,Micromobilité,Pure Electric,Royaume-Uni,6.0,700,oui,24,projet 2
-71,Inokim OXO,Inokim,Trottinettes électriques,Micromobilité,Inokim,Israël,9.0,1900,oui,15,projet 2
-72,Xiaomi Electric Scooter 4 Ultra,Xiaomi,Trottinettes électriques,Micromobilité,Xiaomi,Chine,7.0,830,oui,17,projet 2
-73,Oxelo Town 7 XL,Oxelo,Trottinettes mécaniques,Micromobilité,Decathlon,France,1.5,110,oui,18,projet 2
-74,InMotion V12,InMotion,Gyroroues,Micromobilité,InMotion,Chine,9.0,1650,oui,6,projet 2
+68,Burley D'Lite X,Burley,Sièges enfants & remorques,Equipement du cycliste,Burley,États-Unis,6.5,950,oui,10,projet 2
+69,Ninebot Max G30,Segway-Ninebot,Trottinettes électriques,Micromobilité,Segway-Ninebot,Chine,6.0,650,oui,23,projet 2
+70,Pure Advance+,Pure Electric,Trottinettes électriques,Micromobilité,Pure Electric,Royaume-Uni,6.0,700,oui,21,projet 2
+71,Inokim OXO,Inokim,Trottinettes électriques,Micromobilité,Inokim,Israël,9.0,1900,oui,21,projet 2
+72,Xiaomi Electric Scooter 4 Ultra,Xiaomi,Trottinettes électriques,Micromobilité,Xiaomi,Chine,7.0,830,oui,21,projet 2
+73,Oxelo Town 7 XL,Oxelo,Trottinettes mécaniques,Micromobilité,Decathlon,France,1.5,110,oui,12,projet 2
+74,InMotion V12,InMotion,Gyroroues,Micromobilité,InMotion,Chine,9.0,1650,oui,4,projet 2
 75,Evolve Stoke,Evolve,Skateboards électriques,Micromobilité,Evolve Skateboards,Australie,7.0,1100,oui,7,projet 2
-76,NIU MQi GT,NIU,Scooters électriques,Micromobilité,NIU,Chine,14.0,2500,oui,13,projet 2
-77,Silence S01,Silence,Scooters électriques,Micromobilité,Silence,Espagne,20.0,5800,oui,12,projet 2
+76,NIU MQi GT,NIU,Scooters électriques,Micromobilité,NIU,Chine,14.0,2500,oui,14,projet 2
+77,Silence S01,Silence,Scooters électriques,Micromobilité,Silence,Espagne,20.0,5800,oui,9,projet 2
