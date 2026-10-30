@@ -18,8 +18,7 @@
    ===================================================================== */
 
 -- S1.1 Vue annuelle (ROLL-UP au niveau Année)
--- Question : la saturation du parc augmente-t-elle d'une annee a l'autre ?
--- Resultat : taux de rupture 30 % (2023, parc en demarrage), 24 %, 21 %, puis 31 % en 2026 (arrivee de l'Allemagne)
+-- On se demande si la saturation du parc augmente-t-elle d'une annee a l'autre ?
 SELECT
   {[Measures].[Durée], [Measures].[Nombre de locations],
    [Measures].[Taux d'occupation], [Measures].[Taux de rupture]}      ON COLUMNS,
@@ -27,7 +26,7 @@ SELECT
 FROM [Locations];
 
 -- S1.2 DRILL-DOWN par mois sur l'annee retenue (2026)
--- Question : quels mois sont les plus charges ? (resultat : juin 47 % et septembre 45 %, creux en aout 30 %)
+-- quels sont les mois les plus charg? 
 SELECT
   {[Measures].[Durée], [Measures].[Taux d'occupation],
    [Measures].[Jours de rupture], [Measures].[Taux de rupture]}       ON COLUMNS,
@@ -36,7 +35,7 @@ SELECT
 FROM [Locations];
 
 -- S1.3 DRILL-DOWN par semaine, classees : les semaines du pic
--- Question : quelles semaines precises sont les plus saturees ? (resultat : semaines 39 et 38, 51 % et 50 %)
+-- quelles semaines precises sont les plus saturees ? 
 SELECT
   {[Measures].[Jours de rupture], [Measures].[Taux de rupture]}       ON COLUMNS,
   TopCount(
@@ -45,44 +44,38 @@ SELECT
     10, [Measures].[Taux de rupture])                                 ON ROWS
 FROM [Locations];
 
--- S1.4 SLICE sur la semaine du pic (semaine ISO 38 de 2026) et eclatement par secteur
--- Question : quels secteurs sont les plus touches pendant la semaine europeenne de la mobilite ?
--- Resultat : Velos (53 %), puis Equipement du cycliste et Micromobilite. Le secteur Services et entretien
---            n'apparait pas : ce sont des services vendus, sans exemplaire a louer (NONEMPTY les ecarte).
+-- S1.4 SLICE sur la semaine du pic et eclatement par secteur
+-- quels secteurs sont les plus touches pendant la semaine  du pic donc la semaine 39 ?
 SELECT
   {[Measures].[Durée], [Measures].[Taux d'occupation],
    [Measures].[Taux de rupture]}                                      ON COLUMNS,
   Order(NonEmpty([Exemplaire].[H_GAMME].[Secteur].Members, [Measures].[Durée]),
         [Measures].[Taux de rupture], BDESC)                          ON ROWS
 FROM [Locations]
-WHERE ([Temps].[H_SEM].[Semaine].&[202638]);
+WHERE ([Temps].[H_SEM].[Semaine].&[202639]);
 
 -- S1.5 DRILL-DOWN secteur -> gamme
--- Question : quelles gammes sont les plus proches de la saturation ? (resultat : velos cargo 59 %,
---            velos enfants 58 %, velos electriques urbains 57 %)
+-- quelles gammes sont les plus proches de la saturation ?
 SELECT
   {[Measures].[Durée], [Measures].[Taux de rupture]}                  ON COLUMNS,
   TopCount([Exemplaire].[H_GAMME].[Gamme].Members,
            6, [Measures].[Taux de rupture])                           ON ROWS
 FROM [Locations]
-WHERE ([Temps].[H_SEM].[Semaine].&[202638]);
+WHERE ([Temps].[H_SEM].[Semaine].&[202639]);
 
 -- S1.6 ECLATEMENT par agence (France et Allemagne) pour la gamme retenue en S1.5 (velos electriques
---      urbains), semaines 38 et 39 : OU le parc sature-t-il ?
--- Resultat : agences allemandes en tete (Leipzig 96 %, Stuttgart, Cologne, Hambourg, Berlin) ; en France,
---            Lille (82 %, petit parc) puis Lyon (60 %). Paris (50 %) a le plus gros volume francais (224 jours loues).
+--      urbains), semaines 38 et 39 : où est ce que le parc sature-t-il ?
 SELECT
   {[Measures].[Durée], [Measures].[Taux d'occupation],
    [Measures].[Taux de rupture]}                                      ON COLUMNS,
-  TopCount(NonEmpty([Exemplaire].[H_Agence].[Agence].Members, [Measures].[Durée]),
-           8, [Measures].[Taux de rupture])                           ON ROWS
+  Order(NonEmpty([Exemplaire].[H_Agence].[Agence].Members, [Measures].[Durée]),
+        [Measures].[Taux de rupture], BDESC)                          ON ROWS
 FROM [Locations]
 WHERE ({[Temps].[H_SEM].[Semaine].&[202638], [Temps].[H_SEM].[Semaine].&[202639]}
        * {[Exemplaire].[Gamme].[Vélos électriques urbains]});
 
 -- S1.7 DRILL-DOWN : produits de l'agence de Paris pour la gamme la plus saturee (velos electriques urbains)
--- Question : quels produits precis manquent a Paris (agence au plus gros volume en France) ?
--- Resultat : Peugeot eLC01 (63 %) et Elops LD 500 E (60 %), loin devant les autres modeles
+-- quels produits precis manquent a Paris (agence au plus gros volume en France) ?
 SELECT
   {[Measures].[Durée], [Measures].[Taux de rupture]}                  ON COLUMNS,
   Order(Descendants([Exemplaire].[H_GAMME].[Gamme].[Vélos électriques urbains],

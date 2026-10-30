@@ -62,8 +62,7 @@ SELECT
 FROM [Locations]
 WHERE ([Measures].[Montant payé]);
 
--- b) Montants reellement payes et durees par semaine et par salarie (3 annees completes)
---    (3 000 salaries x 156 semaines : le NON EMPTY est indispensable)
+-- b) Montants reellement payes et durees par semaine et par salarie
 
 SELECT
   {[Measures].[Montant payé], [Measures].[Durée]} ON COLUMNS,
@@ -90,7 +89,6 @@ SELECT
 FROM [Locations];
 
 -- c) Durees mensuelles par region (France) puis par Land (Allemagne)
---    + graphique : tableau croise dynamique Excel connecte au cube
 
 -- FRANCE
 SELECT

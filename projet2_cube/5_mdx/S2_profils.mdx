@@ -35,20 +35,20 @@ SELECT
 FROM [Locations]
 WHERE ([Employé].[H_Categorie].[Super Catégorie].&[Trajet long (plus de 15 km)]);
 
--- S2.4 Montant public / montant paye : classe de trajet x secteur (CROSSJOIN)
+-- S2.4 Montant public / montant paye : classe de trajet x secteur
 SELECT
   {[Measures].[Montant public], [Measures].[Montant payé],
    [Measures].[Taux de remise effectif]}                               ON COLUMNS,
-  [Employé].[H_Categorie].[Super Catégorie].Members
+   NON EMPTY [Employé].[H_Categorie].[Super Catégorie].Members
     * [Exemplaire].[H_GAMME].[Secteur].Members                         ON ROWS
 FROM [Locations];
 
--- S2.5 FILTER : profils dont le taux de remise effectif depasse un seuil
+-- S2.5 profils dont le taux de remise effectif depasse un seuil
 SELECT
   {[Measures].[Montant public], [Measures].[Montant payé],
    [Measures].[Taux de remise effectif]}                               ON COLUMNS,
   Filter([Employé].[H_Categorie].[Catégorie].Members,
-         [Measures].[Taux de remise effectif] > 0.15)                  ON ROWS   -- seuil a ajuster d'apres S2.4
+         [Measures].[Taux de remise effectif] > 0.15)                  ON ROWS
 FROM [Locations];
 
 -- S2.6 Part de chaque profil dans sa classe (pourcentage par rapport au parent)
@@ -60,6 +60,7 @@ WITH
     FORMAT_STRING = '0.00%'
 SELECT
   {[Measures].[Durée], [Measures].[Part de la classe]}                 ON COLUMNS,
-  Order([Employé].[H_Categorie].[Catégorie].Members,
-        [Measures].[Part de la classe], BDESC)                         ON ROWS
+    Order([Employé].[H_Categorie].[Super Catégorie].Members
+          + [Employé].[H_Categorie].[Catégorie].Members,
+        [Measures].[Part de la classe], DESC)                          ON ROWS
 FROM [Locations];
