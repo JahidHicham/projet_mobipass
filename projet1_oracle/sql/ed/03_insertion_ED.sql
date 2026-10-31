@@ -85,15 +85,15 @@ INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) 
 INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE08111', 'Stuttgart, Landeshauptstadt', 'KREISFREIE STADT', 'DE081', 'DE');
 INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE05111', 'Düsseldorf, Stadt', 'KREISFREIE STADT', 'DE051', 'DE');
 INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09564', 'Nürnberg', 'KREISFREIE STADT', 'DE095', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE11000000', 'Berlin', 'GEMEINDE', 'DE11000', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE02000000', 'Hamburg', 'GEMEINDE', 'DE02000', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09162000', 'München', 'GEMEINDE', 'DE09162', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09184119', 'Garching b.München', 'GEMEINDE', 'DE09184', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE05315000', 'Köln', 'GEMEINDE', 'DE05315', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE06412000', 'Frankfurt am Main', 'GEMEINDE', 'DE06412', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE08111000', 'Stuttgart', 'GEMEINDE', 'DE08111', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE05111000', 'Düsseldorf', 'GEMEINDE', 'DE05111', 'DE');
-INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09564000', 'Nürnberg', 'GEMEINDE', 'DE09564', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE11000000', 'Berlin', 'GEMEINDEN', 'DE11000', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE02000000', 'Hamburg', 'GEMEINDEN', 'DE02000', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09162000', 'München', 'GEMEINDEN', 'DE09162', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09184119', 'Garching b.München', 'GEMEINDEN', 'DE09184', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE05315000', 'Köln', 'GEMEINDEN', 'DE05315', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE06412000', 'Frankfurt am Main', 'GEMEINDEN', 'DE06412', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE08111000', 'Stuttgart', 'GEMEINDEN', 'DE08111', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE05111000', 'Düsseldorf', 'GEMEINDEN', 'DE05111', 'DE');
+INSERT INTO ZONE_GEO(CodeZG, NomZG, NiveauZG, CodeZG_zone_englobante, CodePays) VALUES ('DE09564000', 'Nürnberg', 'GEMEINDEN', 'DE09564', 'DE');
 COMMIT;
 
 -- DOMAINE : 32 lignes
