@@ -1,5 +1,5 @@
 ﻿-- MobiPass - Projet 2 : entrepôt du cube « Locations » sous SQL Server (schéma dw)
--- Schéma en étoile issu de la conception du projet 1 (docs/Location_MD.json) : dimensions DIM_TEMPS,
+-- Schéma en étoile issu de la conception du projet 1 (projet1_oracle/docs/Location_MD.json) : dimensions DIM_TEMPS,
 --   DIM_EMPLOYE, DIM_PRODUIT, DIM_EXEMPLAIRE (clés de substitution) et un seul fait, FAIT_LOCATION.
 -- Séquence S1 (« quand et où les employés ne trouvent pas de produit ») : le produit n'est pas disponible quand
 --   tous ses exemplaires sont déjà loués ; le cube le déduit des locations (taux d'occupation, jours de rupture).
@@ -63,7 +63,7 @@ CREATE TABLE dw.DIM_TEMPS(
 GO
 
 -- Dimension Employé : mêmes attributs et mêmes noms que la dimension Employe_MD de la conception du projet 1
--- (docs/Location_MD.json), plus le domaine NAF/WZ de la société (ajout pour la séquence S2).
+-- (projet1_oracle/docs/Location_MD.json), plus le domaine NAF/WZ de la société (ajout pour la séquence S2).
 -- Hiérarchies de la conception : H_France (Employé > Service > Société > Ville > Département > Région > Pays),
 --   H_Allemagne (... Société > Gemeinde > Kreis > Land > Pays), H_District (... Kreis > District > Land),
 --   H_Type_Kreis (... Kreis > TypeKreis), H_Type_Land (... Land > TypeLand), H_Categorie (Employé > Catégorie >
@@ -167,7 +167,7 @@ CREATE TABLE dw.DIM_EXEMPLAIRE(
 );
 GO
 
--- Fait Location : une ligne par JOUR loué (comme LOCATION_MD1 du projet 1, sql/md_locations/01_Location_MD_structure.sql) :
+-- Fait Location : une ligne par JOUR loué (comme LOCATION_MD1 du projet 1, projet1_oracle/sql/md_locations/01_Location_MD_structure.sql) :
 -- une location de 5 jours donne 5 lignes. Les jours loués tombent ainsi dans le bon mois et la bonne semaine
 -- (une location du 28 juin au 3 juillet compte 3 jours en juin et 3 en juillet).
 -- Mesures par ligne : durée = 1 jour ; montant public = prix de location journalier TTC du tarif en vigueur au

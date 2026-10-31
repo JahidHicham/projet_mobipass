@@ -1,7 +1,7 @@
 # Choix de conception du projet 2 (cube « Locations »)
 
 Chaque décision, sa justification et ce qu'elle change par rapport à la conception du projet 1
-(`docs/Location_MD.json`, schéma en étoile Location_MD).
+(`projet1_oracle/docs/Location_MD.json`, schéma en étoile Location_MD).
 
 | # | Décision | Justification | Écart avec le projet 1 |
 |---|---|---|---|

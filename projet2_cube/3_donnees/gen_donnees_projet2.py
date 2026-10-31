@@ -9,7 +9,7 @@ Phénomène P7 proposé par Sami (séquence S3 « Lancement en Allemagne ») :
       mais l'agence de Munich en a trop peu ; chaque refus décourage l'employé, qui loue ensuite moins.
       Une société ajoutée (Munich).
 
-Reprend telles quelles les données du projet 1 (sql/ed/03_insertion_ED.sql) et les complète jusqu'aux
+Reprend telles quelles les données du projet 1 (projet1_oracle/sql/ed/03_insertion_ED.sql) et les complète jusqu'aux
 volumes minimaux du sujet du projet 2 : au moins 40 sociétés sur 5 régions, 3 000 employés, 60 produits
 sur 3 secteurs, 400 exemplaires et 60 000 locations sur 3 années complètes (2023 à 2025 ; 2026 s'arrête
 au 13/10/2026 comme au projet 1). Graine fixe : le script produit toujours les mêmes fichiers.
@@ -54,7 +54,7 @@ from pathlib import Path
 random.seed(2027)
 D = dt.date
 ICI = Path(__file__).resolve().parent
-SQL_P1 = ICI.parents[1] / 'sql' / 'ed' / '03_insertion_ED.sql'
+SQL_P1 = ICI.parents[1] / 'projet1_oracle' / 'sql' / 'ed' / '03_insertion_ED.sql'
 CUBE = ICI.parent                          # dossier projet2_cube
 
 TODAY = D(2026, 10, 14)          # date de génération du projet 1 : toutes les dates d'activité sont avant
@@ -648,7 +648,7 @@ def ecrire(chemin, entete, lignes):
     print(f"écrit : {chemin.relative_to(ICI)} ({len(lignes)} lignes)")
 
 CATS = {r['CodeCAT']: r for r in R['CATEGORIE']}
-def ligne_employe(e):            # colonnes de la dimension Employe_MD de la conception (docs/Location_MD.json)
+def ligne_employe(e):            # colonnes de la dimension Employe_MD de la conception (projet1_oracle/docs/Location_MD.json)
     v = EMP[e]; s = SOC[v['soc']]; r = s['row']
     com = ZG[s['zg']]; par = ZG[com['CodeZG_zone_englobante']]; som = ZG[sommet(s['zg'])]
     do = r['CodeDO']

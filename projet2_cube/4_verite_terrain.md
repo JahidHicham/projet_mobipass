@@ -6,7 +6,7 @@ Il sert à vérifier que l'analyse OLAP retrouve bien ces phénomènes.
 
 ## 1. Origine et volumes
 
-- Les données du projet 1 (`sql/ed/03_insertion_ED.sql`) sont **gardées telles quelles** : 20 sociétés, 403 employés,
+- Les données du projet 1 (`projet1_oracle/sql/ed/03_insertion_ED.sql`) sont **gardées telles quelles** : 20 sociétés, 403 employés,
   40 produits, 256 exemplaires, 5 100 locations, 1 000 réservations (non chargées : pas de fait Réservation). Seule exception : les 8 sociétés allemandes
   reçoivent un domaine d'activité (voir § 5).
 - Le générateur les **complète** jusqu'aux volumes minimaux du sujet.
@@ -29,7 +29,7 @@ avec l'arrivée de nouvelles sociétés clientes et un usage plus intensif. L'Al
 Les fichiers sources sont **complets et cohérents** : pas de données manquantes ni erronées (consigne du prof). Seuls
 des **phénomènes** ont été injectés, pour être retrouvés par l'analyse OLAP.
 
-## 2. Lois de probabilité (réglages en tête du générateur, à valider par le groupe)
+## 2. Lois de probabilité (réglages en tête du générateur)
 
 | Règle | Valeur |
 |---|---|
@@ -65,7 +65,8 @@ des **phénomènes** ont été injectés, pour être retrouvés par l'analyse OL
 
 ### P2 — Concentration d'une gamme dans une région
 - **Règle** : les VTT électriques sont 4 fois plus demandés par les employés d'Auvergne-Rhône-Alpes.
-- **À observer** : les VTT électriques représentent **19 % des locations en Auvergne-Rhône-Alpes**, contre **6 % ailleurs** (19,3 % et 6,3 %).
+- **À observer** : les VTT électriques représentent **19,3 % des locations en Auvergne-Rhône-Alpes**, contre
+  **6,3 % ailleurs** (reste de la France et Allemagne) et 6,5 % dans le reste de la France seule.
 
 ### P3 — Comportement selon la classe de trajet (séquence S2)
 - **Règle** : trajets longs = locations longues mais moins fréquentes ; intermodal = locations courtes, plus fréquentes,
@@ -137,10 +138,28 @@ Phénomène proposé par Sami (séquence S3 « Lancement en Allemagne »).
     bavaroises refusées en 2026 ; 103 des 185 employés bavarois ont vu leur demande divisée par 2 ou plus.
   - Requêtes : `5_mdx/S3_Allemagne.mdx` (valeurs vérifiées sur le cube le 29/10).
 
-## 4. Points à valider par le groupe
+## 4. Choix retenus
 
-- **Domaine des sociétés allemandes** (réglage `DOMAINE_DE` du générateur, actuellement `True`) : le sujet du projet 2
-  demande des « sociétés françaises et allemandes avec leur domaine », alors que le projet 1 n'en donnait pas aux
-  sociétés allemandes. Avec `False`, elles apparaissent dans un domaine « Non renseigné ».
-- Les **lois de probabilité** du § 2 et les **phénomènes** du § 3.
-- Les **référentiels ajoutés** (sociétés, produits, agences, tarifs) : `3_donnees/referentiels/*.csv`, colonne `Origine`.
+- **Domaine des sociétés allemandes** : réglage `DOMAINE_DE = True` du générateur. Le sujet du projet 2 demande des
+  « sociétés françaises et allemandes avec leur domaine », alors que le projet 1 n'en donnait pas aux sociétés
+  allemandes : elles reçoivent l'équivalent NACE de leur code WZ (avec `False`, elles seraient dans un domaine
+  « Non renseigné »).
+- Les **lois de probabilité** du § 2 et les **phénomènes** P1 à P7 du § 3 sont ceux du générateur final.
+- Les **référentiels ajoutés** (sociétés, produits, agences, tarifs) sont dans `3_donnees/referentiels/*.csv` ; la
+  colonne `Origine` distingue les données du projet 1 et les ajouts du projet 2.
+- Le détail des demandes faites à l'assistant IA pour écrire le générateur est dans `3_donnees/journal_prompts.md`.
+
+## 5. Vérification des valeurs
+
+Les valeurs de ce fichier correspondent aux données finales : 67 595 locations et 222 433 jours loués, identiques
+dans les CSV (`3_donnees/csv/`), dans l'entrepôt SQL Server (schéma `dw`) et dans le cube.
+
+- **Recalculées en SQL sur l'entrepôt le 31/10** : volumes du § 1, tendance par année, P2, P3, P4, P5 (durées et
+  vélos cargo par type de Land), P6 (France 2026 par mois) et la montée en charge allemande de P7.
+- **Vérifiées sur le cube en MDX le 29/10** : taux de rupture de P1 et indicateurs détaillés de P7 (requêtes de
+  `5_mdx/`). Les données n'ont pas changé depuis.
+- **Recalculées par le générateur le 31/10** (relancé à l'identique : mêmes fichiers octet pour octet,
+  « ERREURS : aucune ») : demandes refusées de P1 par mois et par semaine ISO, creux d'été des Länder (P6) et
+  indicateurs de P7b (Munich, Bavière).
+- **Simulées par le générateur, absentes des fichiers** : les 7 789 demandes refusées de P1 (elles n'existent que
+  comme cause des ruptures visibles dans le cube).
