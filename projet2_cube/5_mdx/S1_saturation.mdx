@@ -26,7 +26,7 @@ SELECT
 FROM [Locations];
 
 -- S1.2 DRILL-DOWN par mois sur l'annee retenue (2026)
--- quels sont les mois les plus charg? 
+-- quels sont les mois les plus charges ? (octobre est incomplet : donnees arretees au 13/10)
 SELECT
   {[Measures].[Durée], [Measures].[Taux d'occupation],
    [Measures].[Jours de rupture], [Measures].[Taux de rupture]}       ON COLUMNS,
@@ -64,7 +64,7 @@ FROM [Locations]
 WHERE ([Temps].[H_SEM].[Semaine].&[202639]);
 
 -- S1.6 ECLATEMENT par agence (France et Allemagne) pour la gamme retenue en S1.5 (velos electriques
---      urbains), semaines 38 et 39 : où est ce que le parc sature-t-il ?
+--      urbains), semaines 38 et 39 : ou le parc sature-t-il ?
 SELECT
   {[Measures].[Durée], [Measures].[Taux d'occupation],
    [Measures].[Taux de rupture]}                                      ON COLUMNS,
@@ -74,7 +74,7 @@ FROM [Locations]
 WHERE ({[Temps].[H_SEM].[Semaine].&[202638], [Temps].[H_SEM].[Semaine].&[202639]}
        * {[Exemplaire].[Gamme].[Vélos électriques urbains]});
 
--- S1.7 DRILL-DOWN : produits de l'agence de Paris pour la gamme la plus saturee (velos electriques urbains)
+-- S1.7 DRILL-DOWN : produits de l'agence de Paris pour la gamme retenue en S1.5 (velos electriques urbains)
 -- quels produits precis manquent a Paris (agence au plus gros volume en France) ?
 SELECT
   {[Measures].[Durée], [Measures].[Taux de rupture]}                  ON COLUMNS,

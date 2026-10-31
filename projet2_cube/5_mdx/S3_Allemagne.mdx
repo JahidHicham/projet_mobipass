@@ -79,7 +79,8 @@ FROM [Locations];
 /* ---------------------------------------------------------------------
    S3.3 DRILL-DOWN par Land : quels Länder tirent l'Allemagne, lesquels decrochent ?
    Attendu (locations par employe actif) :
-     - Berlin et Hamburg en tete (environ 4 par mois de mai a juin) ;
+     - Hamburg, Berlin et Sachsen autour de 3 a 5 par mois de mai a juin (le Hessen est plus haut,
+       mais sur tres peu d'employes : a ne pas interpreter) ;
      - Bayern plafonne des avril (2,9) puis baisse (2,5 en mai, 2,3 en juillet) alors que les
        autres Länder progressent : c'est le decrochage bavarois (P7b) ;
      - creux de juillet-aout differents selon le Land : vacances scolaires decalees (P6),
@@ -101,7 +102,6 @@ FROM [Locations]
 WHERE ([Measures].[Locations par employé actif]);
 
 -- Variante (P6) : locations par semaine ISO, pour lire le creux des vacances de chaque Land
--- Attendu : NRW creux semaines 30 a 35, Sachsen 28 a 33, Bayern 32 a 37.
 SELECT
   {[Temps].[H_SEM].[Semaine].&[202624] : [Temps].[H_SEM].[Semaine].&[202640]}    ON COLUMNS,
   {[Employé].[Land].&[DE05], [Employé].[Land].&[DE14], [Employé].[Land].&[DE09]} ON ROWS
@@ -152,7 +152,7 @@ WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
 
 -- Reference francaise : memes mesures (memes WITH MEMBER que ci-dessus), lignes remplacees par
 -- l'Ile-de-France et la France entiere.
--- Attendu : Ile-de-France 3,0 j, 7,0 locations par employe actif, 31 % intermodal, 13 % velos pliants, 5,9 % cargo.
+-- Attendu : Ile-de-France 2,9 j, 7,0 locations par employe actif, 31 % intermodal, 13 % velos pliants, 5,9 % cargo.
 --   {[Employé].[H_France].[Région].&[R11], [Employé].[H_France].[Pays].&[FR]}   ON ROWS
 
 
@@ -175,9 +175,7 @@ FROM [Locations]
 WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
 
 -- S3.5 bis : la demande bavaroise ressemble a celle d'Auvergne-Rhone-Alpes (P2), mais elle n'est pas servie.
--- Part des VTT electriques dans les locations. Attendu : Auvergne-Rhone-Alpes 18,9 %, Bayern 8,7 %,
--- autres Länder environ 5 %. Les Bavarois demandent 4 fois plus de VTT electriques que les autres
--- Allemands, comme les Rhonalpins en France, mais faute d'exemplaires a Munich, leur part reste faible.
+-- Part des VTT electriques dans les locations.
 WITH
   MEMBER [Measures].[Part VTT électriques] AS
     IIF([Measures].[Nombre de locations] = 0, NULL,
@@ -190,7 +188,18 @@ SELECT
                         [Employé].[H_Allemagne].[Land])                          ON ROWS
 FROM [Locations]
 WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
--- et pour la France : lignes {[Employé].[H_France].[Région].&[R84], [Employé].[H_France].[Pays].&[FR]}
+-- S3.5 bis (France) : Auvergne-Rhone-Alpes et la France entiere.
+WITH
+  MEMBER [Measures].[Part VTT électriques] AS
+    IIF([Measures].[Nombre de locations] = 0, NULL,
+        ([Measures].[Nombre de locations], [Exemplaire].[Gamme].[VTT électriques])
+          / [Measures].[Nombre de locations]),
+    FORMAT_STRING = 'Percent'
+SELECT
+  {[Measures].[Nombre de locations], [Measures].[Part VTT électriques]}          ON COLUMNS,
+  {[Employé].[H_France].[Région].&[R84], [Employé].[H_France].[Pays].&[FR]}      ON ROWS
+FROM [Locations]
+WHERE ({[Temps].[H_MOIS].[Mois].&[202601] : [Temps].[H_MOIS].[Mois].&[202609]});
 
 
 /* ---------------------------------------------------------------------
