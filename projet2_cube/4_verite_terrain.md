@@ -148,18 +148,3 @@ Phénomène proposé par Sami (séquence S3 « Lancement en Allemagne »).
 - Les **référentiels ajoutés** (sociétés, produits, agences, tarifs) sont dans `3_donnees/referentiels/*.csv` ; la
   colonne `Origine` distingue les données du projet 1 et les ajouts du projet 2.
 - Le détail des demandes faites à l'assistant IA pour écrire le générateur est dans `3_donnees/journal_prompts.md`.
-
-## 5. Vérification des valeurs
-
-Les valeurs de ce fichier correspondent aux données finales : 67 595 locations et 222 433 jours loués, identiques
-dans les CSV (`3_donnees/csv/`), dans l'entrepôt SQL Server (schéma `dw`) et dans le cube.
-
-- **Recalculées en SQL sur l'entrepôt le 31/10** : volumes du § 1, tendance par année, P2, P3, P4, P5 (durées et
-  vélos cargo par type de Land), P6 (France 2026 par mois) et la montée en charge allemande de P7.
-- **Vérifiées sur le cube en MDX le 29/10** : taux de rupture de P1 et indicateurs détaillés de P7 (requêtes de
-  `5_mdx/`). Les données n'ont pas changé depuis.
-- **Recalculées par le générateur le 31/10** (relancé à l'identique : mêmes fichiers octet pour octet,
-  « ERREURS : aucune ») : demandes refusées de P1 par mois et par semaine ISO, creux d'été des Länder (P6) et
-  indicateurs de P7b (Munich, Bavière).
-- **Simulées par le générateur, absentes des fichiers** : les 7 789 demandes refusées de P1 (elles n'existent que
-  comme cause des ruptures visibles dans le cube).
